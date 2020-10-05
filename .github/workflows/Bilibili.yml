@@ -6,8 +6,7 @@
 name: Bilibili
 
 on:
-   watch:
-     types: [started]   
+   fork:
    schedule: 
        - cron: '30 2 * * *'
 
