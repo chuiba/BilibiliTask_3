@@ -49,7 +49,7 @@ SESSDATA | xxxxx
 
 ## 5.开启actions
 
-在Actions中开启Actions，把那个绿色的长按钮点一下。
+默认actions处于禁止状态，在Actions中开启Actions，把那个绿色的长按钮点一下。
 
 ![](img/3.png)
 
