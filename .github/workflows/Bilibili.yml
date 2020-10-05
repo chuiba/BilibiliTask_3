@@ -23,7 +23,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      env: |
+      env: 
         COOKIE: ${{ secrets.COOKIE }}
       run: 
         mvn compile exec:java -Dexec.mainClass="org.example.App" -Dexec.args="${COOKIE}"
