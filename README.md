@@ -38,11 +38,7 @@ b站首页（任意一个页面都行）--> 按下F12 --> Application --> Cookie
 新的Secrets的Name是Cookie，Value格式如下：
 
 ```json
-{
-   \"bili_jct\":\"xxxxx\",
-   \"DedeUserID\":\"xxxxx\",
-   \"SESSDATA\":\"xxxxx\"
-}
+{\"bili_jct\":\"xxxxx\",\"DedeUserID\":\"xxxxx\",\"SESSDATA\":\"xxxxx\"}
 ```
 
 从上一步骤获取的参数，替换对应的xxxxx。此处需要注意的是只替换xxxxx，只替换xxxxx，不要将双引号也替换了。
