@@ -17,7 +17,7 @@
 
 ## 1.fork本项目
 
-默认fork本项目，会自动触发github actions流程，因为Secrets中缺少Cookie参数，会运行失败。继续以下步骤进行完善。
+默认fork本项目。
 
 ## 2.需要的参数
 
@@ -35,13 +35,15 @@ b站首页（任意一个页面都行）--> 按下F12 --> Application --> Cookie
 
 需要把上面的SESSDATA，bili_jct，DedeUserID隐私数据添加到Secrets中。
 
-新的Secrets的Name是Cookie，Value格式如下：
+新的Secrets的Name和Value格式如下：
 
-```json
-{\"bili_jct\":\"xxxxx\",\"DedeUserID\":\"xxxxx\",\"SESSDATA\":\"xxxxx\"}
-```
+Name | Value
+- | -
+BILI_JCT | xxxxx
+DEDEUSERID | xxxxx
+SESSDATA | xxxxx
 
-从上一步骤获取的参数，替换对应的xxxxx。此处需要注意的是只替换xxxxx，只替换xxxxx，不要将双引号也替换了。
+从上一步骤获取的参数，替换对应的xxxxx，一共需要添加三个键值对。
 
 ![](img/2.png)
 
