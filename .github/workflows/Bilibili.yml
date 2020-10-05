@@ -1,0 +1,30 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+# 每天10:30执行
+
+name: Bilibili
+
+on:
+   fork:
+   watch:
+     types: [started]   
+   schedule: 
+       - cron: '30 2 * * *'
+
+jobs:
+  one:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build with Maven
+      env: 
+        Cookie: ${{ secrets.Cookie }}
+      run: 
+        mvn compile exec:java -Dexec.mainClass="org.example.App" -Dexec.args="${Cookie}"
