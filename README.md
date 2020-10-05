@@ -17,7 +17,7 @@
 
 ## 1.fork本项目
 
-默认fork本项目。
+项目地址：[srcrs/BilibiliTask](https://github.com/srcrs/BilibiliTask)
 
 ## 2.需要的参数
 
@@ -38,7 +38,7 @@ b站首页（任意一个页面都行）--> 按下F12 --> Application --> Cookie
 新的Secrets的Name和Value格式如下：
 
 Name | Value
-- | -
+-|-
 BILI_JCT | xxxxx
 DEDEUSERID | xxxxx
 SESSDATA | xxxxx
