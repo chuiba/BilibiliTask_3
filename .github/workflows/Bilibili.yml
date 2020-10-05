@@ -23,7 +23,9 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      env: 
-        COOKIE: ${{ secrets.COOKIE }}
+      env: |
+        BILI_JCT: ${{ secrets.BILI_JCT }}
+        DEDEUSERID: ${{ secrets.DEDEUSERID }}
+        SESSDATA: ${{ secrets.SESSDATA }}
       run: 
-        mvn compile exec:java -Dexec.mainClass="org.example.App" -Dexec.args="${COOKIE}"
+        mvn compile exec:java -Dexec.mainClass="org.example.App" -Dexec.args="${BILI_JCT} ${DEDEUSERID} ${SESSDATA}"
