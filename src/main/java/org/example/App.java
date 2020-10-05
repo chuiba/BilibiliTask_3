@@ -7,6 +7,7 @@ import org.example.domain.Cookie;
 public class App
 {
     public static void main( String[] args ) throws Exception {
+        System.out.println(args[0]);
         Cookie cookie = new Cookie();
         JSONObject jsonObject = JSON.parseObject(args[0]);
         cookie.setBili_jct(jsonObject.getString("bili_jct"));
