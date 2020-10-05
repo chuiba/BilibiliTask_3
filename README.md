@@ -47,7 +47,13 @@ SESSDATA | xxxxx
 
 ![](img/2.png)
 
-## 5.运行一次工作流
+## 5.开启actions
+
+在Actions中开启Actions，把那个绿色的长按钮点一下。
+
+![](img/3.png)
+
+## 6.运行一次工作流
 
 当填写完上面数据之后，再创建wiki，就可以运行一次工作流。
 
