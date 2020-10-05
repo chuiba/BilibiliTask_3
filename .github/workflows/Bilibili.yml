@@ -6,7 +6,7 @@
 name: Bilibili
 
 on:
-   fork:
+   push:
    schedule: 
        - cron: '30 2 * * *'
 
