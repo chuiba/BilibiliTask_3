@@ -71,6 +71,13 @@ public class DailyTasks {
         } catch (Exception e){
             LOGGER.error("分享视频失败"+"-------->"+e);
         }
+        // B站直播签到
+        try {
+            JSONObject json = function.xliveSign();
+            LOGGER.info("直播签到成功"+"-------->"+json);
+        } catch (Exception e){
+            LOGGER.error("直播签到异常"+"-------->"+e);
+        }
         LOGGER.info("本次操作全部完成");
     }
 }

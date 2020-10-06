@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.geom.FlatteningPathIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -134,5 +135,142 @@ public class Function {
         String body = "uid="+user.getMid()+"&dynamic_id="+dynamic_id+"&content="+content+"&extension.emoji_type="+extension+"&csrf_token="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_10(), body).post();
         System.out.println(post);
+    }
+    // 评论动态
+    public JSONObject dynamicReplyAdd(String oid,String message,String type,String plat) throws Exception{
+        String body = "oid="+oid+"&plat="+plat+"&type="+type+"&message="+message+"&csrf="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_11(), body).post();
+        return post;
+    }
+    // 评论动态并转发
+    public JSONObject dynamicRepostReply(String rid,String content,String type,String repost_code,String From,String extension) throws Exception{
+        String body="uid="+user.getMid()+"&rid="+rid+"&content="+content+"&extension.emoji_type="+extension+"&repost_code="+repost_code+"&from="+From+"&csrf_token="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_12(), body).post();
+        return post;
+    }
+    // 关注或者取关up主
+    public JSONObject followed(String followid,String isfollow) throws Exception{
+        //标志位，判断是否关注，以改变状态
+        String flag = "true".equals(isfollow) ? "1":"0";
+        String body ="type="+flag+"&follow="+followid+"&csrf_token="+ce.getBili_jct();
+        System.out.println(body);
+        JSONObject post = new Request(webAPI.getURL_13(), body).post();
+        return post;
+    }
+    // 改变关注状态，与上一个API功能类似
+    public JSONObject followedModify(String followid,String act,String re_src) throws Exception{
+        // act值决定是否关注，值为1关注，值为2取消关注。
+        String body = "fid="+followid+"&act="+act+"&re_src="+re_src+"&csrf="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_14(), body).post();
+        return post;
+    }
+    // 移动关注的up主的分组
+    public JSONObject groupAddFollowed(String followed,String tagids) throws Exception{
+        // tagids 默认分组是0，特别关注是-10;
+        String body="?fids="+followed+"&tagids="+tagids+"&csrf="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_15(), body).post();
+        return post;
+    }
+    // 获取指定账户的关注者
+    public JSONObject getFollowing(String uid,String pn,String ps,String order) throws Exception{
+        if("0".equals(uid)){
+            uid = user.getMid();
+        }
+        String param = "vmid="+uid+"&pn="+pn+"&ps="+ps+"&order="+order;
+        JSONObject jsonObject = new Request(webAPI.getURL_16() + param).get();
+        return jsonObject;
+    }
+    // 取B站的话题信息
+    public JSONObject getTopicInfo(String tag_name) throws Exception{
+        String param = "?tag_name="+tag_name;
+        JSONObject jsonObject = new Request(webAPI.getURL_17() + param).get();
+        return jsonObject;
+    }
+    // 取B站话题列表
+//    public JSONObject getTopicList(String tag_name) throws Exception {
+//        JSONObject topic_id_object = getTopicInfo(tag_name);
+//        String topic_id = topic_id_object.getJSONObject("data").getString("tag_id");
+//        String param = "?topic_id="+topic_id;
+//        JSONObject jsonObject = new Request(webAPI.getURL_18()).get();
+//
+//    }
+    // 获取动态内容
+    public JSONObject getDynamicDetail(String dynamic_id) throws Exception{
+        String param = "?dynamic_id="+dynamic_id;
+        JSONObject jsonObject = new Request(webAPI.getURL_19() + param).get();
+        return jsonObject;
+    }
+    // 取B站用户最新动态数据
+    public JSONObject getDynamicNew(String type_list) throws Exception{
+        String param = "?uid="+user.getMid()+"&type_list="+type_list;
+        JSONObject jsonObject = new Request(webAPI.getURL_20() + param).get();
+        return jsonObject;
+    }
+    // 取B站用户动态数据生成器
+    public void getDynamic(String type_list){
+
+    }
+    // 取B站用户自己的动态列表
+    public void getMyDynamic(String uid){
+
+    }
+    // 删除自己的动态
+    public JSONObject removeDynamic(String dynamic_id) throws Exception{
+        String body = "dynamic_id="+dynamic_id+"&csrf_token="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_23(), body).post();
+        return post;
+    }
+    // 获取指定的抽奖信息
+    public JSONObject getLotteryNotice(String dynamic_id) throws Exception{
+        String param = "?dynamic_id="+dynamic_id;
+        JSONObject jsonObject = new Request(webAPI.getURL_24() + param).get();
+        return jsonObject;
+    }
+    // 获取指定账户的关注信息
+    public JSONObject getRelationStat(String uid) throws Exception{
+        String param = "?vimd="+uid;
+        JSONObject jsonObject = new Request(webAPI.getURL_25() + param).get();
+        return jsonObject;
+    }
+    // 获取指定账户的空间信息
+    public JSONObject getSpaceInfo(String uid) throws Exception {
+        String param = "?mid="+uid;
+        JSONObject jsonObject = new Request(webAPI.getURL_26() + param).get();
+        return jsonObject;
+    }
+    // 获取钱包信息
+    public JSONObject getUserWallet(String platformType) throws Exception{
+        String body = "platformType="+platformType;
+        JSONObject post = new Request(webAPI.getURL_27(), body).post();
+        return post;
+    }
+    // 用b币给up主充电，num>=20
+    public JSONObject elecPay(String uid,String num) throws Exception{
+        String body = "elec_num="+num+"&up_mid="+uid+"&otype="+"up"+"&oid="+uid+"&csrf="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_28(), body).post();
+        return post;
+    }
+    // 充电订单状态查询
+    // order_no 代表订单号
+    public JSONObject elecPayStatus(String order_no) throws Exception{
+        String param = "?order_no="+order_no;
+        JSONObject jsonObject = new Request(webAPI.getURL_29() + param).get();
+        return jsonObject;
+    }
+    // B站直播签到
+    public JSONObject xliveSign() throws Exception{
+        JSONObject jsonObject = new Request(webAPI.getURL_30()).get();
+        return jsonObject;
+    }
+    // B站直播获取金瓜子状态
+    public JSONObject xliveGetStatus() throws Exception{
+        JSONObject jsonObject = new Request(webAPI.getURL_31()).get();
+        return jsonObject;
+    }
+    // 银瓜子兑换硬币
+    public JSONObject silver2coin() throws Exception{
+        String body = "csrf_token="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_32(), body).post();
+        return post;
     }
 }
