@@ -16,15 +16,8 @@ public class DailyTasks {
     }
 
     public void run(){
-        LOGGER.info("正在进行检查账户是否可用");
+        LOGGER.info("正在执行每日任务"+"-------->"+"稍等");
         Function function = Function.FUNCTION;
-        // 检查用户状态
-        try{
-            function.check();
-            LOGGER.info("账户状态正常");
-        } catch (Exception e){
-            LOGGER.error("账户状态异常"+"-------->"+e);
-        }
         // 获取经验信息，进而获取需要投币数
         Integer coin_throw_num = null;
         try{
@@ -71,13 +64,6 @@ public class DailyTasks {
         } catch (Exception e){
             LOGGER.error("分享视频失败"+"-------->"+e);
         }
-        // B站直播签到
-        try {
-            JSONObject json = function.xliveSign();
-            LOGGER.info("直播签到成功"+"-------->"+json);
-        } catch (Exception e){
-            LOGGER.error("直播签到异常"+"-------->"+e);
-        }
-        LOGGER.info("本次操作全部完成");
+        LOGGER.info("每日任务"+"-------->"+"完成");
     }
 }

@@ -25,7 +25,7 @@ public class Function {
     public static final Function FUNCTION = new Function();
 
     // 检查用户是否有效
-    public void check() throws Exception {
+    public boolean check() throws Exception {
         JSONObject jsonObject = new Request(webAPI.getURL_1()).get();
         JSONObject object = jsonObject.getJSONObject("data");
         if("0".equals(jsonObject.getString("code"))){
@@ -33,7 +33,9 @@ public class Function {
             user.setUname(object.getString("uname"));
             user.setUname(object.getString("mid"));
             user.setUname(object.getString("vipType"));
+            return true;
         }
+        return false;
     }
 
     private Function(){};
