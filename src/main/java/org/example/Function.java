@@ -459,7 +459,6 @@ public class Function {
                 +"&storm_beat_id="+storm_beat_id
                 +"&price="+price
                 +"&csrf="+ce.getBili_jct();
-        System.out.println(body);
         JSONObject post = new Request(webAPI.getURL_49(), body).post();
         return post;
     }

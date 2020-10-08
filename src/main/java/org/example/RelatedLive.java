@@ -63,7 +63,13 @@ public class RelatedLive {
                 if((expireAt-nowTime)<172800){
                     JSONObject jsonObject3 = function.xliveBagSend(roomId, uid, json.getString("bag_id"), json.getString("gift_id"), json.getString("gift_num"), "0", "0", "pc");
                     if("0".equals(jsonObject3.getString("code"))){
-                        LOGGER.info("礼物送出成功"+"-------->"+jsonObject3);
+                        LOGGER.info("礼物"+"-------->"
+                                +jsonObject3.getJSONObject("data").getString("send_tips")
+                                + "-"
+                                +jsonObject3.getJSONObject("data").getString("gift_name")
+                                + "-数量-"
+                                +jsonObject3.getJSONObject("data").getString("gift_num")
+                        );
                     }
                     else{
                         LOGGER.info("礼物送出失败"+"-------->"+jsonObject3);
