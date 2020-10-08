@@ -10,10 +10,10 @@ public class App
     public static final Logger LOGGER = LoggerFactory.getLogger(DailyTasks.class);
 
     public static void main( String[] args ) throws Exception {
-//        Cookie cookie = new Cookie();
-//        cookie.setBili_jct(args[0]);
-//        cookie.setDedeUserID(args[1]);
-//        cookie.setSESSDATA(args[2]);
+        Cookie cookie = new Cookie();
+        cookie.setBili_jct(args[0]);
+        cookie.setDedeUserID(args[1]);
+        cookie.setSESSDATA(args[2]);
         // 检查用户是否可用
         LOGGER.info("正在进行检查账户是否可用");
         Function function = Function.FUNCTION;
