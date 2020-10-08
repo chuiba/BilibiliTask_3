@@ -12,7 +12,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.geom.FlatteningPathIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,8 +30,8 @@ public class Function {
         if("0".equals(jsonObject.getString("code"))){
             User user = User.getInstance();
             user.setUname(object.getString("uname"));
-            user.setUname(object.getString("mid"));
-            user.setUname(object.getString("vipType"));
+            user.setMid(object.getString("mid"));
+            user.setVipType(object.getString("vipType"));
             return true;
         }
         return false;
@@ -83,7 +82,11 @@ public class Function {
     // 给指定av号视频投币
     public JSONObject throwCoin(String aid,String num,String select_like) throws Exception{
 
-        String body="aid="+aid+"&multiply="+num+"&select_like="+select_like+"&cross_domain="+"true"+"&csrf="+ce.getBili_jct();
+        String body="aid="+aid
+                +"&multiply="+num
+                +"&select_like="+select_like
+                +"&cross_domain="+"true"
+                +"&csrf="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_4(), body).post();
         System.out.println(post);
         return post;
@@ -96,7 +99,10 @@ public class Function {
     }
     // B站上报观看进度
     public JSONObject report(String aid,String cid,String progres) throws Exception{
-        String body = "aid="+aid+"&cid="+cid+"&progres="+progres+"&csrf="+ce.getBili_jct();
+        String body = "aid="+aid
+                +"&cid="+cid
+                +"&progres="+progres
+                +"&csrf="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_6(), body).post();
         return post;
     }
@@ -134,19 +140,33 @@ public class Function {
     }
     // 转发B站动态
     public void repost(String dynamic_id,String content,String extension) throws Exception {
-        String body = "uid="+user.getMid()+"&dynamic_id="+dynamic_id+"&content="+content+"&extension.emoji_type="+extension+"&csrf_token="+ce.getBili_jct();
+        String body = "uid="+user.getMid()
+                +"&dynamic_id="+dynamic_id
+                +"&content="+content
+                +"&extension.emoji_type="+extension
+                +"&csrf_token="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_10(), body).post();
         System.out.println(post);
     }
     // 评论动态
     public JSONObject dynamicReplyAdd(String oid,String message,String type,String plat) throws Exception{
-        String body = "oid="+oid+"&plat="+plat+"&type="+type+"&message="+message+"&csrf="+ce.getBili_jct();
+        String body = "oid="+oid
+                +"&plat="+plat
+                +"&type="+type
+                +"&message="+message
+                +"&csrf="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_11(), body).post();
         return post;
     }
     // 评论动态并转发
     public JSONObject dynamicRepostReply(String rid,String content,String type,String repost_code,String From,String extension) throws Exception{
-        String body="uid="+user.getMid()+"&rid="+rid+"&content="+content+"&extension.emoji_type="+extension+"&repost_code="+repost_code+"&from="+From+"&csrf_token="+ce.getBili_jct();
+        String body="uid="+user.getMid()
+                +"&rid="+rid
+                +"&content="+content
+                +"&extension.emoji_type="+extension
+                +"&repost_code="+repost_code
+                +"&from="+From
+                +"&csrf_token="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_12(), body).post();
         return post;
     }
@@ -154,7 +174,9 @@ public class Function {
     public JSONObject followed(String followid,String isfollow) throws Exception{
         //标志位，判断是否关注，以改变状态
         String flag = "true".equals(isfollow) ? "1":"0";
-        String body ="type="+flag+"&follow="+followid+"&csrf_token="+ce.getBili_jct();
+        String body ="type="+flag
+                +"&follow="+followid
+                +"&csrf_token="+ce.getBili_jct();
         System.out.println(body);
         JSONObject post = new Request(webAPI.getURL_13(), body).post();
         return post;
@@ -162,14 +184,19 @@ public class Function {
     // 改变关注状态，与上一个API功能类似
     public JSONObject followedModify(String followid,String act,String re_src) throws Exception{
         // act值决定是否关注，值为1关注，值为2取消关注。
-        String body = "fid="+followid+"&act="+act+"&re_src="+re_src+"&csrf="+ce.getBili_jct();
+        String body = "fid="+followid
+                +"&act="+act
+                +"&re_src="+re_src
+                +"&csrf="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_14(), body).post();
         return post;
     }
     // 移动关注的up主的分组
     public JSONObject groupAddFollowed(String followed,String tagids) throws Exception{
         // tagids 默认分组是0，特别关注是-10;
-        String body="?fids="+followed+"&tagids="+tagids+"&csrf="+ce.getBili_jct();
+        String body="?fids="+followed
+                +"&tagids="+tagids
+                +"&csrf="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_15(), body).post();
         return post;
     }
@@ -178,7 +205,10 @@ public class Function {
         if("0".equals(uid)){
             uid = user.getMid();
         }
-        String param = "vmid="+uid+"&pn="+pn+"&ps="+ps+"&order="+order;
+        String param = "vmid="+uid
+                +"&pn="+pn
+                +"&ps="+ps
+                +"&order="+order;
         JSONObject jsonObject = new Request(webAPI.getURL_16() + param).get();
         return jsonObject;
     }
@@ -203,14 +233,29 @@ public class Function {
         return jsonObject;
     }
     // 取B站用户最新动态数据
-    public JSONObject getDynamicNew(String type_list) throws Exception{
-        String param = "?uid="+user.getMid()+"&type_list="+type_list;
+    public JSONArray getDynamicNew(String type_list) throws Exception{
+        String param = "?uid="+user.getMid()
+                +"&type_list="+type_list;
         JSONObject jsonObject = new Request(webAPI.getURL_20() + param).get();
-        return jsonObject;
+        return jsonObject.getJSONObject("data").getJSONArray("cards");
     }
     // 取B站用户动态数据生成器
-    public void getDynamic(String type_list){
-
+    public JSONArray getDynamic(String uid,String type_list) throws Exception {
+        if("0".equals(uid)){
+            uid = user.getMid();
+        }
+        String param = "?uid="+uid+"&type_list="+type_list;
+        JSONArray arr = new JSONArray();
+        JSONObject jsonObject = new Request(webAPI.getURL_20() + param).get();
+        JSONArray jsonArray = jsonObject.getJSONObject("data").getJSONArray("cards");
+        for(Object json : jsonArray){
+            JSONObject object = (JSONObject)json;
+            String offset = object.getJSONObject("desc").getString("dynamic_id");
+            String param2 = "?uid="+user.getMid()+"&offset_dynamic_id="+offset+"&type="+type_list;
+            JSONObject jsonObject1 = new Request(webAPI.getURL_21() + param2).get();
+            arr.add(jsonObject1.getJSONObject("data").getJSONArray("cards"));
+        }
+        return arr;
     }
     // 取B站用户自己的动态列表
     public void getMyDynamic(String uid){
@@ -218,7 +263,8 @@ public class Function {
     }
     // 删除自己的动态
     public JSONObject removeDynamic(String dynamic_id) throws Exception{
-        String body = "dynamic_id="+dynamic_id+"&csrf_token="+ce.getBili_jct();
+        String body = "dynamic_id="+dynamic_id
+                +"&csrf_token="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_23(), body).post();
         return post;
     }
@@ -248,7 +294,11 @@ public class Function {
     }
     // 用b币给up主充电，num>=20
     public JSONObject elecPay(String uid,String num) throws Exception{
-        String body = "elec_num="+num+"&up_mid="+uid+"&otype="+"up"+"&oid="+uid+"&csrf="+ce.getBili_jct();
+        String body = "elec_num="+num
+                +"&up_mid="+uid
+                +"&otype="+"up"
+                +"&oid="+uid
+                +"&csrf="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_28(), body).post();
         return post;
     }
@@ -275,4 +325,189 @@ public class Function {
         JSONObject post = new Request(webAPI.getURL_32(), body).post();
         return post;
     }
+    // 发表专栏
+    public void createArticle(String title,String content,String aid,String category,String list_id,String tid,String original,String image_urls,String origin_image_urls,String submit){
+        String body = "title="+title
+                +"&content="+content
+                +"&category="+category
+                +"&list_id="+list_id
+                +"&tid="+tid
+                +"&reprint="+"0"
+                +"&media_id="+"0"
+                +"&spoiler="+"0"
+                +"&original="+original
+                +"&csrf="+ce.getBili_jct();
+
+    }
+    // 删除专栏
+    public JSONObject deleteArticle(String aid) throws Exception{
+        String body = "aid="+aid+"&csrf="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_35(), body).post();
+        return post;
+    }
+    // 获取专栏列表
+    public JSONObject getArticle(String aid) throws Exception{
+        String param = "?aid="+aid;
+        JSONObject jsonObject = new Request(webAPI.getURL_36() + param).get();
+        return jsonObject;
+    }
+    // 上传本地图片，返回链接
+    public void articleUpcover(String file) throws Exception{
+
+    }
+    // 根据bv号获取视频信息，在专栏引用视频时使用
+    public JSONObject articleCardsBvid(String bvid) throws Exception{
+        String param = "?bvid="+bvid+"&cross_domain=true";
+        JSONObject jsonObject = new Request(webAPI.getURL_38() + param).get();
+        return jsonObject;
+    }
+    // 根据cv号获取专栏，在专栏引用其它专栏时使用
+    public JSONObject articleCardsCvid(String cvid) throws Exception{
+        String param = "?id="+cvid+"&cross_domain=true";
+        JSONObject jsonObject = new Request(webAPI.getURL_38() + param).get();
+        return jsonObject;
+    }
+    // 根据ep号获取番剧信息，在专栏引用站内番剧时使用
+    // 使用时加上ep前缀
+    public JSONObject articleCardsId(String epid){
+        return articleCardsId(epid);
+    }
+    // 根据au号获取音乐信息，在专栏引用站内音乐时使用
+    public JSONObject articleCardsAu(String auid) throws Exception {
+        return articleCardsCvid(auid);
+    }
+    // 根据au号获取会员购信息，在专栏引用会员购时使用
+    public JSONObject articleCardsPw(String pwid) throws Exception{
+        return articleCardsCvid(pwid);
+    }
+    // 根据mc号获取漫画信息，在专栏引用站内漫画时使用
+    public JSONObject articleMangas(String mcid) throws Exception{
+        String param = "?id="+mcid+"&cross_domain=true";
+        JSONObject jsonObject = new Request(webAPI.getURL_39() + param).get();
+        return jsonObject;
+    }
+    // 根据lv号获取直播信息，在专栏引用站内直播时使用
+    public JSONObject articleCardsLv(String lvid) throws Exception{
+        return articleCardsCvid(lvid);
+    }
+    // 获取B站活动列表，生成器
+    public void activityList(String plat,String mold,String http,String start_page,String end_page){
+
+    }
+    // 获取B站活动列表
+    public JSONObject activityAll() throws Exception {
+        JSONObject jsonObject = new Request(webAPI.getURL_41()).get();
+        return jsonObject;
+    }
+    // 增加B站活动的参与次数
+    // 活动sid，活动操作类型
+    public JSONObject activityAddTimes(String sid,String action_type) throws Exception {
+        String body = "sid="+sid
+                +"&action_type="+action_type
+                +"&csrf="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_42(), body).post();
+        return post;
+    }
+    // 参与B站活动
+    public JSONObject activityDo(String sid,String type) throws Exception {
+        String body = "sid="+sid
+                +"&type="+type
+                +"&csrf="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_43(), body).post();
+        return post;
+    }
+    // 获取B站活动次数
+    public JSONObject activityMyTimes(String sid) throws Exception {
+        String param = "?sid="+sid;
+        JSONObject jsonObject = new Request(webAPI.getURL_44() + param).get();
+        // 响应例子{"code":0,"message":"0","ttl":1,"data":{"times":0}}
+        return jsonObject;
+    }
+    // B站直播模拟客户端打开宝箱领取银瓜子
+    public JSONObject xliveGetAward(String platform) throws Exception {
+        String param = "?platform="+platform;
+        JSONObject jsonObject = new Request(webAPI.getURL_45() + param).get();
+        return jsonObject;
+    }
+    // B站直播模拟客户端获取时间宝箱
+    public JSONObject xliveGetCurrentTask(String platform) throws Exception {
+        String param = "?platform="+platform;
+        JSONObject jsonObject = new Request(webAPI.getURL_46() + param).get();
+        return jsonObject;
+    }
+    // B站直播获取背包礼物
+    public JSONObject xliveGiftBagList() throws Exception {
+        JSONObject jsonObject = new Request(webAPI.getURL_47()).get();
+        return jsonObject;
+    }
+    // B站直播获取首页前10条直播
+    public JSONObject xliveGetRecommendList() throws Exception {
+        JSONObject jsonObject = new Request(webAPI.getURL_48()).get();
+        return jsonObject;
+    }
+    // B站直播送出背包礼物
+    public JSONObject xliveBagSend(String biz_id,String ruid,String bag_id,String gift_id,String gift_num,String storm_beat_id,String price,String platform) throws Exception {
+        String body = "uid="+user.getMid()
+                +"&gift_id="+gift_id
+                +"&ruid="+ruid
+                +"&send_ruid=0"
+                +"&gift_num="+gift_num
+                +"&bag_id="+bag_id
+                +"&platform="+platform
+                +"&biz_code="+"live"
+                +"&biz_id="+biz_id
+                +"&storm_beat_id="+storm_beat_id
+                +"&price="+price
+                +"&csrf="+ce.getBili_jct();
+        System.out.println(body);
+        JSONObject post = new Request(webAPI.getURL_49(), body).post();
+        return post;
+    }
+    // B站直播获取房间信息
+    public JSONObject xliveGetRoomInfo(String room_id) throws Exception {
+        String param = "?room_id="+room_id;
+        JSONObject jsonObject = new Request(webAPI.getURL_50() + param).get();
+        return jsonObject;
+    }
+    // B站直播 直播间心跳
+    public void xliveWebHeartBeat(String biz_id,String last,String platform) {
+
+    }
+    // B站直播 心跳(大约2分半一次)
+    public JSONObject xliveHeartBeat() throws Exception {
+        JSONObject jsonObject = new Request(webAPI.getURL_52()).get();
+        return jsonObject;
+    }
+    // B站直播 用户在线心跳(很少见)
+    public JSONObject xliveUserOnlineHeart() throws Exception {
+        String body = "csrf="+ce.getBili_jct();
+        JSONObject post = new Request(webAPI.getURL_53(), body).post();
+        return post;
+    }
+    // 模拟B站漫画客户端签到
+    public JSONObject mangaClockIn(String platform) throws Exception {
+        String body = "platform="+platform;
+        JSONObject post = new Request(webAPI.getURL_54(), body).post();
+        return post;
+    }
+    // 获取钱包信息
+    public JSONObject mangaGetWallet(String platform) throws Exception {
+        String param = "?platform="+platform;
+        JSONObject post = new Request(webAPI.getURL_55()+param, "").post();
+        return post;
+    }
+    // 站友日漫画卷兑换
+    public JSONObject mangaComrade(String platform) throws Exception{
+        String param = "?platform="+platform;
+        JSONObject post = new Request(webAPI.getURL_56() + param, "").post();
+        return post;
+    }
+    // 获取漫画购买信息
+    public JSONObject mangaGetEpisodeBuyInfo(String ep_id,String platform) throws Exception {
+        String param = "?platform="+platform;
+        String body = "ep_id="+ep_id;
+        JSONObject post = new Request(webAPI.getURL_57(), body).post();
+        return post;
+    }
+
 }

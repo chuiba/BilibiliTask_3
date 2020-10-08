@@ -26,6 +26,9 @@ public class App
                 new DailyTasks();
                 // 执行直播相关
                 new RelatedLive();
+                // 执行漫画签到
+                new MangaTask();
+                LOGGER.info("所有操作完成");
 
             } else{
                 LOGGER.warn("账户状态异常");

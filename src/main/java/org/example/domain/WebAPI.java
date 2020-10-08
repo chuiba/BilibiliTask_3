@@ -66,6 +66,156 @@ public class WebAPI {
     private String URL_31 = "https://api.live.bilibili.com/pay/v1/Exchange/getStatus";
     // 银瓜子兑换硬币
     private String URL_32 = "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin";
+    // 专栏编辑草稿
+    private String URL_33 = "https://api.bilibili.com/x/article/creative/draft/addupdate";
+    // 专栏正式发表地址
+    private String URL_34 = "https://api.bilibili.com/x/article/creative/article/submit";
+    // 删除专栏
+    private String URL_35 = "https://member.bilibili.com/x/web/draft/delete";
+    // 获取专栏内容
+    private String URL_36 = "https://api.bilibili.com/x/article/creative/draft/view";
+    // 上传本地图片
+    private String URL_37 = "https://api.bilibili.com/x/article/creative/article/upcover";
+    // 根据bv号获取视频信息
+    private String URL_38 = "https://api.bilibili.com/x/article/cards";
+    // 根据mc号获取漫画信息
+    private String URL_39 = "https://api.bilibili.com/x/article/mangas";
+    // 获取B站活动列表,生成器
+    private String URL_40 = "https://www.bilibili.com/activity/page/list";
+    // 获取B站活动列表
+    private String URL_41 = "https://member.bilibili.com/x/app/h5/activity/videoall";
+    // 增加B站活动的参与次数
+    private String URL_42 = "https://api.bilibili.com/x/activity/lottery/addtimes";
+    // 参与B站的活动
+    private String URL_43 = "https://api.bilibili.com/x/activity/lottery/do";
+    // 获取B站活动次数
+    private String URL_44 = "https://api.bilibili.com/x/activity/lottery/mytimes";
+    // B站直播模拟客户端打开宝箱领取银瓜子
+    private String URL_45 = "https://api.live.bilibili.com/lottery/v1/SilverBox/getAward";
+    // B站直播模拟客户端获取时间宝箱
+    private String URL_46 = "https://api.live.bilibili.com/lottery/v1/SilverBox/getCurrentTask";
+    // B站直播获取背包礼物
+    private String URL_47 = "https://api.live.bilibili.com/xlive/web-room/v1/gift/bag_list";
+    // B站直播获取首页前10条直播
+    private String URL_48 = "https://api.live.bilibili.com/relation/v1/AppWeb/getRecommendList";
+    // B站直播送出背包礼物
+    private String URL_49 = "https://api.live.bilibili.com/gift/v2/live/bag_send";
+    // B站直播获取房间信息
+    private String URL_50 = "https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom";
+    // B站直播 直播间心跳
+    private String URL_51 = "https://live-trace.bilibili.com/xlive/rdata-interface/v1/heartbeat/webHeartBeat";
+    // B站直播 心跳(大约2分半一次)
+    private String URL_52 = "https://api.live.bilibili.com/relation/v1/Feed/heartBeat";
+    // B站直播 用户在线心跳(很少见)
+    private String URL_53 = "https://api.live.bilibili.com/User/userOnlineHeart";
+    // 模拟B站漫画客户端签到
+    private String URL_54 = "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn";
+    // 获取钱包信息
+    private String URL_55 = "https://manga.bilibili.com/twirp/user.v1.User/GetWallet";
+    // 站友日漫画卷兑换
+    private String URL_56 = "https://manga.bilibili.com/twirp/activity.v1.Activity/Comrade";
+    // 获取漫画购买信息
+    private String URL_57 = "https://manga.bilibili.com/twirp/comic.v1.Comic/GetEpisodeBuyInfo";
+
+    public String getURL_57() {
+        return URL_57;
+    }
+
+    public String getURL_56() {
+        return URL_56;
+    }
+
+    public String getURL_55() {
+        return URL_55;
+    }
+
+    public String getURL_54() {
+        return URL_54;
+    }
+
+    public String getURL_53() {
+        return URL_53;
+    }
+
+    public String getURL_52() {
+        return URL_52;
+    }
+
+    public String getURL_51() {
+        return URL_51;
+    }
+
+    public String getURL_50() {
+        return URL_50;
+    }
+
+    public String getURL_49() {
+        return URL_49;
+    }
+
+    public String getURL_48() {
+        return URL_48;
+    }
+
+    public String getURL_47() {
+        return URL_47;
+    }
+
+    public String getURL_46() {
+        return URL_46;
+    }
+
+    public String getURL_45() {
+        return URL_45;
+    }
+
+    public String getURL_44() {
+        return URL_44;
+    }
+
+    public String getURL_43() {
+        return URL_43;
+    }
+
+    public String getURL_42() {
+        return URL_42;
+    }
+
+    public String getURL_41() {
+        return URL_41;
+    }
+
+    public String getURL_40() {
+        return URL_40;
+    }
+
+    public String getURL_39() {
+        return URL_39;
+    }
+
+    public String getURL_38() {
+        return URL_38;
+    }
+
+    public String getURL_37() {
+        return URL_37;
+    }
+
+    public String getURL_36() {
+        return URL_36;
+    }
+
+    public String getURL_35() {
+        return URL_35;
+    }
+
+    public String getURL_34() {
+        return URL_34;
+    }
+
+    public String getURL_33() {
+        return URL_33;
+    }
 
     public String getURL_32() {
         return URL_32;
