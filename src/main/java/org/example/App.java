@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 public class App
 {
     // 获取日志记录对象
-    public static final Logger LOGGER = LoggerFactory.getLogger(DailyTasks.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
     public static void main( String[] args ) throws Exception {
         Cookie cookie = new Cookie();

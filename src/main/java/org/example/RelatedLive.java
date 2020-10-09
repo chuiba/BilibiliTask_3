@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class RelatedLive {
     // 获取日志记录对象
-    public static final Logger LOGGER = LoggerFactory.getLogger(DailyTasks.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(RelatedLive.class);
     public RelatedLive() throws Exception {
         this.run();
     }

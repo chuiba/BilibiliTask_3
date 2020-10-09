@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 public class MangaTask {
     // 获取日志记录对象
-    public static final Logger LOGGER = LoggerFactory.getLogger(DailyTasks.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(MangaTask.class);
     public MangaTask() throws Exception {
         this.run();
     }
