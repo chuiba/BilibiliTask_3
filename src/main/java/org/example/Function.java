@@ -88,7 +88,6 @@ public class Function {
                 +"&cross_domain="+"true"
                 +"&csrf="+ce.getBili_jct();
         JSONObject post = new Request(webAPI.getURL_4(), body).post();
-        System.out.println(post);
         return post;
     }
     // 分享指定av号视频
