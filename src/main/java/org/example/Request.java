@@ -15,20 +15,14 @@ public class Request {
 
     private Cookie ce = new Cookie();
 
-    private String URL = "";
+    private static final Request REQUEST = new Request();
 
-    private String Body = "";
-
-    public Request(String URL) {
-        this.URL = URL;
+    public static Request getInstance(){
+        return REQUEST;
     }
+    private Request(){}
 
-    public Request(String URL, String body) {
-        this.URL = URL;
-        this.Body = body;
-    }
-
-    public JSONObject get() throws Exception {
+    public JSONObject get(String URL) throws Exception {
         java.net.URL url = new URL(URL);
         //得到connection对象。
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -48,6 +42,7 @@ public class Request {
             //将响应流转换成字符串
             String result = new Scanner(inputStream).useDelimiter("\\Z").next();//将流转换为字符串。
             JSONObject jsonObject = JSONObject.parseObject(result);
+            inputStream.close();
             return jsonObject;
         }
         else{
@@ -55,7 +50,7 @@ public class Request {
         }
     }
 
-    public JSONObject post() throws Exception{
+    public JSONObject post(String URL, String Body) throws Exception{
         URL url = new URL(URL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
@@ -86,6 +81,7 @@ public class Request {
             //将响应流转换成字符串
             String result = new Scanner(inputStream).useDelimiter("\\Z").next();//将流转换为字符串。
             JSONObject jsonObject = JSON.parseObject(result);
+            inputStream.close();
             return jsonObject;
         }
         else{

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class DailyTasks {
     // 获取日志记录对象
-    public static final Logger LOGGER = LoggerFactory.getLogger(DailyTasks.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DailyTasks.class);
     Integer reward;
     WebAPI webAPI = new WebAPI();
     public DailyTasks() throws Exception {
@@ -17,7 +17,7 @@ public class DailyTasks {
 
     public void run(){
         LOGGER.info("正在执行每日任务"+"-------->"+"稍等");
-        Function function = Function.FUNCTION;
+        Function function = Function.getInstance();
         // 获取经验信息，进而获取需要投币数
         Integer coin_throw_num = null;
         try{

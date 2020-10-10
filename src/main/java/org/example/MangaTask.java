@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory;
 
 public class MangaTask {
     // 获取日志记录对象
-    public static final Logger LOGGER = LoggerFactory.getLogger(MangaTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MangaTask.class);
     public MangaTask() throws Exception {
         this.run();
     }
     public void run() throws Exception {
-        Function function = Function.FUNCTION;
+        Function function = Function.getInstance();
         LOGGER.info("正在开始漫画签到"+"-------->"+"稍等");
         try {
             JSONObject jsonObject = function.mangaClockIn("android");

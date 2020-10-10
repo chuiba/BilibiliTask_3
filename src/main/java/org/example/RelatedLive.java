@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 
 public class RelatedLive {
     // 获取日志记录对象
-    public static final Logger LOGGER = LoggerFactory.getLogger(RelatedLive.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RelatedLive.class);
     public RelatedLive() throws Exception {
         this.run();
     }
     public void run() throws Exception {
         LOGGER.info("正在执行直播相关"+"-------->"+"稍等");
-        Function function = Function.FUNCTION;
+        Function function = Function.getInstance();
 //        // B站直播签到
         try {
             JSONObject json = function.xliveSign();

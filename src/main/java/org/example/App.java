@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 public class App
 {
     // 获取日志记录对象
-    public static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
     public static void main( String[] args ) throws Exception {
         Cookie cookie = new Cookie();
@@ -16,7 +16,7 @@ public class App
         cookie.setSESSDATA(args[2]);
         // 检查用户是否可用
         LOGGER.info("正在进行检查账户是否可用");
-        Function function = Function.FUNCTION;
+        Function function = Function.getInstance();
         // 检查用户状态
         try{
             boolean check = function.check();
