@@ -17,10 +17,11 @@ public class MangaTask {
             JSONObject jsonObject = function.mangaClockIn("android");
             if("0".equals(jsonObject.getString("code"))){
                 LOGGER.info("漫画签到成功"+"-------->"+jsonObject);
-            }
-            else{
-                LOGGER.warn("漫画签到失败"+"-------->"+jsonObject);
-            }
+            }else if("clockin clockin is duplicate".equals(jsonObject.getString("msg"))){
+                LOGGER.info("漫画已经签到过了"+"-------->"+jsonObject);
+            }else{
+				LOGGER.warn("漫画签到失败"+"-------->"+jsonObject);
+			}
         } catch (Exception e){
             LOGGER.error("漫画签到失败"+"-------->"+e);
         }
