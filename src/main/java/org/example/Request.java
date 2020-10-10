@@ -75,6 +75,22 @@ public class Request {
         writer.close();
 
         int responseCode = connection.getResponseCode();
+        InputStream inputStream = null;
+        if(responseCode < 400){
+            //得到正确的响应流
+            inputStream = connection.getInputStream();
+        }else{
+            //得到错误的响应流
+            inputStream = connection.getErrorStream();
+        }
+        
+        //将响应流转换成字符串
+        String result = new Scanner(inputStream).useDelimiter("\\Z").next();//将流转换为字符串。
+        JSONObject jsonObject = JSON.parseObject(result);
+        inputStream.close();
+        return jsonObject;
+        
+		/*
         if(responseCode == HttpURLConnection.HTTP_OK){
             //得到响应流
             InputStream inputStream = connection.getInputStream();
@@ -86,6 +102,6 @@ public class Request {
         }
         else{
             return JSONObject.parseObject("");
-        }
+        }*/
     }
 }
