@@ -25,6 +25,8 @@ public class RelatedLive {
         } catch (Exception e){
             LOGGER.error("直播签到异常"+"-------->"+e);
         }
+        // 签到成功等待5秒，等待礼物送到包裹
+        Thread.sleep(5000);
         // 银瓜子兑换成硬币
         try{
             JSONObject jsonObject = function.xliveGetStatus();
@@ -47,7 +49,6 @@ public class RelatedLive {
             LOGGER.info("银瓜子兑换硬币错误"+"-------->"+e);
             return;
         }
-        LOGGER.info("直播相关"+"-------->"+"完成");
         // 送出快过期的礼物
         try {
             JSONObject jsonObject = function.xliveGetRecommendList();
@@ -79,5 +80,6 @@ public class RelatedLive {
         } catch (Exception e){
             LOGGER.info("礼物送出失败"+"-------->"+e);
         }
+        LOGGER.info("直播相关"+"-------->"+"完成");
     }
 }
