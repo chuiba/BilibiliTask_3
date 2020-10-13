@@ -27,4 +27,4 @@ jobs:
         DEDEUSERID: ${{ secrets.DEDEUSERID }}
         SESSDATA: ${{ secrets.SESSDATA }}
       run: 
-        mvn compile exec:java -Dexec.mainClass="org.example.App" -Dexec.args="${BILI_JCT} ${DEDEUSERID} ${SESSDATA}"
+        mvn compile exec:java -Dexec.mainClass="org.example.App" -Dexec.args="${BILI_JCT} ${SESSDATA} ${DEDEUSERID}"
