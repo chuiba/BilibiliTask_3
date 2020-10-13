@@ -15,7 +15,7 @@ import top.srcrs.bilibili.util.Request;
  */
 public class Silver2CoinTask implements Task {
     /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(BLiveTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Silver2CoinTask.class);
     Data data = Data.getInstance();
     Config config = Config.getInstance();
 

@@ -16,7 +16,7 @@ import top.srcrs.bilibili.util.Request;
  */
 public class ThrowCoinTask implements Task {
     /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DailyTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ThrowCoinTask.class);
     /** 获取DATA对象 */
     Data data = Data.getInstance();
     /** 获取配置类 */

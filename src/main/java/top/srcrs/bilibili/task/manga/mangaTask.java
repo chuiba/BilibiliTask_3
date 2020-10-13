@@ -14,7 +14,7 @@ import top.srcrs.bilibili.util.Request;
  */
 public class mangaTask implements Task {
     /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(BLiveTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(mangaTask.class);
 
     @Override
     public void run(){
