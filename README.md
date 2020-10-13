@@ -9,6 +9,7 @@
 * [x] 自动兑换银瓜子为硬币 
 * [ ] 自动领取大会员每月权益(B币劵，优惠券) 
 * [x] 漫画辅助脚本(漫画APP签到) 
+* [x] 加入配置文件，用户可自定义执行
 
 # 使用方法
 
@@ -20,6 +21,18 @@
 
 本项目想成功运行需要三个参数，分别是SESSDATA，bili_jct，DedeUserID
 
+在Secrets中的Name和Value格式如下：
+
+Name | Value
+-|-
+BILI_JCT | xxxxx
+DEDEUSERID | xxxxx
+SESSDATA | xxxxx
+
+从下一步骤获取的参数，替换对应的xxxxx，一共需要添加三个键值对。
+
+![](img/2.png)
+
 ## 3.如何获取需要的参数
 
 b站首页（任意一个页面都行）--> 按下F12 --> Application --> Cookies --> https://www.bilibili.com
@@ -28,35 +41,37 @@ b站首页（任意一个页面都行）--> 按下F12 --> Application --> Cookie
 
 ![](img/1.png)
 
-## 4.Secrets的格式
-
-需要把上面的SESSDATA，bili_jct，DedeUserID隐私数据添加到Secrets中。
-
-新的Secrets的Name和Value格式如下：
-
-Name | Value
--|-
-BILI_JCT | xxxxx
-DEDEUSERID | xxxxx
-SESSDATA | xxxxx
-
-从上一步骤获取的参数，替换对应的xxxxx，一共需要添加三个键值对。
-
-![](img/2.png)
-
-## 5.开启actions
+## 4.开启actions
 
 默认actions处于禁止状态，在Actions中开启Actions，把那个绿色的长按钮点一下。
 
 ![](img/3.png)
 
-## 6.运行一次工作流
+## 5.运行一次工作流
 
 当填写完上面数据之后，再创建wiki，就可以运行一次工作流。
 
 Wiki --> Create the first --> Save Page
 
 然后查看actions，显示对勾就说明运行成功了。以后会在每天的10：30进行运行，自动完成每日任务。
+
+## 配置文件说明
+
+配置文件的位置在`src/main/resource/Bilibili.yml`。
+
+```yml
+coin: 5 #每天需要投币的数量，范围为[0,5]
+gift: true #送出即将过期礼物,默认送出为true
+s2c: true #银币转换硬币,默认转换为true
+``` 
+
+## 2020-10-13
+
++ 重构代码，功能不变
+
++ 采用反射实现自动加载task包功能任务代码。
+
++ 加入配置文件，用户可自定义一些配置
 
 ## 2020-10-08
 
