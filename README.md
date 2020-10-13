@@ -57,7 +57,7 @@ SESSDATA | xxxxx
 
 ## 配置文件说明
 
-配置文件的位置在`src/main/resource/Bilibili.yml`。
+配置文件的位置在`src/main/resource/config.yml`。
 
 ```yml
 coin: 5 #每天需要投币的数量，范围为[0,5]

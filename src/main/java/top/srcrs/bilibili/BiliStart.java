@@ -24,7 +24,7 @@ public class BiliStart {
     public static void main(String[] args) {
         data.setCookie(args[0],args[1],args[2]);
         /** 读取yml文件配置信息 */
-        ReadConfig.transformation("/Bilibili.yml");
+        ReadConfig.transformation("/config.yml");
         if(check()){
             LOGGER.info("用户{}状态正常,正在执行脚本",data.getUname());
             PackageScanner pack = new PackageScanner() {
