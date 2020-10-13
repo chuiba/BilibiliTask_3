@@ -20,7 +20,7 @@ public class Silver2CoinTask implements Task {
     Config config = Config.getInstance();
 
     @Override
-    public void run() throws Exception{
+    public void run(){
         try{
             if(config.isS2c()){
                 LOGGER.info("银瓜子兑换硬币,-{}",silver2coin());
