@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.srcrs.bilibili.Task;
-import top.srcrs.bilibili.task.live.BLiveTask;
 import top.srcrs.bilibili.util.Request;
 
 /**
