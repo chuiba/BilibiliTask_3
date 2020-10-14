@@ -1,5 +1,11 @@
 # Bilibili助手
 
+![](https://img.shields.io/github/issues/srcrs/BilibiliTask?color=green)
+![](https://img.shields.io/github/forks/srcrs/BilibiliTask?color=orange)
+![](https://img.shields.io/github/stars/srcrs/BilibiliTask?color=yellow)
+![](https://img.shields.io/github/license/srcrs/BilibiliTask?color=ff69b4)
+![](https://img.shields.io/github/search/srcrs/BilibiliTask/main?color=blue)
+
 👯欢迎访问。✨😄📫
 
 本项目将要完成的功能 
