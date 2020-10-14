@@ -41,7 +41,7 @@ public abstract class PackageScanner {
     }
 
     /**
-     * 递归搜索路径下所有的class文件
+     * 递归搜索target路径下所有的class文件
      * @param currentFile java文件生成的class文件路径
      * @param packageName 包名
      * @author srcrs
