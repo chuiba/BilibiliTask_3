@@ -2,7 +2,6 @@ package top.srcrs.bilibili;
 
 import com.alibaba.fastjson.JSONObject;
 import top.srcrs.bilibili.domain.Data;
-import top.srcrs.bilibili.task.live.GiveGiftTask;
 import top.srcrs.bilibili.util.PackageScanner;
 import top.srcrs.bilibili.util.ReadConfig;
 import top.srcrs.bilibili.util.Request;
