@@ -8,8 +8,7 @@ name: Bilibili
 on:
    gollum:
    schedule: 
-       - cron: '30 10 * * *'
-       # cron表达式 每天10点30，时区为Asia/Shanghai
+       - cron: '30 2 * * *'
 
 jobs:
   start:
@@ -34,6 +33,5 @@ jobs:
         BILI_JCT: ${{ secrets.BILI_JCT }}
         DEDEUSERID: ${{ secrets.DEDEUSERID }}
         SESSDATA: ${{ secrets.SESSDATA }}
-        TZ: Asia/Shanghai
       run: 
         mvn compile exec:java -Dexec.mainClass="top.srcrs.bilibili.BiliStart" -Dexec.args="${BILI_JCT} ${SESSDATA} ${DEDEUSERID}"
