@@ -24,11 +24,11 @@ public class DailyTask implements Task {
         try{
             JSONArray regions = getRegions("6", "1");
             JSONObject report = report(regions.getJSONObject(5).getString("aid"), regions.getJSONObject(5).getString("cid"), "300");
-            LOGGER.info("模拟视频观看进度,-{}",report);
+            LOGGER.info("模拟观看视频 -- {}","0".equals(report.getString("code"))?"成功":"失败");
             JSONObject share = share(regions.getJSONObject(5).getString("aid"));
-            LOGGER.info("分享视频,-{}",report);
+            LOGGER.info("分享视频 -- {}","0".equals(share.getString("code"))?"成功":"失败");
         } catch (Exception e){
-            LOGGER.error("每日任务异常,原因为-{}",e);
+            LOGGER.error("每日任务异常 -- "+e);
         }
     }
 

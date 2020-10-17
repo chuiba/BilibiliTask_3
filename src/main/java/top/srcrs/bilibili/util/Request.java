@@ -51,7 +51,7 @@ public class Request {
             }
             respContent = EntityUtils.toString(entity, "UTF-8");
         } catch (Exception e){
-            LOGGER.info("get请求错误,原因为-{}",e);
+            LOGGER.info("get请求错误 -- "+e);
         } finally {
             return JSONObject.parseObject(respContent);
         }
@@ -89,7 +89,7 @@ public class Request {
             }
             respContent = EntityUtils.toString(entity, "UTF-8");
         } catch (Exception e){
-            LOGGER.info("post请求错误,原因为-{}",e);
+            LOGGER.info("post请求错误 -- "+e);
         }
         finally {
             return JSONObject.parseObject(respContent);

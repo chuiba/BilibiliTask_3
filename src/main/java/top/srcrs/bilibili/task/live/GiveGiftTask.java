@@ -25,7 +25,7 @@ public class GiveGiftTask implements Task {
         try{
             giveGift();
         } catch (Exception e){
-            LOGGER.warn("赠送礼物异常,原因为-{}",e);
+            LOGGER.error("赠送礼物异常 -- "+e);
         }
     }
 
@@ -46,16 +46,15 @@ public class GiveGiftTask implements Task {
                 if((expireAt-nowTime)<172800){
                     JSONObject jsonObject3 = xliveBagSend(roomId, uid, json.getString("bag_id"), json.getString("gift_id"), json.getString("gift_num"), "0", "0", "pc");
                     if("0".equals(jsonObject3.getString("code"))){
-                        LOGGER.info("送出礼物"+"-"
-                                +jsonObject3.getJSONObject("data").getString("send_tips")
-                                + "-"
-                                +jsonObject3.getJSONObject("data").getString("gift_name")
-                                + "-数量-"
-                                +jsonObject3.getJSONObject("data").getString("gift_num")
-                        );
+                        /** 礼物的名字 */
+                        String giftName = jsonObject3.getJSONObject("data").getString("gift_name");
+                        /** 礼物的数量 */
+                        String giftNum = jsonObject3.getJSONObject("data").getString("gift_num");
+                        LOGGER.info("送礼物给 -- {} -- {} -- 数量: {}",roomId,giftName,giftNum);
+
                     }
                     else{
-                        LOGGER.info("礼物送出失败-{}"+jsonObject3);
+                        LOGGER.warn("礼物送出失败 -- "+jsonObject3);
                     }
                 }
             }

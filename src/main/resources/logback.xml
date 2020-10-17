@@ -5,7 +5,7 @@
         说白了就是设置静态属性，
         后面使用的时候直接用${name}即可。
      -->
-    <property name="pattern" value="[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS,GMT+8} %c %M %L %thread %m%n">
+    <property name="pattern" value="[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS,GMT+8} %M %L %c %m%n">
         <!--
         日志输出格式：
             %-5level 日志级别

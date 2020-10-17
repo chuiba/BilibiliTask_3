@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.Enumeration;
 
 /**
- * 扫描task包下的所有的java文件
+ * 扫描task包下的所有的class文件
  * @author srcrs
  * @Time 2020-10-13
  */
@@ -16,6 +16,15 @@ public abstract class PackageScanner {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(PackageScanner.class);
 
+    public static void main(String[] args) {
+        PackageScanner pack = new PackageScanner() {
+            @Override
+            public void dealClass(Class<?> klass) {
+                System.out.println(klass);
+            }
+        };
+        pack.scannerPackage("top.srcrs.bilibili.task");
+    }
     /**
      * 将 . 路径换为 / 路径
      * @param packageName 包名
@@ -36,7 +45,7 @@ public abstract class PackageScanner {
                 scannerDirectory(root, packageName);
             }
         } catch (Exception e) {
-            LOGGER.info("扫包错误,原因-{}",e);
+            LOGGER.error("扫包错误 -- "+e);
         }
     }
 
@@ -65,7 +74,7 @@ public abstract class PackageScanner {
                     dealClass(klass);
                     /** 将得到的元类对象通过抽象方法参数传递给用户，以便用户后续操作。 */
                 } catch (ClassNotFoundException e) {
-                    LOGGER.info("反射获取class错误,原因-{}",e);
+                    LOGGER.error("反射获取class错误 -- "+e);
                 }
             } else if (file.isDirectory()) {
                 scannerDirectory(file, packageName + "." + file.getName());

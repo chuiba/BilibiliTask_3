@@ -19,11 +19,18 @@ public class BLiveTask implements Task {
     @Override
     public void run(){
         try{
-            LOGGER.info("直播签到,-{}",xliveSign());
+            JSONObject json = xliveSign();
+            String msg = "";
+            if("0".equals(json.getString("code"))){
+                msg = "获得"+json.getJSONObject("data").getString("text");
+            } else{
+                msg = json.getString("message");
+            }
+            LOGGER.info("直播签到 -- {}",msg);
             /** 直播签到后等待5秒 */
             Thread.sleep(5000);
         } catch (Exception e){
-            LOGGER.info("直播签到等待中错误,原因为-{}",e);
+            LOGGER.error("直播签到等待中错误 -- "+e);
         }
     }
 

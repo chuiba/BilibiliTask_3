@@ -25,7 +25,9 @@ public class BiliStart {
         /** 读取yml文件配置信息 */
         ReadConfig.transformation("/config.yml");
         if(check()){
-            LOGGER.info("用户{}状态正常,正在执行脚本",data.getUname());
+            LOGGER.info("用户名: {}",data.getUname());
+            LOGGER.info("硬币: {}",data.getMoney());
+            LOGGER.info("经验: {}",data.getCurrentExp());
             PackageScanner pack = new PackageScanner() {
                 @Override
                 public void dealClass(Class<?> klass) {
@@ -35,15 +37,15 @@ public class BiliStart {
                         Method method = clazz.getMethod("run",null);
                         method.invoke(object);
                     } catch (Exception e){
-                        LOGGER.error("反射获取对象错误,原因为-{}",e);
+                        LOGGER.error("反射获取对象错误 -- "+e);
                     }
                 }
             };
             /** 动态执行task包下的所有java代码 */
             pack.scannerPackage("top.srcrs.bilibili.task");
-            LOGGER.info("本次全部操作完成");
+            LOGGER.info("本次任务运行完毕。");
         } else {
-            LOGGER.warn("账户异常中止所有操作");
+            throw  new RuntimeException("账户已失效，请在Secrets重新绑定你的信息");
         }
     }
 
@@ -56,10 +58,18 @@ public class BiliStart {
     public static boolean check(){
         JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
         JSONObject object = jsonObject.getJSONObject("data");
+        System.out.println(object);
         if("0".equals(jsonObject.getString("code"))){
+            /** 用户名 */
             data.setUname(object.getString("uname"));
+            /** 账户的uid */
             data.setMid(object.getString("mid"));
+            /** vip类型 */
             data.setVipType(object.getString("vipType"));
+            /** 硬币数 */
+            data.setMoney(object.getString("money"));
+            /** 经验 */
+            data.setCurrentExp(object.getJSONObject("level_info").getString("current_exp"));
             return true;
         }
         return false;

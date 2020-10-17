@@ -41,11 +41,21 @@ public class ThrowCoinTask implements Task {
             JSONArray regions = getRegions("6", "1");
             /** 给每个视频投 1 个币,点 1 个赞 */
             for(int i=0;i<num;i++){
-                JSONObject json = throwCoin(regions.getJSONObject(i).getString("aid"),"1","1");
-                LOGGER.info("投币信息,-{}",json);
+                /** 视频的aid */
+                String aid = regions.getJSONObject(i).getString("aid");
+                JSONObject json = throwCoin(aid,"1","1");
+                /** 输出的日志消息 */
+                String msg = "";
+                if("0".equals(json.getString("code"))){
+                    msg = "硬币-1";
+                } else{
+                    msg = json.getString("message");
+                }
+                System.out.println(aid);
+                LOGGER.info("投币给 -- av{} -- {}",aid,msg);
             }
         } catch (Exception e){
-            LOGGER.info("投币异常,原因为-{}",e);
+            LOGGER.info("投币异常 -- "+e);
         }
     }
 

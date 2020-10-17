@@ -14,12 +14,31 @@ public class Data {
     private String uname; //登录账户的用户名
     private String mid; //登录账户的uid
     private String vipType; //代表账户的类型
+    private String money; //硬币数
+    private String currentExp; //经验数
 
     public void setCookie(String bili_jct,String SESSDATA,String DedeUserID){
         this.DedeUserID = DedeUserID;
         this.bili_jct = bili_jct;
         this.SESSDATA = SESSDATA;
     }
+
+    public String getCurrentExp() {
+        return currentExp;
+    }
+
+    public void setCurrentExp(String currentExp) {
+        this.currentExp = currentExp;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
+
     public String getDedeUserID() {
         return DedeUserID;
     }
