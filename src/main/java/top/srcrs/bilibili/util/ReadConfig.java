@@ -1,6 +1,9 @@
 package top.srcrs.bilibili.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
+import top.srcrs.bilibili.BiliStart;
 import top.srcrs.bilibili.domain.Config;
 
 /**
@@ -9,6 +12,8 @@ import top.srcrs.bilibili.domain.Config;
  * @Time 2020-10-13
  */
 public class ReadConfig {
+    /** 获取日志记录器对象 */
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReadConfig.class);
 
     /**
      * 将yml的配置映射到Config.java中
@@ -16,7 +21,11 @@ public class ReadConfig {
      * @Time 2020-10-13
      */
     public static void transformation(String file){
-        Yaml yaml = new Yaml();
-        yaml.loadAs(ReadConfig.class.getResourceAsStream(file), Config.class);
+        try{
+            Yaml yaml = new Yaml();
+            yaml.loadAs(ReadConfig.class.getResourceAsStream(file), Config.class);
+        } catch (Exception e){
+            LOGGER.info("配置文件转换成对象出错 -- "+e);
+        }
     }
 }
