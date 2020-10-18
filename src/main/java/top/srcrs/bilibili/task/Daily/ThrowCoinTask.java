@@ -51,7 +51,6 @@ public class ThrowCoinTask implements Task {
                 } else{
                     msg = json.getString("message");
                 }
-                System.out.println(aid);
                 LOGGER.info("投币给 -- av{} -- {}",aid,msg);
             }
         } catch (Exception e){

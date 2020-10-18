@@ -58,7 +58,6 @@ public class BiliStart {
     public static boolean check(){
         JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
         JSONObject object = jsonObject.getJSONObject("data");
-        System.out.println(object);
         if("0".equals(jsonObject.getString("code"))){
             /** 用户名 */
             data.setUname(object.getString("uname"));
