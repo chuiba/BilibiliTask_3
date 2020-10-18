@@ -16,11 +16,29 @@ public class Data {
     private String vipType; //代表账户的类型
     private String money; //硬币数
     private String currentExp; //经验数
+    private String vipStatus; //大会员状态
+    private String coupon_balance; //B币卷余额
 
     public void setCookie(String bili_jct,String SESSDATA,String DedeUserID){
         this.DedeUserID = DedeUserID;
         this.bili_jct = bili_jct;
         this.SESSDATA = SESSDATA;
+    }
+
+    public String getVipStatus() {
+        return vipStatus;
+    }
+
+    public String getCoupon_balance() {
+        return coupon_balance;
+    }
+
+    public void setCoupon_balance(String coupon_balance) {
+        this.coupon_balance = coupon_balance;
+    }
+
+    public void setVipStatus(String vipStatus) {
+        this.vipStatus = vipStatus;
     }
 
     public String getCurrentExp() {

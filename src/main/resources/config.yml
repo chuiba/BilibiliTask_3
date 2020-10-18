@@ -1,3 +1,4 @@
 coin: 5 #每天需要投币的数量
 gift: true #送出即将过期礼物
 s2c: true #银币转换硬币
+autoCharge: true #是否允许月底B币卷给自己充电

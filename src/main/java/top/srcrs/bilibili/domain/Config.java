@@ -14,10 +14,21 @@ public class Config {
     /** 要将银瓜子转换成硬币 true 默认转换*/
     static private boolean s2c;
 
+    /** 是否允许月底用B币卷自动给自己充电 */
+    static private boolean autoCharge;
+
     public static Config getInstance(){
         return CONFIG;
     }
     private Config(){}
+
+    public boolean isAutoCharge() {
+        return autoCharge;
+    }
+
+    public void setAutoCharge(boolean autoCharge) {
+        Config.autoCharge = autoCharge;
+    }
 
     public Integer getCoin() {
         return coin;
@@ -43,12 +54,4 @@ public class Config {
         this.s2c = s2c;
     }
 
-    @Override
-    public String toString() {
-        return "Config{" +
-                "coin=" + coin +
-                ", gift=" + gift +
-                ", s2c=" + s2c +
-                '}';
-    }
 }
