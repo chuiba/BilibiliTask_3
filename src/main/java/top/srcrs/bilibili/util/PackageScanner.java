@@ -16,15 +16,6 @@ public abstract class PackageScanner {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(PackageScanner.class);
 
-    public static void main(String[] args) {
-        PackageScanner pack = new PackageScanner() {
-            @Override
-            public void dealClass(Class<?> klass) {
-                System.out.println(klass);
-            }
-        };
-        pack.scannerPackage("top.srcrs.bilibili.task");
-    }
     /**
      * 将 . 路径换为 / 路径
      * @param packageName 包名
