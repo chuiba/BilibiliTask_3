@@ -21,6 +21,9 @@ public class BiliStart {
     private static Data data = Data.getInstance();
 
     public static void main(String[] args) {
+        if(args.length==0){
+            LOGGER.error("请在Github Secrets中添加你的Cookie信息");
+        }
         data.setCookie(args[0],args[1],args[2]);
         /** 读取yml文件配置信息 */
         ReadConfig.transformation("/config.yml");
@@ -69,6 +72,10 @@ public class BiliStart {
             data.setMoney(object.getString("money"));
             /** 经验 */
             data.setCurrentExp(object.getJSONObject("level_info").getString("current_exp"));
+            /** 大会员状态 */
+            data.setVipStatus(object.getString("vipStatus"));
+            /** 钱包B币卷余额 */
+            data.setCoupon_balance(object.getJSONObject("wallet").getString("coupon_balance"));
             return true;
         }
         return false;
