@@ -62,7 +62,7 @@
 
 - 打开`b`站首页（任意一个页面都行）--> 按下`F12` --> `Application` --> `Cookies` --> `https://www.bilibili.com`
 
-- 找到需要所需要的参数对应的数据，找不到可能是你的账号没有登录。
+- 找到所需要参数对应的数据，找不到可能是你的账号没有登录。
 
 ![](img/1.png)
 
@@ -76,19 +76,19 @@ BILI_JCT | xxxxx
 DEDEUSERID | xxxxx
 SESSDATA | xxxxx
 
-上一步获取的参数，替换对应的`xxxxx`，一共需要添加三个键值对。
+将上一步获取的参数，替换对应的`xxxxx`，一共需要添加三个键值对。
 
 ![](img/2.png)
 
 ## 4.开启actions
 
-默认actions处于禁止状态，在`Actions`中开启`Actions`功能，把那个绿色的长按钮点一下。
+默认`actions`处于禁止状态，在`Actions`选项中开启`Actions`功能，把那个绿色的长按钮点一下。
 
 ![](img/3.png)
 
 ## 5.运行一次工作流
 
-项目创建wiki则会触发一次工作流。
+项目创建`Wiki`则会触发一次工作流。
 
 + `Wiki` --> `Create the first` --> `Save Page`
 
@@ -127,7 +127,7 @@ upstream  https://github.com/srcrs/BilibiliTask (push)
 git remote add upstream https://github.com/srcrs/BilibiliTask
 ```
 
-3、把上游仓库main分支的更新拉取到本地
+3、把上游仓库`main`分支的更新拉取到本地
 
 ```sh
 git pull upstream main
@@ -139,19 +139,20 @@ git pull upstream main
 git push origin main 
 ```
 
-由于添加有配置文件config.yml，有可能会覆盖你自定义的config.yml，需要注意。
+由于添加有配置文件`config.yml`，有可能会覆盖你自定义的`config.yml`，需要注意。
 
 # 更新日志
+
 ## 2020-10-19
 
-+ 增加年度大会员每月1号领取B币卷
++ 增加年度大会员每月`1`号领取`B`币卷
 
-+ 月底自动用B币卷给自己充电
++ 月底自动用`B`币卷给自己充电
 
-+ 在配置项中添加是否月底用B币卷给自己充电开关，默认开启
++ 在配置项中添加是否月底用`B`币卷给自己充电开关，默认开启
 
-由于我本身不是年度大会员，无法测试是否可以正常领取年度大会员权益和B币卷，
-出错的时候麻烦给我提一个issues，我会及时解决的。
+由于我本身不是年度大会员，无法测试是否可以正常领取年度大会员权益和`B`币卷，
+出错的时候麻烦给我提一个`issues`，我会及时解决的。
 
 ## 2020-10-17
 
