@@ -1,3 +1,4 @@
+<div> 
 <center><h1>Bilibili助手</h1></center>
 <center>
 <img src="https://img.shields.io/github/issues/srcrs/BilibiliTask?color=green">
@@ -6,6 +7,7 @@
 <img src="https://img.shields.io/github/license/srcrs/BilibiliTask?color=ff69b4">
 <img src="https://img.shields.io/github/search/srcrs/BilibiliTask/main?color=blue">
 </center>
+</div>
 
 # 简介
 
