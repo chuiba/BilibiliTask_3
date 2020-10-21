@@ -7,7 +7,7 @@ name: Bilibili
 
 on:
    gollum:
-   schedule: 
+   schedule:
        - cron: '30 2 * * *'
 
 jobs:
@@ -29,9 +29,10 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: Build with Maven
-      env: 
+      env:
         BILI_JCT: ${{ secrets.BILI_JCT }}
         DEDEUSERID: ${{ secrets.DEDEUSERID }}
         SESSDATA: ${{ secrets.SESSDATA }}
-      run: 
-        mvn compile exec:java -Dexec.mainClass="top.srcrs.bilibili.BiliStart" -Dexec.args="${BILI_JCT} ${SESSDATA} ${DEDEUSERID}"
+        SCKEY: ${{ secrets.SCKEY }}
+      run:
+        mvn compile exec:java -Dexec.mainClass="top.srcrs.bilibili.BiliStart" -Dexec.args="${BILI_JCT} ${SESSDATA} ${DEDEUSERID} ${SCKEY}"
