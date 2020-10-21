@@ -7,6 +7,7 @@ import top.srcrs.bilibili.util.ReadConfig;
 import top.srcrs.bilibili.util.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.srcrs.bilibili.util.SendServer;
 
 import java.lang.reflect.Method;
 
@@ -47,6 +48,10 @@ public class BiliStart {
             /** 动态执行task包下的所有java代码 */
             pack.scannerPackage("top.srcrs.bilibili.task");
             LOGGER.info("本次任务运行完毕。");
+            /** 如果用户填了server酱的SCKEY就会执行 */
+            if(args.length==4){
+                SendServer.send(args[3]);
+            }
         } else {
             throw  new RuntimeException("账户已失效，请在Secrets重新绑定你的信息");
         }
