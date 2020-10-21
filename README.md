@@ -116,14 +116,14 @@ gift: true #送出即将过期礼物，默认送出为true。[true,false]
 s2c: true #银瓜子兑换为硬币，默认兑换为true。[true,false]
 autoCharge: true #允许月底B币卷给自己充电，默认为true允许。[false,true]
 ``` 
-S
+
 ## 推送运行结果到微信
 
-使用server酱将程序运行结果推送到微信。
+使用`server`酱将程序运行结果推送到微信。
 
-server酱官网：http://sc.ftqq.com
+`server`酱官网：http://sc.ftqq.com
 
-+ 按照server酱官网使用教程，用`github`登录并绑定微信。
++ 按照`server`酱官网使用教程，用`github`登录并绑定微信。
 
 + 获得`SCKEY`并将其填入到`Secrets`中。
 
