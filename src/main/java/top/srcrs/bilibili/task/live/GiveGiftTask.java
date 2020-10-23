@@ -44,7 +44,8 @@ public class GiveGiftTask implements Task {
                 JSONObject json = (JSONObject) object;
                 long expireAt = Long.valueOf(json.getString("expire_at"));
                 /** 礼物还剩1天送出 */
-                if((expireAt-nowTime)<87000){
+                /** 永久礼物到期时间为0 */
+                if((expireAt-nowTime)<87000&&expireAt!=0){
                     JSONObject jsonObject3 = xliveBagSend(roomId, uid, json.getString("bag_id"), json.getString("gift_id"), json.getString("gift_num"), "0", "0", "pc");
                     if("0".equals(jsonObject3.getString("code"))){
                         /** 礼物的名字 */
