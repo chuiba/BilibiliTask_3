@@ -1,4 +1,4 @@
-package top.srcrs.bilibili.task.Daily;
+package top.srcrs.bilibili.task.daily;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
