@@ -45,7 +45,7 @@ public class Silver2CoinTask implements Task {
      * @Time 2020-10-13
      */
     public JSONObject silver2coin(){
-        String body = "csrf_token="+data.getBili_jct();
+        String body = "csrf="+data.getBili_jct();
         return Request.post("https://api.live.bilibili.com/pay/v1/Exchange/silver2coin", body);
     }
 
