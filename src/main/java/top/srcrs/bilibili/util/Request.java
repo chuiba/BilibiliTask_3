@@ -19,11 +19,11 @@ import top.srcrs.bilibili.domain.Data;
  */
 public class Request {
     /** 获取data对象 */
-    private static Data data = Data.getInstance();
+    private static final Data DATA = Data.getInstance();
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(Request.class);
 
-    private Request(){};
+    private Request(){}
 
     /**
      * 发送get请求
@@ -38,21 +38,16 @@ public class Request {
         httpGet.addHeader("connection","keep-alive");
         httpGet.addHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36");
         httpGet.addHeader("referer","https://www.bilibili.com/");
-        httpGet.addHeader("Cookie",data.getCookie());
-        HttpResponse resp = null;
+        httpGet.addHeader("Cookie",DATA.getCookie());
+        HttpResponse resp ;
         String respContent = null;
         try{
             resp = client.execute(httpGet);
-            HttpEntity entity=null;
-            if(resp.getStatusLine().getStatusCode()<400){
-                entity = resp.getEntity();
-            } else{
-                entity = resp.getEntity();
-            }
+            HttpEntity entity = resp.getEntity();
             respContent = EntityUtils.toString(entity, "UTF-8");
+            return JSONObject.parseObject(respContent);
         } catch (Exception e){
             LOGGER.info("get请求错误 -- "+e);
-        } finally {
             return JSONObject.parseObject(respContent);
         }
     }
@@ -75,23 +70,18 @@ public class Request {
         httpPost.addHeader("Content-Type","application/x-www-form-urlencoded");
         httpPost.addHeader("charset","UTF-8");
         httpPost.addHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36");
-        httpPost.addHeader("Cookie",data.getCookie());
+        httpPost.addHeader("Cookie",DATA.getCookie());
         httpPost.setEntity(entityBody);
-        HttpResponse resp = null;
+        HttpResponse resp ;
         String respContent = null;
         try{
             resp = client.execute(httpPost);
-            HttpEntity entity=null;
-            if(resp.getStatusLine().getStatusCode()<400){
-                entity = resp.getEntity();
-            } else{
-                entity = resp.getEntity();
-            }
+            HttpEntity entity;
+            entity = resp.getEntity();
             respContent = EntityUtils.toString(entity, "UTF-8");
+            return JSONObject.parseObject(respContent);
         } catch (Exception e){
             LOGGER.info("post请求错误 -- "+e);
-        }
-        finally {
             return JSONObject.parseObject(respContent);
         }
     }

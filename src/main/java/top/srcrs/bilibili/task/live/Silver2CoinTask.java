@@ -23,10 +23,10 @@ public class Silver2CoinTask implements Task {
     public void run(){
         if(config.isS2c()){
             try{
-                /** 获得银瓜子的数量 */
+                /* 获得银瓜子的数量 */
                 Integer silver = getSilver();
                 LOGGER.info("银瓜子: {}",silver);
-                /** 如果银瓜子数量小于700没有必要再进行兑换 */
+                /* 如果银瓜子数量小于700没有必要再进行兑换 */
                 if(silver<700){
                     LOGGER.info("银瓜子兑换硬币 -- {}","银瓜子余额不足");
                 } else{
@@ -45,7 +45,7 @@ public class Silver2CoinTask implements Task {
      * @Time 2020-10-13
      */
     public JSONObject silver2coin(){
-        String body = "csrf="+data.getBili_jct();
+        String body = "csrf="+data.getBiliJct();
         return Request.post("https://api.live.bilibili.com/pay/v1/Exchange/silver2coin", body);
     }
 

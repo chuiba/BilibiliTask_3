@@ -16,25 +16,30 @@ import java.util.TimeZone;
  * @author srcrs
  * @Time 2020-10-19
  */
-public class BCoinApply implements Task {
+public class BiCoinApply implements Task {
     /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(BCoinApply.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BiCoinApply.class);
     /** 获取DATA对象 */
     Data data = Data.getInstance();
     /** 获取用户自定义配置信息 */
     Config config = Config.getInstance();
+    /** 28号代表月底 */
+    private static final int END_OF_MONTH = 28;
+    /** 代表获取到正确的json对象 code */
+    private static final String SUCCESS = "0";
 
     @Override
     public void run() {
         try{
             Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
-            Integer day = cal.get(Calendar.DATE);
-            /** B币券余额 */
-            Integer couponBalance = Integer.parseInt(data.getCoupon_balance());
-            if (day == 28 && couponBalance >= 2) {
-                switch (config.getAutoBCoin()){
+            int day = cal.get(Calendar.DATE);
+            /* B币券余额 */
+            Integer couponBalance = Integer.parseInt(data.getCouponBalance());
+            if (day == END_OF_MONTH && couponBalance > 0) {
+                switch (config.getAutoBiCoin()){
                     case "1" : doCharge(couponBalance);break;
                     case "2" : doMelonSeed(couponBalance);break;
+                    default: break;
                 }
             }
         } catch (Exception e){
@@ -48,16 +53,20 @@ public class BCoinApply implements Task {
      * @Time 2020-10-19
      */
     public void doCharge(Integer couponBalance) {
-        /**
+        /*
          * 判断条件 是月底&&b币券余额大于2&&配置项允许自动充电
          */
-        /** 被充电用户的userID */
+        if(couponBalance < 2){
+            LOGGER.warn("B币卷数量: "+ couponBalance + " -- 无法给自己充电");
+            return ;
+        }
+        /* 被充电用户的userID */
         String userId = data.getMid();
         String body = "elec_num=" + couponBalance * 10
                 + "&up_mid=" + userId
                 + "&otype=up"
                 + "&oid=" + userId
-                + "&csrf=" + data.getBili_jct();
+                + "&csrf=" + data.getBiliJct();
 
         JSONObject jsonObject = Request.post("http://api.bilibili.com/x/ugcpay/trade/elec/pay/quick", body);
 
@@ -69,9 +78,9 @@ public class BCoinApply implements Task {
             if (statusCode == 4) {
                 LOGGER.info("月底了，给自己充电成功啦，送的B币券没有浪费啦");
                 LOGGER.info("本次给自己充值了: " + couponBalance * 10 + "个电池");
-                /** 获取充电留言token */
-                String order_no = dataJson.getString("order_no");
-                chargeComments(order_no);
+                /* 获取充电留言token */
+                String orderNo = dataJson.getString("order_no");
+                chargeComments(orderNo);
             } else {
                 LOGGER.warn("充电失败 -- " + jsonObject);
             }
@@ -83,7 +92,7 @@ public class BCoinApply implements Task {
 
     /**
      * 自动充电完，添加一条评论
-     * @param token
+     * @param token 订单id
      * @author srcrs
      * @Time 2020-10-19
      */
@@ -91,7 +100,7 @@ public class BCoinApply implements Task {
 
         String requestBody = "order_id=" + token
                 + "&message=" + "BilibiliTask自动充电"
-                + "&csrf=" + data.getBili_jct();
+                + "&csrf=" + data.getBiliJct();
         JSONObject jsonObject = Request.post("http://api.bilibili.com/x/ugcpay/trade/elec/message", requestBody);
         LOGGER.debug(jsonObject.toString());
     }
@@ -109,10 +118,12 @@ public class BCoinApply implements Task {
                 + "&context_type=11"
                 + "&goods_id=1"
                 + "&goods_num=" + couponBalance
-                + "&csrf=" + data.getBili_jct();
+                + "&csrf=" + data.getBiliJct();
         JSONObject post = Request.post("https://api.live.bilibili.com/xlive/revenue/v1/order/createOrder", body);
-        String msg = "";
-        if("0".equals(post.getString("code"))){
+        String msg ;
+        /* json对象的状态码 */
+        String code = post.getString("code");
+        if(SUCCESS.equals(code)){
             msg = "成功将 " + couponBalance + " B币卷兑换成 "+couponBalance*1000+" 金瓜子";
         } else{
             msg = post.getString("message");

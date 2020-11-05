@@ -11,9 +11,9 @@ import top.srcrs.bilibili.util.Request;
  * @author srcrs
  * @Time 2020-10-13
  */
-public class mangaTask implements Task {
+public class MangaTask implements Task {
     /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(mangaTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MangaTask.class);
 
     @Override
     public void run(){
@@ -27,14 +27,13 @@ public class mangaTask implements Task {
 
     /**
      * 模拟漫画app签到
-     * @param platform
+     * @param platform 设备标识
      * @return JSONObject
      * @author srcrs
      * @Time 2020-10-13
      */
     public JSONObject mangaClockIn(String platform){
         String body = "platform="+platform;
-        JSONObject post = Request.post("https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn", body);
-        return post;
+        return Request.post("https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn", body);
     }
 }

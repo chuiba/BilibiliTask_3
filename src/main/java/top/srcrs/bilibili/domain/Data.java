@@ -9,19 +9,26 @@ public class Data {
     private static final Data DATA = new Data();
 
     private String DedeUserID;
-    private String bili_jct;
+    private String biliJct;
     private String SESSDATA;
-    private String uname; //登录账户的用户名
-    private String mid; //登录账户的uid
-    private String vipType; //代表账户的类型
-    private String money; //硬币数
-    private String currentExp; //经验数
-    private String vipStatus; //大会员状态
-    private String coupon_balance; //B币卷余额
+    /** 登录账户的用户名 */
+    private String uname;
+    /** 登录账户的uid */
+    private String mid;
+    /** 代表账户的类型 */
+    private String vipType;
+    /** 硬币数 */
+    private String money;
+    /** 经验数 */
+    private String currentExp;
+    /** 大会员状态 */
+    private String vipStatus;
+    /** B币卷余额 */
+    private String couponBalance;
 
-    public void setCookie(String bili_jct,String SESSDATA,String DedeUserID){
+    public void setCookie(String biliJct, String SESSDATA, String DedeUserID) {
         this.DedeUserID = DedeUserID;
-        this.bili_jct = bili_jct;
+        this.biliJct = biliJct;
         this.SESSDATA = SESSDATA;
     }
 
@@ -29,12 +36,12 @@ public class Data {
         return vipStatus;
     }
 
-    public String getCoupon_balance() {
-        return coupon_balance;
+    public String getCouponBalance() {
+        return couponBalance;
     }
 
-    public void setCoupon_balance(String coupon_balance) {
-        this.coupon_balance = coupon_balance;
+    public void setCouponBalance(String couponBalance) {
+        this.couponBalance = couponBalance;
     }
 
     public void setVipStatus(String vipStatus) {
@@ -57,28 +64,8 @@ public class Data {
         this.money = money;
     }
 
-    public String getDedeUserID() {
-        return DedeUserID;
-    }
-
-    public void setDedeUserID(String dedeUserID) {
-        DedeUserID = dedeUserID;
-    }
-
-    public String getBili_jct() {
-        return bili_jct;
-    }
-
-    public void setBili_jct(String bili_jct) {
-        this.bili_jct = bili_jct;
-    }
-
-    public String getSESSDATA() {
-        return SESSDATA;
-    }
-
-    public void setSESSDATA(String SESSDATA) {
-        this.SESSDATA = SESSDATA;
+    public String getBiliJct() {
+        return biliJct;
     }
 
     public String getUname() {
@@ -110,7 +97,7 @@ public class Data {
      * @return String
      */
     public String getCookie(){
-        return "bili_jct="+bili_jct+";SESSDATA="+SESSDATA+";DedeUserID="+DedeUserID;
+        return "bili_jct="+biliJct+";SESSDATA="+SESSDATA+";DedeUserID="+DedeUserID;
     }
     private Data(){}
     public static Data getInstance(){

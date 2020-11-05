@@ -22,10 +22,13 @@ import java.util.List;
 public class BiliStart {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(BiliStart.class);
-    private static Data data = Data.getInstance();
+    /** 获取DATA对象 */
+    private static final Data DATA = Data.getInstance();
+    /** 访问成功 */
+    private static final String SUCCESS = "0";
 
     public static void main(String[] args) {
-        /**
+        /*
          * 存储所有 class 全路径名
          * 因为测试的时候发现，在 windows 中是按照字典排序的
          * 但是在 Linux 中并不是字典排序我就很迷茫
@@ -35,14 +38,14 @@ public class BiliStart {
         if(args.length==0){
             LOGGER.error("请在Github Secrets中添加你的Cookie信息");
         }
-        data.setCookie(args[0],args[1],args[2]);
-        /** 读取yml文件配置信息 */
+        DATA.setCookie(args[0],args[1],args[2]);
+        /* 读取yml文件配置信息 */
         ReadConfig.transformation("/config.yml");
-        /** 如果用户账户有效 */
+        /* 如果用户账户有效 */
         if(check()){
-            LOGGER.info("用户名: {}",data.getUname());
-            LOGGER.info("硬币: {}",data.getMoney());
-            LOGGER.info("经验: {}",data.getCurrentExp());
+            LOGGER.info("用户名: {}",DATA.getUname());
+            LOGGER.info("硬币: {}",DATA.getMoney());
+            LOGGER.info("经验: {}",DATA.getCurrentExp());
             PackageScanner pack = new PackageScanner() {
                 @Override
                 public void dealClass(Class<?> klass) {
@@ -53,21 +56,21 @@ public class BiliStart {
                     }
                 }
             };
-            /** 动态执行task包下的所有java代码 */
+            /* 动态执行task包下的所有java代码 */
             pack.scannerPackage("top.srcrs.bilibili.task");
             Collections.sort(list);
             for(String s : list){
                 try{
                     Object object = Class.forName(s).newInstance();
-                    Class clazz = object.getClass();
-                    Method method = clazz.getMethod("run",null);
+                    Method method = object.getClass().getMethod("run", (Class<?>[]) null);
                     method.invoke(object);
                 } catch (Exception e){
                     LOGGER.error("反射获取对象错误 -- "+e);
                 }
             }
             LOGGER.info("本次任务运行完毕。");
-            /** 如果用户填了server酱的SCKEY就会执行 */
+            /* 如果用户填了server酱的SCKEY就会执行 */
+            /* 此时数组的长度为4，就默认填写的是SCKEY */
             if(args.length==4){
                 SendServer.send(args[3]);
             }
@@ -85,21 +88,22 @@ public class BiliStart {
     public static boolean check(){
         JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
         JSONObject object = jsonObject.getJSONObject("data");
-        if("0".equals(jsonObject.getString("code"))){
-            /** 用户名 */
-            data.setUname(object.getString("uname"));
-            /** 账户的uid */
-            data.setMid(object.getString("mid"));
-            /** vip类型 */
-            data.setVipType(object.getString("vipType"));
-            /** 硬币数 */
-            data.setMoney(object.getString("money"));
-            /** 经验 */
-            data.setCurrentExp(object.getJSONObject("level_info").getString("current_exp"));
-            /** 大会员状态 */
-            data.setVipStatus(object.getString("vipStatus"));
-            /** 钱包B币卷余额 */
-            data.setCoupon_balance(object.getJSONObject("wallet").getString("coupon_balance"));
+        String code = jsonObject.getString("code");
+        if(SUCCESS.equals(code)){
+            /* 用户名 */
+            DATA.setUname(object.getString("uname"));
+            /* 账户的uid */
+            DATA.setMid(object.getString("mid"));
+            /* vip类型 */
+            DATA.setVipType(object.getString("vipType"));
+            /* 硬币数 */
+            DATA.setMoney(object.getString("money"));
+            /* 经验 */
+            DATA.setCurrentExp(object.getJSONObject("level_info").getString("current_exp"));
+            /* 大会员状态 */
+            DATA.setVipStatus(object.getString("vipStatus"));
+            /* 钱包B币卷余额 */
+            DATA.setCouponBalance(object.getJSONObject("wallet").getString("coupon_balance"));
             return true;
         }
         return false;

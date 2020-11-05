@@ -11,5 +11,5 @@ public interface Task {
      * @author srcrs
      * @Time 2020-10-13
      */
-    public void run();
+    void run();
 }

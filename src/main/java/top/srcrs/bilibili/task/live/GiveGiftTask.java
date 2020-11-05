@@ -29,28 +29,33 @@ public class GiveGiftTask implements Task {
         }
     }
 
+    /**
+     * 执行赠送礼物
+     * @author srcrs
+     * @Time 2020-10-13
+     */
     public void giveGift(){
-        /** 从配置类中读取是否需要执行赠送礼物 */
+        /* 从配置类中读取是否需要执行赠送礼物 */
         if(config.isGift()){
-            /** 获取一个直播间的room_id */
+            /* 获取一个直播间的room_id */
             String roomId = xliveGetRecommend();
-            /** 通过room_id获取uid */
+            /* 通过room_id获取uid */
             String uid = xliveGetRoomUid(roomId);
-            /** B站后台时间戳为10位 */
+            /* B站后台时间戳为10位 */
             long nowTime = System.currentTimeMillis()/1000;
-            /** 获得礼物列表 */
-            JSONArray jsonArray = xliveGiftBagList();;
+            /* 获得礼物列表 */
+            JSONArray jsonArray = xliveGiftBagList();
             for(Object object : jsonArray){
                 JSONObject json = (JSONObject) object;
-                long expireAt = Long.valueOf(json.getString("expire_at"));
-                /** 礼物还剩1天送出 */
-                /** 永久礼物到期时间为0 */
+                long expireAt = Long.parseLong(json.getString("expire_at"));
+                /* 礼物还剩1天送出 */
+                /* 永久礼物到期时间为0 */
                 if((expireAt-nowTime)<87000&&expireAt!=0){
                     JSONObject jsonObject3 = xliveBagSend(roomId, uid, json.getString("bag_id"), json.getString("gift_id"), json.getString("gift_num"), "0", "0", "pc");
                     if("0".equals(jsonObject3.getString("code"))){
-                        /** 礼物的名字 */
+                        /* 礼物的名字 */
                         String giftName = jsonObject3.getJSONObject("data").getString("gift_name");
-                        /** 礼物的数量 */
+                        /* 礼物的数量 */
                         String giftNum = jsonObject3.getJSONObject("data").getString("gift_num");
                         LOGGER.info("送礼物给 -- {} -- {} -- 数量: {}",roomId,giftName,giftNum);
 
@@ -79,13 +84,13 @@ public class GiveGiftTask implements Task {
 
     /**
      * B站获取直播间的uid
-     * @param room_id 房间的id
+     * @param roomId 房间的id
      * @return JSONObject
      * @author srcrs
      * @Time 2020-10-13
      */
-    public String xliveGetRoomUid(String room_id){
-        String param = "?room_id="+room_id;
+    public String xliveGetRoomUid(String roomId){
+        String param = "?room_id="+roomId;
         return Request.get("https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom" + param)
                 .getJSONObject("data")
                 .getJSONObject("room_info")
@@ -106,31 +111,31 @@ public class GiveGiftTask implements Task {
 
     /**
      * B站直播送出背包的礼物
-     * @param biz_id roomId
+     * @param bizId roomId
      * @param ruid uid 用户id
-     * @param bag_id 背包id
-     * @param gift_id 礼物id
-     * @param gift_num 礼物数量
-     * @param storm_beat_id
-     * @param price
+     * @param bagId 背包id
+     * @param giftId 礼物id
+     * @param giftNum 礼物数量
+     * @param stormBeatId 未知意思
+     * @param price 价格
      * @param platform 设备标识
      * @return JSONObject
      * @author srcrs
      * @Time 2020-10-13
      */
-    public JSONObject xliveBagSend(String biz_id, String ruid, String bag_id, String gift_id, String gift_num, String storm_beat_id, String price, String platform){
+    public JSONObject xliveBagSend(String bizId, String ruid, String bagId, String giftId, String giftNum, String stormBeatId, String price, String platform){
         String body = "uid="+data.getMid()
-                +"&gift_id="+gift_id
+                +"&gift_id="+giftId
                 +"&ruid="+ruid
                 +"&send_ruid=0"
-                +"&gift_num="+gift_num
-                +"&bag_id="+bag_id
+                +"&gift_num="+giftNum
+                +"&bag_id="+bagId
                 +"&platform="+platform
                 +"&biz_code="+"live"
-                +"&biz_id="+biz_id
-                +"&storm_beat_id="+storm_beat_id
+                +"&biz_id="+bizId
+                +"&storm_beat_id="+stormBeatId
                 +"&price="+price
-                +"&csrf="+data.getBili_jct();
+                +"&csrf="+data.getBiliJct();
         return Request.post("https://api.live.bilibili.com/gift/v2/live/bag_send", body);
     }
 }

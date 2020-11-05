@@ -15,19 +15,19 @@ public class Config {
     static private boolean s2c;
 
     /** 自动使用B币卷 */
-    static private String autoBCoin;
+    static private String autoBiCoin;
 
     public static Config getInstance(){
         return CONFIG;
     }
     private Config(){}
 
-    public String getAutoBCoin() {
-        return autoBCoin;
+    public String getAutoBiCoin() {
+        return autoBiCoin;
     }
 
-    public void setAutoBCoin(String autoBCoin) {
-        this.autoBCoin = autoBCoin;
+    public void setAutoBiCoin(String autoBiCoin) {
+        Config.autoBiCoin = autoBiCoin;
     }
 
     public Integer getCoin() {
@@ -35,7 +35,7 @@ public class Config {
     }
 
     public void setCoin(Integer coin) {
-        this.coin = coin;
+        Config.coin = coin;
     }
 
     public boolean isGift() {
@@ -43,7 +43,7 @@ public class Config {
     }
 
     public void setGift(boolean gift) {
-        this.gift = gift;
+        Config.gift = gift;
     }
 
     public boolean isS2c() {
@@ -51,7 +51,7 @@ public class Config {
     }
 
     public void setS2c(boolean s2c) {
-        this.s2c = s2c;
+        Config.s2c = s2c;
     }
 
 }
