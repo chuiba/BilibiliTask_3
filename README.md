@@ -112,12 +112,14 @@ coin | 代表投币的数量 [0,5]
 gift | 是否需要送出即将过期礼物 [true,false]
 s2c | 是否需要将银瓜子兑换硬币 [true,false]
 autoBiCoin | 月底自动使用B币卷 [{0,自己有其他用途},{1,给自己充电},{2,兑换成金瓜子}]
+platform | 用户设备的标识[android,ios]
 
 ```yml
 coin: 5 #每天需要投币的数量。[0,5]。
 gift: true #送出即将过期礼物。[true,false]
 s2c: true #银瓜子兑换为硬币。[true,false]
 autoBiCoin: 1 #月底自动使用B币卷。[{0,自己会使用},{1,给自己充电},{2,兑换成金瓜子}]
+platform: android #用户设备的标识[android,ios]
 ``` 
 
 ## 推送运行结果到微信
@@ -177,6 +179,10 @@ git push origin main
 # 更新日志
 
 ## 2020-11-05
+
++ 根据阿里巴巴代码规范优化代码
+
++ 增加用户标识配置项
 
 ## 2020-11-03
 

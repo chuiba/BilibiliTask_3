@@ -13,9 +13,18 @@ public class Config {
     static private boolean gift;
     /** 要将银瓜子转换成硬币 true 默认转换*/
     static private boolean s2c;
-
     /** 自动使用B币卷 */
     static private String autoBiCoin;
+    /** 用户设备的标识 */
+    static private String platform;
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        Config.platform = platform;
+    }
 
     public static Config getInstance(){
         return CONFIG;

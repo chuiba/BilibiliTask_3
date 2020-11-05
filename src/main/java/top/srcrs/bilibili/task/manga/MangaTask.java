@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.srcrs.bilibili.Task;
+import top.srcrs.bilibili.domain.Config;
 import top.srcrs.bilibili.util.Request;
 
 /**
@@ -14,11 +15,11 @@ import top.srcrs.bilibili.util.Request;
 public class MangaTask implements Task {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(MangaTask.class);
-
+    Config config = Config.getInstance();
     @Override
     public void run(){
         try{
-            JSONObject jsonObject = mangaClockIn("android");
+            JSONObject jsonObject = mangaClockIn(config.getPlatform());
             LOGGER.info("漫画签到 -- {}","0".equals(jsonObject.getString("code"))?"成功":"今天已经签过了");
         } catch (Exception e){
             LOGGER.error("漫画签到错误 -- "+e);
