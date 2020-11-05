@@ -7,6 +7,7 @@ name: Bilibili
 
 on:
    push:
+     branches: main
    gollum:
    schedule:
        - cron: '30 2 * * *'
