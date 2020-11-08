@@ -1,4 +1,4 @@
-package top.srcrs.bilibili.domain;
+package top.srcrs.domain;
 
 /**
  * 用户的一些个人信息

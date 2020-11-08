@@ -1,10 +1,10 @@
-package top.srcrs.bilibili.task.live;
+package top.srcrs.task.live;
 
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.srcrs.bilibili.Task;
-import top.srcrs.bilibili.util.Request;
+import top.srcrs.Task;
+import top.srcrs.util.Request;
 
 
 /**

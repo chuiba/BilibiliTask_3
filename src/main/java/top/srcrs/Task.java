@@ -1,4 +1,4 @@
-package top.srcrs.bilibili;
+package top.srcrs;
 
 /**
  * 所有的任务功能都要实现这个接口，以达到动态加载

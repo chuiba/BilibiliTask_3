@@ -1,13 +1,13 @@
-package top.srcrs.bilibili.task.daily;
+package top.srcrs.task.daily;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.srcrs.bilibili.Task;
-import top.srcrs.bilibili.domain.Config;
-import top.srcrs.bilibili.domain.Data;
-import top.srcrs.bilibili.util.Request;
+import top.srcrs.Task;
+import top.srcrs.domain.Config;
+import top.srcrs.domain.Data;
+import top.srcrs.util.Request;
 
 /**
  * 进行视频投币

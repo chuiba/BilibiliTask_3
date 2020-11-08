@@ -1,4 +1,4 @@
-package top.srcrs.bilibili.util;
+package top.srcrs.util;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.*;
@@ -10,7 +10,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.srcrs.bilibili.domain.Data;
+import top.srcrs.domain.Data;
 
 /**
  * 封装的网络请求请求工具类

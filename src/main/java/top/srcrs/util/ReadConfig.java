@@ -1,9 +1,9 @@
-package top.srcrs.bilibili.util;
+package top.srcrs.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
-import top.srcrs.bilibili.domain.Config;
+import top.srcrs.domain.Config;
 
 /**
  * 读取yml配置

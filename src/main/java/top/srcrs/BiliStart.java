@@ -1,13 +1,13 @@
-package top.srcrs.bilibili;
+package top.srcrs;
 
 import com.alibaba.fastjson.JSONObject;
-import top.srcrs.bilibili.domain.Data;
-import top.srcrs.bilibili.util.PackageScanner;
-import top.srcrs.bilibili.util.ReadConfig;
-import top.srcrs.bilibili.util.Request;
+import top.srcrs.domain.Data;
+import top.srcrs.util.PackageScanner;
+import top.srcrs.util.ReadConfig;
+import top.srcrs.util.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.srcrs.bilibili.util.SendServer;
+import top.srcrs.util.SendServer;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class BiliStart {
                 }
             };
             /* 动态执行task包下的所有java代码 */
-            pack.scannerPackage("top.srcrs.bilibili.task");
+            pack.scannerPackage("top.srcrs.task");
             Collections.sort(list);
             for(String s : list){
                 try{

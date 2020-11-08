@@ -1,4 +1,4 @@
-package top.srcrs.bilibili.domain;
+package top.srcrs.domain;
 
 /**
  * 项目的配置类。

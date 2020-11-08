@@ -1,11 +1,11 @@
-package top.srcrs.bilibili.task.bigvip;
+package top.srcrs.task.bigvip;
 
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.srcrs.bilibili.Task;
-import top.srcrs.bilibili.domain.Data;
-import top.srcrs.bilibili.util.Request;
+import top.srcrs.Task;
+import top.srcrs.domain.Data;
+import top.srcrs.util.Request;
 
 import java.util.Calendar;
 import java.util.TimeZone;
