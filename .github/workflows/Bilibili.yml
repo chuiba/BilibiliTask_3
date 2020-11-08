@@ -9,6 +9,7 @@ on:
    push:
      branches: main
    gollum:
+   workflow_dispatch:
    schedule:
        - cron: '30 2 * * *'
 
