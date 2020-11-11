@@ -34,11 +34,11 @@ public class BiCoinApply implements Task {
             Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
             int day = cal.get(Calendar.DATE);
             /* B币券余额 */
-            Integer couponBalance = Integer.parseInt(data.getCouponBalance());
+            double couponBalance = Double.parseDouble(data.getCouponBalance());
             if (day == END_OF_MONTH && couponBalance > 0) {
                 switch (config.getAutoBiCoin()){
                     case "1" : doCharge(couponBalance);break;
-                    case "2" : doMelonSeed(couponBalance);break;
+                    case "2" : doMelonSeed((int) couponBalance);break;
                     default: break;
                 }
             }
@@ -52,7 +52,7 @@ public class BiCoinApply implements Task {
      * @author srcrs
      * @Time 2020-10-19
      */
-    public void doCharge(Integer couponBalance) {
+    public void doCharge(Double couponBalance) {
         /*
          * 判断条件 是月底&&b币券余额大于2&&配置项允许自动充电
          */
