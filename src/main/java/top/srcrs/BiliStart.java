@@ -77,8 +77,9 @@ public class BiliStart {
         } else {
             LOGGER.info("💔账户已失效，请在Secrets重新绑定你的信息");
         }
-        /* 如果用户填了server酱的SCKEY就会执行 */
+        /* 当用户只推送 server 酱或钉钉时，需要做一下判断*/
         if(args.length==4){
+            /* 如果该字符串包含钉钉推送链接信息，则证明是钉钉推送 */
             String ding = "https://oapi.dingtalk.com/robot/send";
             if(args[3].contains(ding)){
                 SendDingTalk.send(args[3]);
