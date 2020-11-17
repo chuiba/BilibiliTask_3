@@ -37,5 +37,6 @@ jobs:
         DEDEUSERID: ${{ secrets.DEDEUSERID }}
         SESSDATA: ${{ secrets.SESSDATA }}
         SCKEY: ${{ secrets.SCKEY }}
+        DINGTALK: ${{secrets.DINGTALK}}
       run:
-        mvn compile exec:java -Dexec.mainClass="top.srcrs.BiliStart" -Dexec.args="${BILI_JCT} ${SESSDATA} ${DEDEUSERID} ${SCKEY}"
+        mvn compile exec:java -Dexec.mainClass="top.srcrs.BiliStart" -Dexec.args="${BILI_JCT} ${SESSDATA} ${DEDEUSERID} ${SCKEY} ${DINGTALK}"
