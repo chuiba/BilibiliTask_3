@@ -20,9 +20,10 @@ public class MangaTask implements Task {
     public void run(){
         try{
             JSONObject jsonObject = mangaClockIn(config.getPlatform());
-            LOGGER.info("漫画签到 -- {}","0".equals(jsonObject.getString("code"))?"成功":"今天已经签过了");
+            LOGGER.info("【漫画签到设备信息】: " + config.getPlatform());
+            LOGGER.info("【漫画签到】: {}","0".equals(jsonObject.getString("code"))?"成功✔":"今天已经签过了❌");
         } catch (Exception e){
-            LOGGER.error("漫画签到错误 -- "+e);
+            LOGGER.error("💔漫画签到错误 : " + e);
         }
     }
 

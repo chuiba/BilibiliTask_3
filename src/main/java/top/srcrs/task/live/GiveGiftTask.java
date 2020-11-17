@@ -25,7 +25,7 @@ public class GiveGiftTask implements Task {
         try{
             giveGift();
         } catch (Exception e){
-            LOGGER.error("赠送礼物异常 -- "+e);
+            LOGGER.error("💔赠送礼物异常 : " + e);
         }
     }
 
@@ -45,26 +45,40 @@ public class GiveGiftTask implements Task {
             long nowTime = System.currentTimeMillis()/1000;
             /* 获得礼物列表 */
             JSONArray jsonArray = xliveGiftBagList();
+            /* 判断是否有过期礼物出现 */
+            boolean flag = true;
             for(Object object : jsonArray){
                 JSONObject json = (JSONObject) object;
                 long expireAt = Long.parseLong(json.getString("expire_at"));
                 /* 礼物还剩1天送出 */
                 /* 永久礼物到期时间为0 */
-                if((expireAt-nowTime)<87000&&expireAt!=0){
-                    JSONObject jsonObject3 = xliveBagSend(roomId, uid, json.getString("bag_id"), json.getString("gift_id"), json.getString("gift_num"), "0", "0", "pc");
+                if((expireAt-nowTime) < 87000 && expireAt != 0){
+                    JSONObject jsonObject3 = xliveBagSend(
+                            roomId,
+                            uid,
+                            json.getString("bag_id"),
+                            json.getString("gift_id"),
+                            json.getString("gift_num"),
+                            "0",
+                            "0", "pc");
                     if("0".equals(jsonObject3.getString("code"))){
                         /* 礼物的名字 */
                         String giftName = jsonObject3.getJSONObject("data").getString("gift_name");
                         /* 礼物的数量 */
                         String giftNum = jsonObject3.getJSONObject("data").getString("gift_num");
-                        LOGGER.info("送礼物给 -- {} -- {} -- 数量: {}",roomId,giftName,giftNum);
-
+                        LOGGER.info("【送即将过期礼物】: 给直播间 - {} - {} - 数量: {}✔",roomId,giftName,giftNum);
+                        flag = false;
                     }
                     else{
-                        LOGGER.warn("礼物送出失败 -- "+jsonObject3);
+                        LOGGER.warn("【送即将过期礼物】: 失败, 原因 : " + jsonObject3+"❌");
                     }
                 }
             }
+            if(flag){
+                LOGGER.info("【送即将过期礼物】: " + "当前无即将过期礼物❌");
+            }
+        } else{
+            LOGGER.info("【送即将过期礼物】: " + "自定义配置不送出即将过期礼物✔");
         }
     }
 
@@ -123,19 +137,26 @@ public class GiveGiftTask implements Task {
      * @author srcrs
      * @Time 2020-10-13
      */
-    public JSONObject xliveBagSend(String bizId, String ruid, String bagId, String giftId, String giftNum, String stormBeatId, String price, String platform){
-        String body = "uid="+data.getMid()
-                +"&gift_id="+giftId
-                +"&ruid="+ruid
-                +"&send_ruid=0"
-                +"&gift_num="+giftNum
-                +"&bag_id="+bagId
-                +"&platform="+platform
-                +"&biz_code="+"live"
-                +"&biz_id="+bizId
-                +"&storm_beat_id="+stormBeatId
-                +"&price="+price
-                +"&csrf="+data.getBiliJct();
+    public JSONObject xliveBagSend(
+            String bizId,
+            String ruid,
+            String bagId,
+            String giftId,
+            String giftNum,
+            String stormBeatId,
+            String price, String platform){
+        String body = "uid=" + data.getMid()
+                + "&gift_id=" + giftId
+                + "&ruid=" + ruid
+                + "&send_ruid=0"
+                + "&gift_num=" + giftNum
+                + "&bag_id=" + bagId
+                + "&platform=" + platform
+                + "&biz_code=" + "live"
+                + "&biz_id=" + bizId
+                + "&storm_beat_id=" + stormBeatId
+                + "&price=" + price
+                + "&csrf=" + data.getBiliJct();
         return Request.post("https://api.live.bilibili.com/gift/v2/live/bag_send", body);
     }
 }

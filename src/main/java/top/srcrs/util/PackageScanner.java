@@ -36,7 +36,7 @@ public abstract class PackageScanner {
                 scannerDirectory(root, packageName);
             }
         } catch (Exception e) {
-            LOGGER.error("扫包错误 -- "+e);
+            LOGGER.error("💔扫包错误 : " + e);
         }
     }
 
@@ -64,7 +64,7 @@ public abstract class PackageScanner {
                     dealClass(klass);
                     /* 将得到的元类对象通过抽象方法参数传递给用户，以便用户后续操作。 */
                 } catch (ClassNotFoundException e) {
-                    LOGGER.error("反射获取class错误 -- "+e);
+                    LOGGER.error("💔反射获取class错误 : " + e);
                 }
             } else if (file.isDirectory()) {
                 scannerDirectory(file, packageName + "." + file.getName());

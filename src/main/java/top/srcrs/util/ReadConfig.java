@@ -24,7 +24,7 @@ public class ReadConfig {
             Yaml yaml = new Yaml();
             yaml.loadAs(ReadConfig.class.getResourceAsStream(file), Config.class);
         } catch (Exception e){
-            LOGGER.info("配置文件转换成对象出错 -- "+e);
+            LOGGER.info("💔配置文件转换成对象出错 : " + e);
         }
     }
 }

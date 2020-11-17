@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 /**
- * 月底自动使用B币卷给自己充电
+ * 月底 (28号) 自动使用 B 币卷给自己充电
  * @author srcrs
  * @Time 2020-10-19
  */
@@ -35,15 +35,22 @@ public class BiCoinApply implements Task {
             int day = cal.get(Calendar.DATE);
             /* B币券余额 */
             double couponBalance = Double.parseDouble(data.getCouponBalance());
-            if (day == END_OF_MONTH && couponBalance > 0) {
-                switch (config.getAutoBiCoin()){
-                    case "1" : doCharge(couponBalance);break;
-                    case "2" : doMelonSeed((int) couponBalance);break;
-                    default: break;
-                }
+            LOGGER.info("【B币卷】: " + couponBalance);
+            if(day != END_OF_MONTH){
+                LOGGER.info("【使用B币卷】: " + "今日不是月底(28号)❌");
+                return;
+            }
+            if(couponBalance <= 0){
+                LOGGER.info("【使用B币卷】: " + "B币卷 <= 0 ,无法使用❌");
+                return ;
+            }
+            switch (config.getAutoBiCoin()){
+                case "1" : doCharge(couponBalance);break;
+                case "2" : doMelonSeed((int) couponBalance);break;
+                default: break;
             }
         } catch (Exception e){
-            LOGGER.error("使用B币卷部分异常 -- "+e);
+            LOGGER.error("💔使用B币卷部分错误 : " + e);
         }
     }
 
@@ -57,7 +64,7 @@ public class BiCoinApply implements Task {
          * 判断条件 是月底&&b币券余额大于2&&配置项允许自动充电
          */
         if(couponBalance < 2){
-            LOGGER.warn("B币卷数量: "+ couponBalance + " -- 无法给自己充电");
+            LOGGER.warn("【用B币卷给自己充电】: " + couponBalance + "<2 ,无法给自己充电❌");
             return ;
         }
         /* 被充电用户的userID */
@@ -76,17 +83,15 @@ public class BiCoinApply implements Task {
             LOGGER.debug(dataJson.toString());
             Integer statusCode = dataJson.getInteger("status");
             if (statusCode == 4) {
-                LOGGER.info("月底了，给自己充电成功啦，送的B币券没有浪费啦");
-                LOGGER.info("本次给自己充值了: " + couponBalance * 10 + "个电池");
+                LOGGER.info("【用B币卷给自己充电】: " + "本次给自己充值了: " + couponBalance * 10 + "个电池✔");
                 /* 获取充电留言token */
                 String orderNo = dataJson.getString("order_no");
                 chargeComments(orderNo);
             } else {
-                LOGGER.warn("充电失败 -- " + jsonObject);
+                LOGGER.warn("【用B币卷给自己充电】: " + "失败, 原因为: " + jsonObject + "❌");
             }
-
         } else {
-            LOGGER.warn("充电失败了啊 -- " + jsonObject);
+            LOGGER.warn("【用B币卷给自己充电】: " + "失败, 原因为: " + jsonObject + "❌");
         }
     }
 
@@ -106,8 +111,8 @@ public class BiCoinApply implements Task {
     }
 
     /**
-     * 用B币卷兑换成金瓜子
-     * @param couponBalance 传入B币卷的数量
+     * 用 B 币卷兑换成金瓜子
+     * @param couponBalance 传入 B 币卷的数量
      * @author srcrs
      * @Time 2020-11-02
      */
@@ -124,11 +129,11 @@ public class BiCoinApply implements Task {
         /* json对象的状态码 */
         String code = post.getString("code");
         if(SUCCESS.equals(code)){
-            msg = "成功将 " + couponBalance + " B币卷兑换成 "+couponBalance*1000+" 金瓜子";
+            msg = "成功将 " + couponBalance + " B币卷兑换成 " + couponBalance*1000 + " 金瓜子✔";
         } else{
-            msg = post.getString("message");
+            msg = post.getString("message") + "❌";
         }
-        LOGGER.info("B币卷兑换金瓜子 -- " + msg);
+        LOGGER.info("【B币卷兑换金瓜子】: " + msg);
     }
 
 }

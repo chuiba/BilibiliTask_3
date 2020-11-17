@@ -1,13 +1,11 @@
 package top.srcrs;
 
 import com.alibaba.fastjson.JSONObject;
+import top.srcrs.domain.Config;
 import top.srcrs.domain.Data;
-import top.srcrs.util.PackageScanner;
-import top.srcrs.util.ReadConfig;
-import top.srcrs.util.Request;
+import top.srcrs.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.srcrs.util.SendServer;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -26,7 +24,8 @@ public class BiliStart {
     private static final Data DATA = Data.getInstance();
     /** 访问成功 */
     private static final String SUCCESS = "0";
-
+    /** 获取Config配置的对象 */
+    private static final Config CONFIG = Config.getInstance();
     public static void main(String[] args) {
         /*
          * 存储所有 class 全路径名
@@ -35,24 +34,28 @@ public class BiliStart {
          * 因为部分任务是需要有顺序的去执行
          */
         final List<String> list = new ArrayList<>();
-        if(args.length==0){
-            LOGGER.error("请在Github Secrets中添加你的Cookie信息");
+        if(args.length == 0){
+            LOGGER.error("💔请在Github Secrets中添加你的Cookie信息");
+            return;
         }
+        /* 账户信息是否失效 */
+        boolean flag = true;
         DATA.setCookie(args[0],args[1],args[2]);
         /* 读取yml文件配置信息 */
         ReadConfig.transformation("/config.yml");
         /* 如果用户账户有效 */
         if(check()){
-            LOGGER.info("用户名: {}",DATA.getUname());
-            LOGGER.info("硬币: {}",DATA.getMoney());
-            LOGGER.info("经验: {}",DATA.getCurrentExp());
+            flag =false;
+            LOGGER.info("【用户名】: {}",hideString(DATA.getUname(),1,1,'*'));
+            LOGGER.info("【硬币】: {}",DATA.getMoney());
+            LOGGER.info("【经验】: {}",DATA.getCurrentExp());
             PackageScanner pack = new PackageScanner() {
                 @Override
                 public void dealClass(Class<?> klass) {
                     try{
                         list.add(klass.getName());
                     } catch (Exception e){
-                        LOGGER.error("扫描class目录出错 -- "+e);
+                        LOGGER.error("💔扫描class目录出错 : " + e);
                     }
                 }
             };
@@ -65,17 +68,26 @@ public class BiliStart {
                     Method method = object.getClass().getMethod("run", (Class<?>[]) null);
                     method.invoke(object);
                 } catch (Exception e){
-                    LOGGER.error("反射获取对象错误 -- "+e);
+                    LOGGER.error("💔反射获取对象错误 : " + e);
                 }
             }
+            LOGGER.info("【升级预计】: 当前等级为: Lv" + DATA.getCurrentLevel() + " ,预计升级到下一级还需要: " + getNextLevel() +" 天");
             LOGGER.info("本次任务运行完毕。");
-            /* 如果用户填了server酱的SCKEY就会执行 */
-            /* 此时数组的长度为4，就默认填写的是SCKEY */
-            if(args.length==4){
-                SendServer.send(args[3]);
-            }
+
         } else {
-            throw  new RuntimeException("账户已失效，请在Secrets重新绑定你的信息");
+            LOGGER.info("💔账户已失效，请在Secrets重新绑定你的信息");
+        }
+        /* 如果用户填了server酱的SCKEY就会执行 */
+        if(!("".equals(args[3]))){
+            SendServer.send(args[3]);
+        }
+        /* 此时数组的长度为4，就默认填写的是填写的钉钉 webHook 链接 */
+        if(!("".equals(args[4]))){
+            SendDingTalk.send(args[4]);
+        }
+        /* 当用户失效工作流执行失败，github将会给邮箱发送运行失败信息 */
+        if(flag){
+            throw new RuntimeException("💔账户已失效，请在Secrets重新绑定你的信息");
         }
     }
 
@@ -104,8 +116,56 @@ public class BiliStart {
             DATA.setVipStatus(object.getString("vipStatus"));
             /* 钱包B币卷余额 */
             DATA.setCouponBalance(object.getJSONObject("wallet").getString("coupon_balance"));
+            /* 升级到下一级所需要的经验 */
+            DATA.setNextExp(object.getJSONObject("level_info").getString("next_exp"));
+            /* 获取当前的等级 */
+            DATA.setNextExp(object.getJSONObject("level_info").getString("current_level"));
             return true;
         }
         return false;
+    }
+
+    /**
+     * 计算到下一级所需要的天数
+     * 未包含今日所获得经验数
+     * @return int 距离升级到下一等级还需要几天
+     * @author srcrs
+     * @Time 2020-11-17
+     */
+    private static int getNextLevel(){
+        /* 当前经验数 */
+        int currentExp = Integer.parseInt(DATA.getCurrentExp());
+        /* 到达下一级所需要的经验数 */
+        int nextExp = Integer.parseInt(DATA.getNextExp());
+        /* 获取当前硬币数量 */
+        int num1 = (int)Double.parseDouble(DATA.getMoney());
+        /* 获取配置中每日投币数量 */
+        int num2 = CONFIG.getCoin();
+        /* 避免投币数设置成负数异常 */
+        num2 = Math.max(num2,0);
+        /* 实际每日能需要投币数 */
+        int num = Math.min(num1,num2);
+        /* 距离升级到下一级所需要的天数 */
+        int nextNum = 0;
+        while(currentExp < nextExp){
+            nextNum += 1;
+            num1 += 1;
+            currentExp += (15+num*10);
+            num1 -= num;
+            num = Math.min(num1,num2);
+        }
+        return nextNum;
+    }
+    public static String hideString(String str, int startLen, int endLen, char replaceChar)
+    {
+        int length = str.length() - startLen - endLen;
+        String startStr = str.substring(0, startLen);
+        String endStr = str.substring(str.length() - endLen);
+        StringBuilder hideStr = new StringBuilder();
+        length = Math.min(length, 3);
+        while(length--!=0){
+            hideStr.append(replaceChar);
+        }
+        return startStr + hideStr + endStr;
     }
 }

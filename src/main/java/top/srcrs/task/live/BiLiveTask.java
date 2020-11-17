@@ -23,17 +23,21 @@ public class BiLiveTask implements Task {
         try{
             JSONObject json = xliveSign();
             String msg ;
+            String key = "code";
             /* 获取json对象的状态码code */
-            if(SUCCESS.equals(json.getString("code"))){
-                msg = "获得"+json.getJSONObject("data").getString("text");
+            if(SUCCESS.equals(json.getString(key))){
+                msg = "获得" + json.getJSONObject("data").getString("text") + " ,"
+                        + json.getJSONObject("data").getString("specialText") + "✔";
             } else{
-                msg = json.getString("message");
+                msg = json.getString("message") + "❌";
             }
-            LOGGER.info("直播签到 -- {}",msg);
-            /* 直播签到后等待5秒 */
+            LOGGER.info("【直播签到】: {}",msg);
+            /* 直播签到后等待5秒
+            ** 为防止礼物未到到账，而无法送出
+            */
             Thread.sleep(5000);
         } catch (Exception e){
-            LOGGER.error("直播签到等待中错误 -- "+e);
+            LOGGER.error("💔直播签到错误 : " + e);
         }
     }
 

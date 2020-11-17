@@ -47,7 +47,7 @@ public class Request {
             respContent = EntityUtils.toString(entity, "UTF-8");
             return JSONObject.parseObject(respContent);
         } catch (Exception e){
-            LOGGER.info("get请求错误 -- "+e);
+            LOGGER.info("💔get请求错误 : " + e);
             return JSONObject.parseObject(respContent);
         }
     }
@@ -81,7 +81,7 @@ public class Request {
             respContent = EntityUtils.toString(entity, "UTF-8");
             return JSONObject.parseObject(respContent);
         } catch (Exception e){
-            LOGGER.info("post请求错误 -- "+e);
+            LOGGER.info("💔post请求错误 : " + e);
             return JSONObject.parseObject(respContent);
         }
     }
