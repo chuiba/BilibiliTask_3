@@ -1,5 +1,7 @@
 package top.srcrs.domain;
 
+import java.util.List;
+
 /**
  * 项目的配置类。
  * @author srcrs
@@ -13,10 +15,20 @@ public class Config {
     static private boolean gift;
     /** 要将银瓜子转换成硬币 true 默认转换*/
     static private boolean s2c;
-    /** 自动使用B币卷 */
+    /** 自动使用 B 币卷 */
     static private String autoBiCoin;
     /** 用户设备的标识 */
     static private String platform;
+    /** 投币给自定义的 up 主 */
+    static private List<String> upList;
+
+    public List<String> getUpList() {
+        return upList;
+    }
+
+    public void setUpList(List<String> upList) {
+        Config.upList = upList;
+    }
 
     public String getPlatform() {
         return platform;

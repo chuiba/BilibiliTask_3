@@ -25,11 +25,31 @@ public class Data {
     private String vipStatus;
     /** B币卷余额 */
     private String couponBalance;
+    /** 当前等级 */
+    private String currentLevel;
+    /** 距离升级到下一级所需要的经验 */
+    private String nextExp;
 
     public void setCookie(String biliJct, String SESSDATA, String DedeUserID) {
         this.DedeUserID = DedeUserID;
         this.biliJct = biliJct;
         this.SESSDATA = SESSDATA;
+    }
+
+    public void setCurrentLevel(String currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public void setNextExp(String nextExp) {
+        this.nextExp = nextExp;
+    }
+
+    public String getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public String getNextExp() {
+        return nextExp;
     }
 
     public String getVipStatus() {
