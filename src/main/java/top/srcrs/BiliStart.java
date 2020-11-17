@@ -78,11 +78,16 @@ public class BiliStart {
             LOGGER.info("💔账户已失效，请在Secrets重新绑定你的信息");
         }
         /* 如果用户填了server酱的SCKEY就会执行 */
-        if(!("".equals(args[3]))){
-            SendServer.send(args[3]);
+        if(args.length==4){
+            String ding = "https://oapi.dingtalk.com/robot/send";
+            if(args[3].contains(ding)){
+                SendDingTalk.send(args[3]);
+            } else{
+                SendServer.send(args[3]);
+            }
         }
         /* 此时数组的长度为4，就默认填写的是填写的钉钉 webHook 链接 */
-        if(!("".equals(args[4]))){
+        if(args.length==5){
             SendDingTalk.send(args[4]);
         }
         /* 当用户失效工作流执行失败，github将会给邮箱发送运行失败信息 */
