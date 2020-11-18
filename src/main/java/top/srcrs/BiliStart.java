@@ -71,7 +71,16 @@ public class BiliStart {
                     LOGGER.error("💔反射获取对象错误 : " + e);
                 }
             }
-            LOGGER.info("【升级预计】: 当前等级为: Lv" + DATA.getCurrentLevel() + " ,预计升级到下一级还需要: " + getNextLevel() +" 天");
+            /* 当用户等级为Lv6时，升级到下一级 next_exp 值为 -- 代表无穷大 */
+            String maxLevel = "6";
+            if(maxLevel.equals(DATA.getCurrentLevel())){
+                LOGGER.info("【升级预计】: 当前等级为: Lv" + maxLevel + " ,已经是最高等级");
+                LOGGER.info("【温馨提示】: 可在配置文件中关闭每日投币操作");
+            } else{
+                LOGGER.info("【升级预计】: 当前等级为: Lv"
+                        + DATA.getCurrentLevel() + " ,预计升级到下一级还需要: "
+                        + getNextLevel() +" 天");
+            }
             LOGGER.info("本次任务运行完毕。");
 
         } else {
