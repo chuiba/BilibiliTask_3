@@ -18,6 +18,10 @@ public class MangaTask implements Task {
     Config config = Config.getInstance();
     @Override
     public void run(){
+        if(!config.isManga()){
+            LOGGER.info("【漫画签到】: 自定义配置不执行漫画签到任务✔");
+            return ;
+        }
         try{
             JSONObject jsonObject = mangaClockIn(config.getPlatform());
             LOGGER.info("【漫画签到设备信息】: " + config.getPlatform());

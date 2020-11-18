@@ -21,6 +21,16 @@ public class Config {
     static private String platform;
     /** 投币给自定义的 up 主 */
     static private List<String> upList;
+    /** 自动进行漫画签到任务 */
+    static private boolean manga;
+
+    public boolean isManga() {
+        return manga;
+    }
+
+    public void setManga(boolean manga) {
+        Config.manga = manga;
+    }
 
     public List<String> getUpList() {
         return upList;
