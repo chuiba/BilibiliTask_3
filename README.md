@@ -123,6 +123,7 @@ s2c | 是否需要将银瓜子兑换硬币 [true,false]
 autoBiCoin | 月底自动使用B币卷 [{0,自己有其他用途},{1,给自己充电},{2,兑换成金瓜子}]
 platform | 用户设备的标识[android,ios]
 upList | up 主列表,优先给这些 up 主投币[uid]
+manga | 是否自动进行漫画签到 [true,false]
 
 ```yml
 coin: 5 #每天需要投币的数量。[0,5]。
@@ -133,9 +134,10 @@ platform: android #用户设备的标识[android,ios]
 upList:         # 自定义优先给这些 up 的视频投币 , 以yml数组的形式 , 填写其 uid (mid)
   - 477137547
   - 14602398
+manga: true #进行漫画签到任务。[true,false]
 ``` 
 
-如过实在没有想给他投币的up主，可以考虑把我填上哦😄
+如过实在没有想给他投币的up主，可以考虑把我填上哦 `477137547` 😄
 
 ## 2.推送运行结果到微信
 
