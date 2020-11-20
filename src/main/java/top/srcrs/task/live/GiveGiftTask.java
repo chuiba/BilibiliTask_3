@@ -23,24 +23,15 @@ public class GiveGiftTask implements Task {
     @Override
     public void run(){
         try{
-            giveGift();
-        } catch (Exception e){
-            LOGGER.error("💔赠送礼物异常 : " + e);
-        }
-    }
-
-    /**
-     * 执行赠送礼物
-     * @author srcrs
-     * @Time 2020-10-13
-     */
-    public void giveGift(){
-        /* 从配置类中读取是否需要执行赠送礼物 */
-        if(config.isGift()){
-            /* 获取一个直播间的room_id */
-            String roomId = xliveGetRecommend();
-            /* 通过room_id获取uid */
-            String uid = xliveGetRoomUid(roomId);
+            /* 从配置类中读取是否需要执行赠送礼物 */
+            if(!config.isGift()){
+                LOGGER.info("【送即将过期礼物】: " + "自定义配置不送出即将过期礼物✔");
+                return;
+            }
+            /* 直播间 id */
+            String roomId = "";
+            /* 直播间 uid 即 up 的 id*/
+            String uid = "";
             /* B站后台时间戳为10位 */
             long nowTime = System.currentTimeMillis()/1000;
             /* 获得礼物列表 */
@@ -53,6 +44,12 @@ public class GiveGiftTask implements Task {
                 /* 礼物还剩1天送出 */
                 /* 永久礼物到期时间为0 */
                 if((expireAt-nowTime) < 87000 && expireAt != 0){
+                    /* 如果有未送出的礼物，则获取一个直播间 */
+                    if("".equals(roomId)){
+                        JSONObject uidAndRid = getuidAndRid();
+                        uid = uidAndRid.getString("uid");
+                        roomId = uidAndRid.getString("roomId");
+                    }
                     JSONObject jsonObject3 = xliveBagSend(
                             roomId,
                             uid,
@@ -77,8 +74,8 @@ public class GiveGiftTask implements Task {
             if(flag){
                 LOGGER.info("【送即将过期礼物】: " + "当前无即将过期礼物❌");
             }
-        } else{
-            LOGGER.info("【送即将过期礼物】: " + "自定义配置不送出即将过期礼物✔");
+        } catch (Exception e){
+            LOGGER.error("💔赠送礼物异常 : " + e);
         }
     }
 
@@ -98,7 +95,7 @@ public class GiveGiftTask implements Task {
 
     /**
      * B站获取直播间的uid
-     * @param roomId 房间的id
+     * @param roomId up 主的 uid
      * @return JSONObject
      * @author srcrs
      * @Time 2020-10-13
@@ -109,6 +106,20 @@ public class GiveGiftTask implements Task {
                 .getJSONObject("data")
                 .getJSONObject("room_info")
                 .getString("uid");
+    }
+
+    /**
+     * 根据 uid 获取其 roomid
+     * @param mid 即 uid
+     * @return String 返回一个直播间id
+     * @author srcrs
+     * @Time 2020-11-20
+     */
+    public String getRoomInfoOld(String mid) {
+        String param = "?mid="+mid;
+        return Request.get("http://api.live.bilibili.com/room/v1/Room/getRoomInfoOld"+param)
+                .getJSONObject("data")
+                .getString("roomid");
     }
 
     /**
@@ -158,5 +169,43 @@ public class GiveGiftTask implements Task {
                 + "&price=" + price
                 + "&csrf=" + data.getBiliJct();
         return Request.post("https://api.live.bilibili.com/gift/v2/live/bag_send", body);
+    }
+
+    /**
+     * 获取一个包含 uid 和 RooId 的 json 对象
+     * @return JSONObject 返回一个包含 uid 和 RooId 的 json 对象
+     * @author srcrs
+     * @Time 2020-11-20
+     */
+    public JSONObject getuidAndRid(){
+        /* 直播间 id */
+        String roomId;
+        /* 直播间 uid 即 up 的 id*/
+        String uid;
+        if(config.getUpLive() != null){
+            /* 获取指定up的id */
+            uid = config.getUpLive();
+            roomId = getRoomInfoOld(uid);
+            String status = "0";
+            if(status.equals(roomId)){
+                LOGGER.info("【获取直播间】: " + "自定义up " + uid + " 无直播间");
+                /* 随机获取一个直播间 */
+                roomId = xliveGetRecommend();
+                uid = xliveGetRoomUid(roomId);
+                LOGGER.info("【获取直播间】: " + "随机直播间");
+            } else{
+                LOGGER.info("【获取直播间】: " + "自定义up " + uid + " 的直播间");
+            }
+
+        } else{
+            /* 随机获取一个直播间 */
+            roomId = xliveGetRecommend();
+            uid = xliveGetRoomUid(roomId);
+            LOGGER.info("【获取直播间】: " + "随机直播间");
+        }
+        JSONObject json = new JSONObject();
+        json.put("uid",uid);
+        json.put("roomId",roomId);
+        return json;
     }
 }

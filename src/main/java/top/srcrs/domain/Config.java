@@ -23,6 +23,16 @@ public class Config {
     static private List<String> upList;
     /** 自动进行漫画签到任务 */
     static private boolean manga;
+    /** 送出即将过期礼物给此 up 的直播间 */
+    static private String upLive;
+
+    public String getUpLive() {
+        return upLive;
+    }
+
+    public void setUpLive(String upLive) {
+        Config.upLive = upLive;
+    }
 
     public boolean isManga() {
         return manga;
