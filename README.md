@@ -46,6 +46,8 @@
   - [2.推送运行结果到微信](#2推送运行结果到微信)
   - [3.推送运行结果到钉钉](#3推送运行结果到钉钉)
 - [如何拉取最新代码](#如何拉取最新代码)
+  - [方法一](#方法一)
+  - [方法二](#方法二)
 - [更新日志](#更新日志)
 - [参考项目](#参考项目)
 
@@ -124,20 +126,30 @@ autoBiCoin | 月底自动使用B币卷 [{0,自己有其他用途},{1,给自己�
 platform | 用户设备的标识[android,ios]
 upList | up 主列表,优先给这些 up 主投币[uid]
 manga | 是否自动进行漫画签到 [true,false]
+upLive | 即将过期礼物给此up的直播间,填写其 uid
 
 ```yml
-coin: 5 #每天需要投币的数量。[0,5]。
-gift: true #送出即将过期礼物。[true,false]
-s2c: true #银瓜子兑换为硬币。[true,false]
-autoBiCoin: 1 #月底自动使用B币卷。[{0,自己会使用},{1,给自己充电},{2,兑换成金瓜子}]
-platform: android #用户设备的标识[android,ios]
-upList:         # 自定义优先给这些 up 的视频投币 , 以yml数组的形式 , 填写其 uid (mid)
+#每天需要投币的数量 [0,5]。
+coin: 5
+#送出即将过期礼物 [true,false]
+gift: true
+#银瓜子兑换为硬币 [true,false]
+s2c: true
+#月底自动使用B币卷 [{0,自己会使用},{1,给自己充电},{2,兑换成金瓜子}]
+autoBiCoin: 1
+#用户设备的标识 [android,ios]
+platform: android
+# 自定义优先给这些 up 的视频投币 , 以yml数组的形式 , 填写其 uid (mid)
+upList:
   - 477137547
   - 14602398
-manga: true #进行漫画签到任务。[true,false]
+#进行漫画签到任务 [true,false]
+manga: true
+#优先送出即将过期礼物给此up的直播间,填写其 uid
+upLive: 477137547
 ``` 
 
-如过实在没有想给他投币的up主，可以考虑把我填上哦 `477137547` 😄
+如实在没有想给他投币的up主，可以考虑把我填上哦 `477137547` 😄
 
 ## 2.推送运行结果到微信
 
@@ -174,6 +186,16 @@ DINGTALK | https://oapi.dingtalk.com/robot/send?access_token=064559acaa666c43d5b
 ![](img/获取钉钉Webhook.gif)
 
 # 如何拉取最新代码
+
+## 方法一
+
+在`github`安装`pull`，会自动帮你检测上游仓库，并帮助你更新代码
+
+地址在这: https://github.com/apps/pull
+
+由于添加有配置文件`config.yml`，有可能会覆盖你自定义的`config.yml`，需要注意。
+
+## 方法二
 
 1、查看是否有源头仓库的别名和地址
 
