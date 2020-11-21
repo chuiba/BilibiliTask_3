@@ -1,14 +1,14 @@
 package top.srcrs.util;
 
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
@@ -17,9 +17,8 @@ import java.nio.charset.StandardCharsets;
  * @author srcrs
  * @Time 2020-10-22
  */
+@Slf4j
 public class SendServer {
-    /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SendServer.class);
 
     /**
      * 发送消息给用户，如果绑定了微信，会发送到微信上。
@@ -29,27 +28,29 @@ public class SendServer {
      */
     public static void send(String sckey){
         /* 将要推送的数据 */
-        String desp = ReadLog.getString("logs/logback.log");
-        String body = "text=" + "BilibiliTask运行结果" + "&desp="+desp;
-        HttpEntity entityBody = new StringEntity(body, StandardCharsets.UTF_8);
-        HttpPost httpPost = new HttpPost("https://sc.ftqq.com/" + sckey + ".send");
-        httpPost.addHeader("Content-Type","application/x-www-form-urlencoded");
-        httpPost.setEntity(entityBody);
-        HttpResponse resp ;
-        String respContent;
+        JSONObject pJson = new JSONObject();
+        pJson.put("text", "BilibiliTask运行结果");
+        pJson.put("desp", ReadLog.getString("logs/logback.log"));
+
+        HttpUriRequest httpPost = RequestBuilder.post()
+                                                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                                                .setUri("https://sc.ftqq.com/" + sckey + ".send")
+                                                .addParameters(Request.getPairList(pJson))
+                                                .build();
+
         try(CloseableHttpClient client = HttpClients.createDefault()){
-            resp = client.execute(httpPost);
-            HttpEntity entity;
-            entity = resp.getEntity();
-            respContent = EntityUtils.toString(entity, StandardCharsets.UTF_8);
+            HttpResponse resp = client.execute(httpPost);
+            HttpEntity entity = resp.getEntity();
+            String respContent = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             int success = 200;
             if(resp.getStatusLine().getStatusCode() == success){
-                LOGGER.info("【server酱推送】: 正常✔");
+                log.info("【server酱推送】: 正常✔");
             } else{
-                LOGGER.info("【server酱推送】: 失败, 原因为: {}❌", respContent);
+                log.info("【server酱推送】: 失败, 原因为: {}❌", respContent);
             }
         } catch (Exception e){
-            LOGGER.error("💔server酱发送错误 : ", e);
+            log.error("💔server酱发送错误 : ", e);
         }
     }
+
 }

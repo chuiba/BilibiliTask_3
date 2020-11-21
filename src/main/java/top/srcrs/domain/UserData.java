@@ -44,14 +44,14 @@ public class UserData {
     /** 硬币数 */
     private BigDecimal money;
     /** 经验数 */
-    private BigDecimal currentExp;
+    private Integer currentExp;
     /** 大会员状态 */
     private String vipStatus;
     /** B币卷余额 */
-    private String couponBalance;
+    private Integer couponBalance;
     /** 当前等级 */
     private String currentLevel;
     /** 距离升级到下一级所需要的经验 */
-    private BigDecimal nextExp;
+    private Integer nextExp;
 
 }

@@ -38,4 +38,4 @@ jobs:
         SCKEY: ${{ secrets.SCKEY }}
         DINGTALK: ${{secrets.DINGTALK}}
       run:
-        ./gradlew runMain
+        sh gradlew runMain

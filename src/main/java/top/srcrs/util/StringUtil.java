@@ -10,6 +10,14 @@ import java.util.Arrays;
  */
 public class StringUtil {
 
+    public static String get(Object o) {
+        if (o == null) {
+            return null;
+        }
+
+        return o.toString();
+    }
+
     public static boolean isNotBlank(CharSequence cs) {
         return !isBlank(cs);
     }

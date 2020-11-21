@@ -133,15 +133,15 @@ public class BiliStart {
             /* 硬币数 */
             USER_DATA.setMoney(object.getBigDecimal("money"));
             /* 经验 */
-            USER_DATA.setCurrentExp(levelInfo.getBigDecimal("current_exp"));
+            USER_DATA.setCurrentExp(levelInfo.getIntValue("current_exp"));
             /* 大会员状态 */
             USER_DATA.setVipStatus(object.getString("vipStatus"));
             /* 钱包B币卷余额 */
-            USER_DATA.setCouponBalance(object.getJSONObject("wallet").getString("coupon_balance"));
+            USER_DATA.setCouponBalance(object.getJSONObject("wallet").getIntValue("coupon_balance"));
             /* 升级到下一级所需要的经验 */
-            USER_DATA.setNextExp(levelInfo.getBigDecimal("next_exp"));
+            USER_DATA.setNextExp(levelInfo.getIntValue("next_exp"));
             /* 获取当前的等级 */
-            USER_DATA.setNextExp(levelInfo.getBigDecimal("current_level"));
+            USER_DATA.setNextExp(levelInfo.getIntValue("current_level"));
             return true;
         }
         return false;
