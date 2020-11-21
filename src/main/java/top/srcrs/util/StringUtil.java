@@ -10,6 +10,8 @@ import java.util.Arrays;
  */
 public class StringUtil {
 
+    private StringUtil(){}
+
     public static String get(Object o) {
         if (o == null) {
             return null;

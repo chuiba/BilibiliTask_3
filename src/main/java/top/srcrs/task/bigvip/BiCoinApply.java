@@ -35,7 +35,7 @@ public class BiCoinApply implements Task {
             int couponBalance =userData.getCouponBalance();
             log.info("【B币卷】: {}", couponBalance);
             if(couponBalance <= 0){
-                log.info("【使用B币卷】: " + "B币卷 <= 0 ,无法使用❌");
+                log.info("【使用B币卷】: " + "B币卷为0 ,无法使用❌");
                 return ;
             }
             if(day != END_OF_MONTH){

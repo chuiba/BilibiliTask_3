@@ -13,6 +13,8 @@ import java.io.FileReader;
 @Slf4j
 public class ReadLog {
 
+    private ReadLog(){}
+
     /**
      * 读取输出到文件中的日志
      * @param pathName 日志文件的名字，包括路径

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -19,6 +20,8 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 public class SendDingTalk {
+
+    private SendDingTalk(){}
 
     /**
      * 发送消息给用户，如果绑定了微信，会发送到微信上。
@@ -46,8 +49,7 @@ public class SendDingTalk {
             HttpResponse resp = client.execute(httpPost);
             HttpEntity entity = resp.getEntity();
             String respContent = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-            int success = 200;
-            if(resp.getStatusLine().getStatusCode() == success){
+            if(resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
                 log.info("【钉钉推送】: 正常✔");
             } else{
                 log.info("【钉钉推送】: 失败, 原因为: {}❌", respContent);

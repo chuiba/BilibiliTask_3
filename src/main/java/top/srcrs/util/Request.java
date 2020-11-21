@@ -34,8 +34,7 @@ public class Request {
 
     private static final String UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36";
 
-    private Request() {
-    }
+    private Request() {}
 
     /**
      * 发送get请求
