@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.srcrs.Task;
 import top.srcrs.domain.Config;
-import top.srcrs.domain.Data;
+import top.srcrs.domain.UserData;
 import top.srcrs.util.Request;
 
 /**
@@ -17,7 +17,7 @@ import top.srcrs.util.Request;
 public class GiveGiftTask implements Task {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(GiveGiftTask.class);
-    Data data = Data.getInstance();
+    UserData userData = UserData.getInstance();
     Config config = Config.getInstance();
 
     @Override
@@ -67,7 +67,7 @@ public class GiveGiftTask implements Task {
                         flag = false;
                     }
                     else{
-                        LOGGER.warn("【送即将过期礼物】: 失败, 原因 : " + jsonObject3+"❌");
+                        LOGGER.warn("【送即将过期礼物】: 失败, 原因 : {}❌", jsonObject3);
                     }
                 }
             }
@@ -75,7 +75,7 @@ public class GiveGiftTask implements Task {
                 LOGGER.info("【送即将过期礼物】: " + "当前无即将过期礼物❌");
             }
         } catch (Exception e){
-            LOGGER.error("💔赠送礼物异常 : " + e);
+            LOGGER.error("💔赠送礼物异常 : ", e);
         }
     }
 
@@ -156,18 +156,18 @@ public class GiveGiftTask implements Task {
             String giftNum,
             String stormBeatId,
             String price, String platform){
-        String body = "uid=" + data.getMid()
-                + "&gift_id=" + giftId
-                + "&ruid=" + ruid
-                + "&send_ruid=0"
-                + "&gift_num=" + giftNum
-                + "&bag_id=" + bagId
-                + "&platform=" + platform
-                + "&biz_code=" + "live"
-                + "&biz_id=" + bizId
-                + "&storm_beat_id=" + stormBeatId
-                + "&price=" + price
-                + "&csrf=" + data.getBiliJct();
+        String body = "uid=" + userData.getMid()
+                      + "&gift_id=" + giftId
+                      + "&ruid=" + ruid
+                      + "&send_ruid=0"
+                      + "&gift_num=" + giftNum
+                      + "&bag_id=" + bagId
+                      + "&platform=" + platform
+                      + "&biz_code=" + "live"
+                      + "&biz_id=" + bizId
+                      + "&storm_beat_id=" + stormBeatId
+                      + "&price=" + price
+                      + "&csrf=" + userData.getBiliJct();
         return Request.post("https://api.live.bilibili.com/gift/v2/live/bag_send", body);
     }
 
@@ -188,13 +188,13 @@ public class GiveGiftTask implements Task {
             roomId = getRoomInfoOld(uid);
             String status = "0";
             if(status.equals(roomId)){
-                LOGGER.info("【获取直播间】: " + "自定义up " + uid + " 无直播间");
+                LOGGER.info("【获取直播间】: 自定义up {} 无直播间", uid);
                 /* 随机获取一个直播间 */
                 roomId = xliveGetRecommend();
                 uid = xliveGetRoomUid(roomId);
-                LOGGER.info("【获取直播间】: " + "随机直播间");
+                LOGGER.info("【获取直播间】: 随机直播间");
             } else{
-                LOGGER.info("【获取直播间】: " + "自定义up " + uid + " 的直播间");
+                LOGGER.info("【获取直播间】: 自定义up {} 的直播间", uid);
             }
 
         } else{

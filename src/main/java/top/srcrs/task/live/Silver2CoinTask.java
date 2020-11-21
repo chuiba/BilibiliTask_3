@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.srcrs.Task;
 import top.srcrs.domain.Config;
-import top.srcrs.domain.Data;
+import top.srcrs.domain.UserData;
 import top.srcrs.util.Request;
 
 /**
@@ -16,7 +16,7 @@ import top.srcrs.util.Request;
 public class Silver2CoinTask implements Task {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(Silver2CoinTask.class);
-    Data data = Data.getInstance();
+    UserData userData = UserData.getInstance();
     Config config = Config.getInstance();
 
     @Override
@@ -34,7 +34,7 @@ public class Silver2CoinTask implements Task {
                     LOGGER.warn("【银瓜子兑换硬币】: {}",silver2coin().getString("msg") + "✔");
                 }
             } catch (Exception e){
-                LOGGER.error("💔银瓜子兑换硬币错误 : " + e);
+                LOGGER.error("💔银瓜子兑换硬币错误 : ", e);
             }
         } else{
             LOGGER.info("【银瓜子兑换硬币】: " + "自定义配置不将银瓜子兑换硬币✔");
@@ -48,7 +48,7 @@ public class Silver2CoinTask implements Task {
      * @Time 2020-10-13
      */
     public JSONObject silver2coin(){
-        String body = "csrf="+data.getBiliJct();
+        String body = "csrf=" + userData.getBiliJct();
         return Request.post("https://api.live.bilibili.com/pay/v1/Exchange/silver2coin", body);
     }
 

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.srcrs.Task;
-import top.srcrs.domain.Data;
+import top.srcrs.domain.UserData;
 import top.srcrs.util.Request;
 
 import java.util.Random;
@@ -19,7 +19,7 @@ public class DailyTask implements Task {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(DailyTask.class);
     /** 获取DATA对象 */
-    Data data = Data.getInstance();
+    UserData userData = UserData.getInstance();
 
     @Override
     public void run() {
@@ -57,7 +57,7 @@ public class DailyTask implements Task {
                 LOGGER.info("【分享视频】: {}", "0".equals(share.getString("code")) ? "成功✔" : "失败❌");
             }
         } catch (Exception e) {
-            LOGGER.error("💔每日任务异常 : " + e);
+            LOGGER.error("💔每日任务异常 : ", e);
         }
     }
 
@@ -98,9 +98,9 @@ public class DailyTask implements Task {
      */
     public JSONObject report(String aid, String cid, String progres) {
         String body = "aid=" + aid
-                + "&cid=" + cid
-                + "&progres=" + progres
-                + "&csrf=" + data.getBiliJct();
+                      + "&cid=" + cid
+                      + "&progres=" + progres
+                      + "&csrf=" + userData.getBiliJct();
         return Request.post("http://api.bilibili.com/x/v2/history/report", body);
     }
 
@@ -113,7 +113,7 @@ public class DailyTask implements Task {
      * @Time 2020-10-13
      */
     public JSONObject share(String aid) {
-        String body = "aid=" + aid + "&csrf=" + data.getBiliJct();
+        String body = "aid=" + aid + "&csrf=" + userData.getBiliJct();
         return Request.post("https://api.bilibili.com/x/web-interface/share/add", body);
     }
 

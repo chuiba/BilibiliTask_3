@@ -9,22 +9,28 @@ import java.util.List;
  */
 public class Config {
     private static final Config CONFIG = new Config();
+
+    public static Config getInstance(){
+        return CONFIG;
+    }
+    private Config(){}
+
     /** 代表所需要投币的数量 */
-    static private Integer coin;
+    private static Integer coin;
     /** 送出即将过期的礼物 true 默认送出*/
-    static private boolean gift;
+    private static boolean gift;
     /** 要将银瓜子转换成硬币 true 默认转换*/
-    static private boolean s2c;
+    private static boolean s2c;
     /** 自动使用 B 币卷 */
-    static private String autoBiCoin;
+    private static String autoBiCoin;
     /** 用户设备的标识 */
-    static private String platform;
+    private static String platform;
     /** 投币给自定义的 up 主 */
-    static private List<String> upList;
+    private static List<String> upList;
     /** 自动进行漫画签到任务 */
-    static private boolean manga;
+    private static boolean manga;
     /** 送出即将过期礼物给此 up 的直播间 */
-    static private String upLive;
+    private static String upLive;
 
     public String getUpLive() {
         return upLive;
@@ -57,11 +63,6 @@ public class Config {
     public void setPlatform(String platform) {
         Config.platform = platform;
     }
-
-    public static Config getInstance(){
-        return CONFIG;
-    }
-    private Config(){}
 
     public String getAutoBiCoin() {
         return autoBiCoin;

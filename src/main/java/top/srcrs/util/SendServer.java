@@ -2,13 +2,15 @@ package top.srcrs.util;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 将日志消息发送到用户的 server 酱 （微信）
@@ -29,26 +31,25 @@ public class SendServer {
         /* 将要推送的数据 */
         String desp = ReadLog.getString("logs/logback.log");
         String body = "text=" + "BilibiliTask运行结果" + "&desp="+desp;
-        StringEntity entityBody = new StringEntity(body,"UTF-8");
-        HttpClient client = HttpClients.createDefault();
+        HttpEntity entityBody = new StringEntity(body, StandardCharsets.UTF_8);
         HttpPost httpPost = new HttpPost("https://sc.ftqq.com/" + sckey + ".send");
         httpPost.addHeader("Content-Type","application/x-www-form-urlencoded");
         httpPost.setEntity(entityBody);
         HttpResponse resp ;
         String respContent;
-        try{
+        try(CloseableHttpClient client = HttpClients.createDefault()){
             resp = client.execute(httpPost);
             HttpEntity entity;
             entity = resp.getEntity();
-            respContent = EntityUtils.toString(entity, "UTF-8");
+            respContent = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             int success = 200;
             if(resp.getStatusLine().getStatusCode() == success){
                 LOGGER.info("【server酱推送】: 正常✔");
             } else{
-                LOGGER.info("【server酱推送】: 失败, 原因为: " + respContent + "❌");
+                LOGGER.info("【server酱推送】: 失败, 原因为: {}❌", respContent);
             }
         } catch (Exception e){
-            LOGGER.error("💔server酱发送错误 : " + e);
+            LOGGER.error("💔server酱发送错误 : ", e);
         }
     }
 }

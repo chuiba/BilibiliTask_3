@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.srcrs.Task;
-import top.srcrs.domain.Data;
+import top.srcrs.domain.UserData;
 import top.srcrs.util.Request;
 
 import java.util.Calendar;
@@ -19,7 +19,7 @@ public class CollectVipGift implements Task {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(CollectVipGift.class);
     /** 获取DATA对象 */
-    Data data = Data.getInstance();
+    UserData userData = UserData.getInstance();
 
     /** 不是大会员 */
     private static final String NOT_VIP = "0";
@@ -51,7 +51,7 @@ public class CollectVipGift implements Task {
             vipPrivilege(2);
 
         } catch (Exception e){
-            LOGGER.error("💔领取年度大会员礼包错误 : " + e);
+            LOGGER.error("💔领取年度大会员礼包错误 : ", e);
         }
     }
 
@@ -63,7 +63,7 @@ public class CollectVipGift implements Task {
      */
     public void vipPrivilege(Integer type) {
         String body = "type=" + type
-                + "&csrf=" + data.getBiliJct();
+                      + "&csrf=" + userData.getBiliJct();
         JSONObject jsonObject = Request.post("https://api.bilibili.com/x/vip/privilege/receive", body);
         Integer code = jsonObject.getInteger("code");
         if (0 == code) {
@@ -74,8 +74,7 @@ public class CollectVipGift implements Task {
             }
 
         } else {
-            LOGGER.warn("【领取年度大会员每月赠送的B币券/大会员福利】: 失败, 原因: "
-                    + jsonObject.getString("message") + "❌");
+            LOGGER.warn("【领取年度大会员每月赠送的B币券/大会员福利】: 失败, 原因: {}❌", jsonObject.getString("message"));
         }
     }
 
@@ -86,8 +85,8 @@ public class CollectVipGift implements Task {
      * @Time 2020-10-19
      */
     public String queryVipStatusType() {
-        if (IS_VIP.equals(data.getVipStatus())) {
-            return data.getVipType();
+        if (IS_VIP.equals(userData.getVipStatus())) {
+            return userData.getVipType();
         } else {
             return NOT_VIP;
         }

@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.srcrs.Task;
 import top.srcrs.domain.Config;
-import top.srcrs.domain.Data;
+import top.srcrs.domain.UserData;
 import top.srcrs.util.Request;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class ThrowCoinTask implements Task {
     /** 获取日志记录器对象 */
     private static final Logger LOGGER = LoggerFactory.getLogger(ThrowCoinTask.class);
     /** 获取DATA对象 */
-    private static final Data DATA = Data.getInstance();
+    private static final UserData USER_DATA = UserData.getInstance();
     Config config = Config.getInstance();
 
     @Override
@@ -67,20 +67,19 @@ public class ThrowCoinTask implements Task {
                 if(num - videoAid.size() > 0){
                     for(String up : config.getUpList()){
                         videoAid.addAll(spaceSearch(up,num - videoAid.size()));
-                        LOGGER.info("【优先投币up " + up + " 】: "
-                                + "成功获取到: " + videoAid.size() + " 个视频");
+                        LOGGER.info("【优先投币up {} 】: 成功获取到: {} 个视频", up, videoAid.size());
                     }
                 }
             }
             /* 获取当前用户最新的20条动态投稿视频列表 */
             if(num - videoAid.size() > 0){
                 videoAid.addAll(dynamicNew(num - videoAid.size()));
-                LOGGER.info("【用户动态列表】: " + "成功获取到: " + videoAid.size() + " 个视频");
+                LOGGER.info("【用户动态列表】: 成功获取到: {} 个视频", videoAid.size());
             }
             /* 获取分区视频 */
             if(num - videoAid.size() > 0){
                 videoAid.addAll(getRegions("6", "1",num - videoAid.size()));
-                LOGGER.info("【分区热门视频】: " + "成功获取到: " + videoAid.size() + " 个视频");
+                LOGGER.info("【分区热门视频】: 成功获取到: {} 个视频", videoAid.size());
             }
             /* 给每个视频投 1 个币,点 1 个赞 */
             for (int i = 0; i < num; i++) {
@@ -96,11 +95,11 @@ public class ThrowCoinTask implements Task {
                 }
                 LOGGER.info("【投币】: 给视频 - av{} - {}", aid, msg);
                 /* 投完币等待1-2秒 */
-                Thread.sleep(new Random().nextInt(1000)+1000);
+                Thread.sleep(2000);
             }
             update(navData);
         } catch (Exception e) {
-            LOGGER.info("💔投币异常 : " + e);
+            LOGGER.info("💔投币异常 : ", e);
         }
     }
 
@@ -116,10 +115,10 @@ public class ThrowCoinTask implements Task {
     public JSONObject throwCoin(String aid, String num, String selectLike) {
 
         String body = "aid=" + aid
-                + "&multiply=" + num
-                + "&select_like=" + selectLike
-                + "&cross_domain=" + "true"
-                + "&csrf=" + DATA.getBiliJct();
+                      + "&multiply=" + num
+                      + "&select_like=" + selectLike
+                      + "&cross_domain=" + "true"
+                      + "&csrf=" + USER_DATA.getBiliJct();
         return Request.post("https://api.bilibili.com/x/web-interface/coin/add", body);
     }
 
@@ -164,7 +163,7 @@ public class ThrowCoinTask implements Task {
             String mid = archive.getJSONObject("owner").getString("mid");
             if(isThrowCoins(aid)){
                 /* 可能会碰到自己的视频 */
-                if(!(DATA.getMid().equals(mid))){
+                if(!(USER_DATA.getMid().equals(mid))){
                     videoAid.add(aid);
                 }
             }
@@ -184,13 +183,14 @@ public class ThrowCoinTask implements Task {
     private void update(JSONObject navData){
         /* 考虑到需要计算还剩几天升级，需要更新 Data 类中的结果 */
         /* 更新Data实体类中硬币剩余数 */
-        DATA.setMoney(navData.getString("money"));
+        USER_DATA.setMoney(navData.getBigDecimal("money"));
+        JSONObject levelInfo = navData.getJSONObject("level_info");
         /* 更新Data实体类中的经验数 */
-        DATA.setCurrentExp(navData.getJSONObject("level_info").getString("current_exp"));
+        USER_DATA.setCurrentExp(levelInfo.getBigDecimal("current_exp"));
         /* 更新Data实体类中的等级 */
-        DATA.setCurrentLevel(navData.getJSONObject("level_info").getString("current_level"));
+        USER_DATA.setCurrentLevel(levelInfo.getString("current_level"));
         /* 更新Data实体类中的升级到下一级所需要的经验数 */
-        DATA.setNextExp(navData.getJSONObject("level_info").getString("next_exp"));
+        USER_DATA.setNextExp(levelInfo.getBigDecimal("next_exp"));
     }
 
     /**
@@ -200,7 +200,7 @@ public class ThrowCoinTask implements Task {
      * @Time 2020-11-17
      */
     private List<String> dynamicNew(int num){
-        String param = "?uid="+DATA.getMid()+"&type_list=8";
+        String param = "?uid=" + USER_DATA.getMid() + "&type_list=8";
         JSONObject dynamic = Request.get("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new"+param);
         List<String> videoAid = new ArrayList<>();
         String success = "0";
@@ -213,7 +213,7 @@ public class ThrowCoinTask implements Task {
                 String mid = card.getJSONObject("desc").getString("rid");
                 if(isThrowCoins(aid)){
                     /* 可能会碰到自己的视频 */
-                    if(!(DATA.getMid().equals(mid))){
+                    if(!(USER_DATA.getMid().equals(mid))){
                         videoAid.add(aid);
                     }
                 }
@@ -264,7 +264,7 @@ public class ThrowCoinTask implements Task {
                 String mid = video.getString("mid");
                 if(isThrowCoins(aid)){
                     /* 可能会碰到自己的视频 */
-                    if(!(DATA.getMid().equals(mid))){
+                    if(!(USER_DATA.getMid().equals(mid))){
                         videoAid.add(aid);
                     }
                 }

@@ -37,7 +37,7 @@ public class BiLiveTask implements Task {
             */
             Thread.sleep(5000);
         } catch (Exception e){
-            LOGGER.error("💔直播签到错误 : " + e);
+            LOGGER.error("💔直播签到错误 : ", e);
         }
     }
 
