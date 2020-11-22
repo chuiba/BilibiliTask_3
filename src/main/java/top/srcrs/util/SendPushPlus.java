@@ -38,12 +38,12 @@ public class SendPushPlus {
         pJson.put("token", token);
         pJson.put("title", "BilibiliTask运行结果");
         pJson.put("content", ReadLog.getHTMLString("logs/logback.log"));
-        /**
+        /*
          * html	支持html文本。为空默认使用html模板(默认)
          * json	可视化展示json格式内容
          */
-        // pJson.put("template", "html");
 
+        /* pJson.put("template", "html"); */
         HttpUriRequest httpPost = RequestBuilder.get()
                                                 .setUri("http://pushplus.hxtrip.com/send")
                                                 .addParameters(Request.getPairList(pJson))

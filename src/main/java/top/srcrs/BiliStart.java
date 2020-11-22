@@ -109,10 +109,13 @@ public class BiliStart {
     }
 
     public static boolean checkEnv() {
+
         String BILI_JCT = System.getenv("BILI_JCT");
         String SESSDATA = System.getenv("SESSDATA");
         String DEDEUSERID = System.getenv("DEDEUSERID");
-        USER_DATA.setCookie(System.getenv("BILI_JCT"), System.getenv("SESSDATA"), System.getenv("DEDEUSERID"));
+        USER_DATA.setCookie(System.getenv("BILI_JCT"),
+                System.getenv("SESSDATA"),
+                System.getenv("DEDEUSERID"));
         return StringUtil.isAnyBlank(BILI_JCT, SESSDATA, DEDEUSERID);
     }
 
@@ -160,9 +163,9 @@ public class BiliStart {
      */
     private static int getNextLevel(){
         /* 当前经验数 */
-        int currentExp = USER_DATA.getCurrentExp().intValue();
+        int currentExp = USER_DATA.getCurrentExp();
         /* 到达下一级所需要的经验数 */
-        int nextExp = USER_DATA.getNextExp().intValue();
+        int nextExp = USER_DATA.getNextExp();
         /* 获取当前硬币数量 */
         int num1 = USER_DATA.getMoney().intValue();
         /* 获取配置中每日投币数量 */

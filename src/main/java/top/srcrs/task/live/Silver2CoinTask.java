@@ -29,7 +29,7 @@ public class Silver2CoinTask implements Task {
                 if(silver < minSilver){
                     log.info("【银瓜子兑换硬币】: {}","银瓜子余额不足❌");
                 } else{
-                    log.warn("【银瓜子兑换硬币】: {}",silver2coin().getString("msg") + "✔");
+                    log.info("【银瓜子兑换硬币】: {}",silver2coin().getString("msg") + "✔");
                 }
             } catch (Exception e){
                 log.error("💔银瓜子兑换硬币错误 : ", e);
