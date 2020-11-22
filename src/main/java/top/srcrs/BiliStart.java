@@ -58,9 +58,13 @@ public class BiliStart {
             log.info("💔账户已失效，请在Secrets重新绑定你的信息");
         }
 
-        /* 当用户只推送 server 酱或钉钉时，需要做一下判断*/
+        // server酱
         if(StringUtil.isNotBlank(System.getenv("SCKEY"))){
             SendServer.send(System.getenv("SCKEY"));
+        }
+        // PUSHPLUSTK
+        if(StringUtil.isNotBlank(System.getenv("PUSHPLUSTK"))){
+            SendPushPlus.send(System.getenv("PUSHPLUSTK"));
         }
         /* 此时数组的长度为4，就默认填写的是填写的钉钉 webHook 链接 */
         if(StringUtil.isNotBlank(System.getenv("DINGTALK"))){

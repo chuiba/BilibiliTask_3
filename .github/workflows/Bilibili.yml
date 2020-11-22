@@ -37,5 +37,6 @@ jobs:
         SESSDATA: ${{ secrets.SESSDATA }}
         SCKEY: ${{ secrets.SCKEY }}
         DINGTALK: ${{secrets.DINGTALK}}
+        PUSHPLUSTK: ${{secrets.PUSHPLUSTK}}
       run:
         sh gradlew runMain
