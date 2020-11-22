@@ -8,12 +8,19 @@ import org.junit.jupiter.api.Test;
  * @author : Ali
  * @date : 2020/11/21
  */
-class SendServerTest {
+class SendTest {
 
     @Test
-    void sendTest() {
+    void SendServerTest() {
         if(StringUtil.isNotBlank(System.getenv("SCKEY"))){
             SendServer.send(System.getenv("SCKEY"));
+        }
+    }
+
+    @Test
+    void SendPushPlusTest() {
+        if(StringUtil.isNotBlank(System.getenv("PUSHPLUSTK"))){
+            SendPushPlus.send(System.getenv("PUSHPLUSTK"));
         }
     }
 

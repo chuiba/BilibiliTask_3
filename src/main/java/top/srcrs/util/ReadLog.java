@@ -22,17 +22,25 @@ public class ReadLog {
      * @author srcrs
      * @Time 2020-10-22
      */
-    public static String getString(String pathName){
+    public static String getString(String pathName, String suffix){
         /* str代表要发送的数据 */
         StringBuilder str = new StringBuilder();
         try(FileReader reader = new FileReader(pathName);
             BufferedReader br = new BufferedReader(reader)){
             while (br.ready()){
-                str.append(br.readLine()).append("\n\n");
+                str.append(br.readLine()).append(suffix);
             }
         } catch (Exception e){
             log.error("💔读日志文件时出错 : ", e);
         }
         return str.toString();
+    }
+
+    public static String getMarkDownString(String pathName) {
+        return getString(pathName, "\n\n");
+    }
+
+    public static String getHTMLString(String pathName) {
+        return getString(pathName, "<br />");
     }
 }

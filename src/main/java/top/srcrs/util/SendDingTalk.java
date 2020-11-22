@@ -31,7 +31,7 @@ public class SendDingTalk {
      */
     public static void send(String dingTalk){
         /* 将要推送的数据 */
-        String desp = ReadLog.getString("logs/logback.log");
+        String desp = ReadLog.getMarkDownString("logs/logback.log");
         JSONObject markdownJson = new JSONObject();
         markdownJson.put("title", "BilibiliTask运行结果");
         markdownJson.put("text", desp);

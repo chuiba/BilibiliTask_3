@@ -14,33 +14,38 @@ import org.apache.http.util.EntityUtils;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 将日志消息发送到用户的 server 酱 （微信）
+ * 将日志消息发送到PUSHPLUS
+ * pushplus.hxtrip.com
  *
- * @author srcrs
+ * @author sixer
  * @Time 2020-10-22
  */
 @Slf4j
-public class SendServer {
+public class SendPushPlus {
 
-    private SendServer(){}
+    private SendPushPlus(){}
 
     /**
      * 发送消息给用户，如果绑定了微信，会发送到微信上。
-     * sc.ftqq.com
      *
-     * @param sckey 需要从server酱的官网注册获取
-     * @author srcrs
+     * @param token push+的token
+     * @author sixer
      * @Time 2020-10-22
      */
-    public static void send(String sckey) {
+    public static void send(String token) {
         /* 将要推送的数据 */
         JSONObject pJson = new JSONObject();
-        pJson.put("text", "BilibiliTask运行结果");
-        pJson.put("desp", ReadLog.getMarkDownString("logs/logback.log"));
+        pJson.put("token", token);
+        pJson.put("title", "BilibiliTask运行结果");
+        pJson.put("content", ReadLog.getHTMLString("logs/logback.log"));
+        /**
+         * html	支持html文本。为空默认使用html模板(默认)
+         * json	可视化展示json格式内容
+         */
+        // pJson.put("template", "html");
 
-        HttpUriRequest httpPost = RequestBuilder.post()
-                                                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                                                .setUri("https://sc.ftqq.com/" + sckey + ".send")
+        HttpUriRequest httpPost = RequestBuilder.get()
+                                                .setUri("http://pushplus.hxtrip.com/send")
                                                 .addParameters(Request.getPairList(pJson))
                                                 .build();
 
@@ -49,12 +54,12 @@ public class SendServer {
             HttpEntity entity = resp.getEntity();
             String respContent = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                log.info("【server酱推送】: 正常✔");
+                log.info("【PUSH+推送】: 正常✔");
             } else {
-                log.info("【server酱推送】: 失败, 原因为: {}❌", respContent);
+                log.info("【PUSH+推送】: 失败, 原因为: {}❌", respContent);
             }
         } catch (Exception e) {
-            log.error("💔server酱发送错误 : ", e);
+            log.error("💔PUSH+发送错误 : ", e);
         }
     }
 
