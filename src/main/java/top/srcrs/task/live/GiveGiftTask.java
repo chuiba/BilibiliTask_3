@@ -40,9 +40,9 @@ public class GiveGiftTask implements Task {
             for(Object object : jsonArray){
                 JSONObject json = (JSONObject) object;
                 long expireAt = Long.parseLong(json.getString("expire_at"));
-                /* 礼物还剩2天送出 */
-                /* 永久礼物到期时间为0 */
-                if((expireAt-nowTime) < 60*60*24*2 && expireAt != 0){
+                /* 礼物还剩 1 天送出 */
+                /* 永久礼物到期时间为 0 */
+                if((expireAt-nowTime) < 60*60*24*1 && expireAt != 0){
                     /* 如果有未送出的礼物，则获取一个直播间 */
                     if("".equals(roomId)){
                         JSONObject uidAndRid = getuidAndRid();
