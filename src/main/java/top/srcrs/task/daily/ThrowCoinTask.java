@@ -10,6 +10,7 @@ import top.srcrs.util.Request;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 进行视频投币
@@ -91,7 +92,7 @@ public class ThrowCoinTask implements Task {
                 }
                 log.info("【投币】: 给视频 - av{} - {}", aid, msg);
                 /* 投完币等待1-2秒 */
-                Thread.sleep(2000);
+                Thread.sleep(new Random().nextInt(1000)+1000);
             }
             update(navData);
         } catch (Exception e) {

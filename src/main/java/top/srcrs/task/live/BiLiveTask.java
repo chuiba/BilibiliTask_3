@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import top.srcrs.Task;
 import top.srcrs.util.Request;
 
+import java.util.Random;
+
 /**
  * 进行直播签到
  * @author srcrs
@@ -29,10 +31,10 @@ public class BiLiveTask implements Task {
                 msg = json.getString("message") + "❌";
             }
             log.info("【直播签到】: {}",msg);
-            /* 直播签到后等待5秒
+            /* 直播签到后等待 3-5 秒
             ** 为防止礼物未到到账，而无法送出
             */
-            Thread.sleep(5000);
+            Thread.sleep(new Random().nextInt(2000)+3000);
         } catch (Exception e){
             log.error("💔直播签到错误 : ", e);
         }
