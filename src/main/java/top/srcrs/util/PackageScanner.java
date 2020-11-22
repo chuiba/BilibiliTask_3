@@ -1,7 +1,6 @@
 package top.srcrs.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.net.URL;
@@ -12,9 +11,8 @@ import java.util.Enumeration;
  * @author srcrs
  * @Time 2020-10-13
  */
+@Slf4j
 public abstract class PackageScanner {
-    /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(PackageScanner.class);
 
     /**
      * 将 . 路径换为 / 路径
@@ -36,7 +34,7 @@ public abstract class PackageScanner {
                 scannerDirectory(root, packageName);
             }
         } catch (Exception e) {
-            LOGGER.error("💔扫包错误 : " + e);
+            log.error("💔扫包错误 : ", e);
         }
     }
 
@@ -59,13 +57,8 @@ public abstract class PackageScanner {
                 /* 去除掉后缀 .class */
                 String className = packageName + "." + fileName;
                 /* 得到带包名的类，为取得元类对象做准备 */
-                try {
-                    Class<?> klass = Class.forName(className);
-                    dealClass(klass);
-                    /* 将得到的元类对象通过抽象方法参数传递给用户，以便用户后续操作。 */
-                } catch (ClassNotFoundException e) {
-                    LOGGER.error("💔反射获取class错误 : " + e);
-                }
+                dealClass(className);
+                /* 将得到的元类对象通过抽象方法参数传递给用户，以便用户后续操作。 */
             } else if (file.isDirectory()) {
                 scannerDirectory(file, packageName + "." + file.getName());
                 /* 此处采用递归，只要是目录就继续往下一层遍历，直到file.isFile()为true,且以.class结尾 */
@@ -74,8 +67,8 @@ public abstract class PackageScanner {
     }
 
     /**
-     * 获得真实的class对象
-     * @param klass class形式对象
+     * 获得真实的className
+     * @param className className
      */
-    public abstract void dealClass(Class<?> klass);
+    public abstract void dealClass(String className);
 }

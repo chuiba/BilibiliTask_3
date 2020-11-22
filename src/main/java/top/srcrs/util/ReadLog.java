@@ -1,7 +1,6 @@
 package top.srcrs.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,9 +10,10 @@ import java.io.FileReader;
  * @author srcrs
  * @Time 2020-11-16
  */
+@Slf4j
 public class ReadLog {
-    /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReadLog.class);
+
+    private ReadLog(){}
 
     /**
      * 读取输出到文件中的日志
@@ -22,23 +22,25 @@ public class ReadLog {
      * @author srcrs
      * @Time 2020-10-22
      */
-    public static String getString(String pathName){
+    public static String getString(String pathName, String suffix){
         /* str代表要发送的数据 */
         StringBuilder str = new StringBuilder();
-        FileReader reader ;
-        BufferedReader br ;
-        try{
-            reader = new FileReader(pathName);
-            br = new BufferedReader(reader);
-            String line;
-            while ((line = br.readLine()) != null){
-                str.append(line).append("\n\n");
+        try(FileReader reader = new FileReader(pathName);
+            BufferedReader br = new BufferedReader(reader)){
+            while (br.ready()){
+                str.append(br.readLine()).append(suffix);
             }
-            reader.close();
-            br.close();
         } catch (Exception e){
-            LOGGER.error("💔读日志文件时出错 : " + e);
+            log.error("💔读日志文件时出错 : ", e);
         }
         return str.toString();
+    }
+
+    public static String getMarkDownString(String pathName) {
+        return getString(pathName, "\n\n");
+    }
+
+    public static String getHTMLString(String pathName) {
+        return getString(pathName, "<br />");
     }
 }

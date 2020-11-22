@@ -2,11 +2,10 @@ package top.srcrs.task.live;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import top.srcrs.Task;
 import top.srcrs.domain.Config;
-import top.srcrs.domain.Data;
+import top.srcrs.domain.UserData;
 import top.srcrs.util.Request;
 
 /**
@@ -14,10 +13,10 @@ import top.srcrs.util.Request;
  * @author srcrs
  * @Time 2020-10-13
  */
+@Slf4j
 public class GiveGiftTask implements Task {
     /** 获取日志记录器对象 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(GiveGiftTask.class);
-    Data data = Data.getInstance();
+    UserData userData = UserData.getInstance();
     Config config = Config.getInstance();
 
     @Override
@@ -25,7 +24,7 @@ public class GiveGiftTask implements Task {
         try{
             /* 从配置类中读取是否需要执行赠送礼物 */
             if(!config.isGift()){
-                LOGGER.info("【送即将过期礼物】: " + "自定义配置不送出即将过期礼物✔");
+                log.info("【送即将过期礼物】: 自定义配置不送出即将过期礼物✔");
                 return;
             }
             /* 直播间 id */
@@ -41,41 +40,40 @@ public class GiveGiftTask implements Task {
             for(Object object : jsonArray){
                 JSONObject json = (JSONObject) object;
                 long expireAt = Long.parseLong(json.getString("expire_at"));
-                /* 礼物还剩1天送出 */
+                /* 礼物还剩2天送出 */
                 /* 永久礼物到期时间为0 */
-                if((expireAt-nowTime) < 87000 && expireAt != 0){
+                if((expireAt-nowTime) < 60*60*24*2 && expireAt != 0){
                     /* 如果有未送出的礼物，则获取一个直播间 */
                     if("".equals(roomId)){
                         JSONObject uidAndRid = getuidAndRid();
                         uid = uidAndRid.getString("uid");
                         roomId = uidAndRid.getString("roomId");
                     }
-                    JSONObject jsonObject3 = xliveBagSend(
-                            roomId,
-                            uid,
-                            json.getString("bag_id"),
-                            json.getString("gift_id"),
-                            json.getString("gift_num"),
-                            "0",
-                            "0", "pc");
+                    JSONObject pJson = new JSONObject();
+                    pJson.put("biz_id", roomId);
+                    pJson.put("ruid", uid);
+                    pJson.put("bag_id", json.get("bag_id"));
+                    pJson.put("gift_id", json.get("gift_id"));
+                    pJson.put("gift_num", json.get("gift_num"));
+                    JSONObject jsonObject3 = xliveBagSend(pJson);
                     if("0".equals(jsonObject3.getString("code"))){
                         /* 礼物的名字 */
                         String giftName = jsonObject3.getJSONObject("data").getString("gift_name");
                         /* 礼物的数量 */
                         String giftNum = jsonObject3.getJSONObject("data").getString("gift_num");
-                        LOGGER.info("【送即将过期礼物】: 给直播间 - {} - {} - 数量: {}✔",roomId,giftName,giftNum);
+                        log.info("【送即将过期礼物】: 给直播间 - {} - {} - 数量: {}✔",roomId,giftName,giftNum);
                         flag = false;
                     }
                     else{
-                        LOGGER.warn("【送即将过期礼物】: 失败, 原因 : " + jsonObject3+"❌");
+                        log.warn("【送即将过期礼物】: 失败, 原因 : {}❌", jsonObject3);
                     }
                 }
             }
             if(flag){
-                LOGGER.info("【送即将过期礼物】: " + "当前无即将过期礼物❌");
+                log.info("【送即将过期礼物】: " + "当前无即将过期礼物❌");
             }
         } catch (Exception e){
-            LOGGER.error("💔赠送礼物异常 : " + e);
+            log.error("💔赠送礼物异常 : ", e);
         }
     }
 
@@ -101,8 +99,9 @@ public class GiveGiftTask implements Task {
      * @Time 2020-10-13
      */
     public String xliveGetRoomUid(String roomId){
-        String param = "?room_id="+roomId;
-        return Request.get("https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom" + param)
+        JSONObject pJson = new JSONObject();
+        pJson.put("room_id", roomId);
+        return Request.get("https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom", pJson)
                 .getJSONObject("data")
                 .getJSONObject("room_info")
                 .getString("uid");
@@ -116,8 +115,9 @@ public class GiveGiftTask implements Task {
      * @Time 2020-11-20
      */
     public String getRoomInfoOld(String mid) {
-        String param = "?mid="+mid;
-        return Request.get("http://api.live.bilibili.com/room/v1/Room/getRoomInfoOld"+param)
+        JSONObject pJson = new JSONObject();
+        pJson.put("mid", mid);
+        return Request.get("http://api.live.bilibili.com/room/v1/Room/getRoomInfoOld", pJson)
                 .getJSONObject("data")
                 .getString("roomid");
     }
@@ -136,39 +136,20 @@ public class GiveGiftTask implements Task {
 
     /**
      * B站直播送出背包的礼物
-     * @param bizId roomId
-     * @param ruid uid 用户id
-     * @param bagId 背包id
-     * @param giftId 礼物id
-     * @param giftNum 礼物数量
-     * @param stormBeatId 未知意思
-     * @param price 价格
-     * @param platform 设备标识
+     * @param pJson JSONObject
      * @return JSONObject
      * @author srcrs
      * @Time 2020-10-13
      */
-    public JSONObject xliveBagSend(
-            String bizId,
-            String ruid,
-            String bagId,
-            String giftId,
-            String giftNum,
-            String stormBeatId,
-            String price, String platform){
-        String body = "uid=" + data.getMid()
-                + "&gift_id=" + giftId
-                + "&ruid=" + ruid
-                + "&send_ruid=0"
-                + "&gift_num=" + giftNum
-                + "&bag_id=" + bagId
-                + "&platform=" + platform
-                + "&biz_code=" + "live"
-                + "&biz_id=" + bizId
-                + "&storm_beat_id=" + stormBeatId
-                + "&price=" + price
-                + "&csrf=" + data.getBiliJct();
-        return Request.post("https://api.live.bilibili.com/gift/v2/live/bag_send", body);
+    public JSONObject xliveBagSend(JSONObject pJson){
+        pJson.put("uid", userData.getMid());
+        pJson.put("csrf", userData.getBiliJct());
+        pJson.put("send_ruid", 0);
+        pJson.put("storm_beat_id", 0);
+        pJson.put("price", 0);
+        pJson.put("platform", "pc");
+        pJson.put("biz_code", "live");
+        return Request.post("https://api.live.bilibili.com/gift/v2/live/bag_send", pJson);
     }
 
     /**
@@ -188,20 +169,20 @@ public class GiveGiftTask implements Task {
             roomId = getRoomInfoOld(uid);
             String status = "0";
             if(status.equals(roomId)){
-                LOGGER.info("【获取直播间】: " + "自定义up " + uid + " 无直播间");
+                log.info("【获取直播间】: 自定义up {} 无直播间", uid);
                 /* 随机获取一个直播间 */
                 roomId = xliveGetRecommend();
                 uid = xliveGetRoomUid(roomId);
-                LOGGER.info("【获取直播间】: " + "随机直播间");
+                log.info("【获取直播间】: 随机直播间");
             } else{
-                LOGGER.info("【获取直播间】: " + "自定义up " + uid + " 的直播间");
+                log.info("【获取直播间】: 自定义up {} 的直播间", uid);
             }
 
         } else{
             /* 随机获取一个直播间 */
             roomId = xliveGetRecommend();
             uid = xliveGetRoomUid(roomId);
-            LOGGER.info("【获取直播间】: " + "随机直播间");
+            log.info("【获取直播间】: " + "随机直播间");
         }
         JSONObject json = new JSONObject();
         json.put("uid",uid);
