@@ -186,7 +186,7 @@ public class ThrowCoinTask implements Task {
         /* 更新Data实体类中的等级 */
         USER_DATA.setCurrentLevel(levelInfo.getString("current_level"));
         /* 更新Data实体类中的升级到下一级所需要的经验数 */
-        USER_DATA.setNextExp(levelInfo.getIntValue("next_exp"));
+        USER_DATA.setNextExp(levelInfo.getString("next_exp"));
     }
 
     /**

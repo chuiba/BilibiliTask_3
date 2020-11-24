@@ -146,9 +146,9 @@ public class BiliStart {
             /* 钱包B币卷余额 */
             USER_DATA.setCouponBalance(object.getJSONObject("wallet").getIntValue("coupon_balance"));
             /* 升级到下一级所需要的经验 */
-            USER_DATA.setNextExp(levelInfo.getIntValue("next_exp"));
+            USER_DATA.setNextExp(levelInfo.getString("next_exp"));
             /* 获取当前的等级 */
-            USER_DATA.setNextExp(levelInfo.getIntValue("current_level"));
+            USER_DATA.setNextExp(levelInfo.getString("current_level"));
             return true;
         }
         return false;
@@ -165,7 +165,7 @@ public class BiliStart {
         /* 当前经验数 */
         int currentExp = USER_DATA.getCurrentExp();
         /* 到达下一级所需要的经验数 */
-        int nextExp = USER_DATA.getNextExp();
+        int nextExp = Integer.parseInt(USER_DATA.getNextExp());
         /* 获取当前硬币数量 */
         int num1 = USER_DATA.getMoney().intValue();
         /* 获取配置中每日投币数量 */
