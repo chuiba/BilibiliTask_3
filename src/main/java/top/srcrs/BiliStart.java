@@ -39,10 +39,9 @@ public class BiliStart {
             log.info("【用户名】: {}",StringUtil.hideString(USER_DATA.getUname(),1,1,'*'));
             log.info("【硬币】: {}", USER_DATA.getMoney());
             log.info("【经验】: {}", USER_DATA.getCurrentExp());
-
+            log.info("【等级】: {}",USER_DATA.getCurrentLevel());
             /* 动态执行task包下的所有java代码 */
             scanTask();
-
             /* 当用户等级为Lv6时，升级到下一级 next_exp 值为 -- 代表无穷大 */
             String maxLevel = "6";
             if(maxLevel.equals(USER_DATA.getCurrentLevel())){
@@ -126,37 +125,44 @@ public class BiliStart {
      * @Time 2020-10-13
      */
     public static boolean check(){
-        JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
-        JSONObject object = jsonObject.getJSONObject("data");
-        String code = jsonObject.getString("code");
-        if(SUCCESS.equals(code)){
-            JSONObject levelInfo = object.getJSONObject("level_info");
-            /* 用户名 */
-            USER_DATA.setUname(object.getString("uname"));
-            /* 账户的uid */
-            USER_DATA.setMid(object.getString("mid"));
-            /* vip类型 */
-            USER_DATA.setVipType(object.getString("vipType"));
-            /* 硬币数 */
-            USER_DATA.setMoney(object.getBigDecimal("money"));
-            /* 经验 */
-            USER_DATA.setCurrentExp(levelInfo.getIntValue("current_exp"));
-            /* 大会员状态 */
-            USER_DATA.setVipStatus(object.getString("vipStatus"));
-            /* 钱包B币卷余额 */
-            USER_DATA.setCouponBalance(object.getJSONObject("wallet").getIntValue("coupon_balance"));
-            /* 升级到下一级所需要的经验 */
-            USER_DATA.setNextExp(levelInfo.getString("next_exp"));
-            /* 获取当前的等级 */
-            USER_DATA.setNextExp(levelInfo.getString("current_level"));
-            return true;
+        /* 连续登录 80 次，有一次登录成功即停止
+         * 每次失败后等待5秒钟
+         */
+        int num = 80;
+        while(num--!=0){
+            JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
+            JSONObject object = jsonObject.getJSONObject("data");
+            String code = jsonObject.getString("code");
+            if(SUCCESS.equals(code)){
+                JSONObject levelInfo = object.getJSONObject("level_info");
+                /* 用户名 */
+                USER_DATA.setUname(object.getString("uname"));
+                /* 账户的uid */
+                USER_DATA.setMid(object.getString("mid"));
+                /* vip类型 */
+                USER_DATA.setVipType(object.getString("vipType"));
+                /* 硬币数 */
+                USER_DATA.setMoney(object.getBigDecimal("money"));
+                /* 经验 */
+                USER_DATA.setCurrentExp(levelInfo.getIntValue("current_exp"));
+                /* 大会员状态 */
+                USER_DATA.setVipStatus(object.getString("vipStatus"));
+                /* 钱包B币卷余额 */
+                USER_DATA.setCouponBalance(object.getJSONObject("wallet").getIntValue("coupon_balance"));
+                /* 升级到下一级所需要的经验 */
+                USER_DATA.setNextExp(levelInfo.getString("next_exp"));
+                /* 获取当前的等级 */
+                USER_DATA.setCurrentLevel(levelInfo.getString("current_level"));
+                return true;
+            }
+            Request.waitFor();
         }
         return false;
     }
 
     /**
      * 计算到下一级所需要的天数
-     * 未包含今日所获得经验数
+     * 由于风控抓的紧，为减少相关 api 的请求次数，会有一天的误差
      * @return int 距离升级到下一等级还需要几天
      * @author srcrs
      * @Time 2020-11-17
