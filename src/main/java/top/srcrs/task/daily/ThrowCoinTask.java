@@ -28,10 +28,8 @@ public class ThrowCoinTask implements Task {
         try {
             /* 今天投币获得了多少经验 */
             int reward = getReward();
-            /* navData */
-            JSONObject navData = getNav();
             /* 还剩多少个硬币 */
-            int num2 = (int)navData.getDoubleValue("money");
+            int num2 = USER_DATA.getMoney().intValue();
             /* 配置类中设置投币数 */
             int num3 = config.getCoin();
             /* 计算今天需要投 num1 个硬币
@@ -94,7 +92,6 @@ public class ThrowCoinTask implements Task {
                 /* 投完币等待1-2秒 */
                 Thread.sleep(new Random().nextInt(1000)+1000);
             }
-            update(navData);
         } catch (Exception e) {
             log.info("💔投币异常 : ", e);
         }
@@ -131,17 +128,6 @@ public class ThrowCoinTask implements Task {
     }
 
     /**
-     * 获取账号信息(经验，硬币数，B币卷等等)
-     * @return JSONObject 返回账户 json 数据
-     * @author srcrs
-     * @Time 2020-11-17
-     */
-    public JSONObject getNav() {
-        return Request.get("https://api.bilibili.com/x/web-interface/nav?build=0&mobi_app=web")
-                .getJSONObject("data");
-    }
-
-    /**
      * 获取B站分区视频信息
      * @param ps  获取视频的数量
      * @param rid 分区号
@@ -168,25 +154,6 @@ public class ThrowCoinTask implements Task {
             }
         }
         return videoAid;
-    }
-
-    /**
-     * 更新 Data 实体类中的账户信息
-     * @param navData 用户的数据信息
-     * @author srcrs
-     * @Time 2020-11-17
-     */
-    private void update(JSONObject navData){
-        /* 考虑到需要计算还剩几天升级，需要更新 Data 类中的结果 */
-        /* 更新Data实体类中硬币剩余数 */
-        USER_DATA.setMoney(navData.getBigDecimal("money"));
-        JSONObject levelInfo = navData.getJSONObject("level_info");
-        /* 更新Data实体类中的经验数 */
-        USER_DATA.setCurrentExp(levelInfo.getIntValue("current_exp"));
-        /* 更新Data实体类中的等级 */
-        USER_DATA.setCurrentLevel(levelInfo.getString("current_level"));
-        /* 更新Data实体类中的升级到下一级所需要的经验数 */
-        USER_DATA.setNextExp(levelInfo.getString("next_exp"));
     }
 
     /**
