@@ -18,6 +18,7 @@ import top.srcrs.domain.UserData;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * 封装的网络请求请求工具类
@@ -32,7 +33,7 @@ public class Request {
      */
     private static final UserData USER_DATA = UserData.getInstance();
 
-    private static String UserAgent = "";
+    public static String UserAgent = "";
 
     private Request() {}
 
@@ -118,13 +119,13 @@ public class Request {
 
     /**
      * 增加等待时间，解决风控问题
-     * 暂时先设置为每次请求预等待 5 秒钟
+     * 暂时先设置为每次请求预等待 0-9 秒钟
      * @author srcrs
      * @Time 2020-11-28
      */
     public static void waitFor() {
         try{
-            Thread.sleep(5*1000);
+            Thread.sleep(new Random().nextInt(10)*1000);
         } catch (Exception e){
             log.warn("等待过程中出错",e);
         }
