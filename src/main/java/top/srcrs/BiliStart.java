@@ -22,6 +22,8 @@ public class BiliStart {
     private static final UserData USER_DATA = UserData.getInstance();
     /** 访问成功 */
     private static final String SUCCESS = "0";
+    /** 账号未登录，即 Cookie 已失效 */
+    private static final String NOT_LOGGED_IN = "-101";
     /** 获取Config配置的对象 */
     private static final Config CONFIG = Config.getInstance();
     public static void main(String ...args) {
@@ -29,13 +31,10 @@ public class BiliStart {
             log.error("💔请在Github Secrets中添加你的Cookie信息");
             return;
         }
-        /* 账户信息是否失效 */
-        boolean flag = true;
         /* 读取yml文件配置信息 */
         ReadConfig.transformation("/config.yml");
         /* 如果用户账户有效 */
         if(check()){
-            flag =false;
             log.info("【用户名】: {}",StringUtil.hideString(USER_DATA.getUname(),1,1,'*'));
             log.info("【硬币】: {}", USER_DATA.getMoney());
             log.info("【经验】: {}", USER_DATA.getCurrentExp());
@@ -53,8 +52,6 @@ public class BiliStart {
             }
             log.info("本次任务运行完毕。");
 
-        } else {
-            log.info("💔账户已失效，请在Secrets重新绑定你的信息");
         }
 
         // server酱
@@ -68,10 +65,6 @@ public class BiliStart {
         /* 此时数组的长度为4，就默认填写的是填写的钉钉 webHook 链接 */
         if(StringUtil.isNotBlank(System.getenv("DINGTALK"))){
             SendDingTalk.send(System.getenv("DINGTALK"));
-        }
-        /* 当用户失效工作流执行失败，github将会给邮箱发送运行失败信息 */
-        if(flag){
-            log.error("💔账户已失效，请在Secrets重新绑定你的信息");
         }
     }
 
@@ -130,6 +123,7 @@ public class BiliStart {
          */
         int num = 80;
         while(num--!=0){
+            Request.UserAgent = InitUserAgent.getOne();
             JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
             JSONObject object = jsonObject.getJSONObject("data");
             String code = jsonObject.getString("code");
@@ -153,10 +147,16 @@ public class BiliStart {
                 USER_DATA.setNextExp(levelInfo.getString("next_exp"));
                 /* 获取当前的等级 */
                 USER_DATA.setCurrentLevel(levelInfo.getString("current_level"));
+                log.info("【尝试登录次数】: {}",80-num);
                 return true;
+            }
+            if(NOT_LOGGED_IN.equals(code)){
+                log.info("💔账户已失效，请在Secrets重新绑定你的信息");
+                return false;
             }
             Request.waitFor();
         }
+        log.info("💔80次尝试登录全部失败");
         return false;
     }
 
