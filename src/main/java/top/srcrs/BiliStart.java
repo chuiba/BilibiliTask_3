@@ -118,45 +118,36 @@ public class BiliStart {
      * @Time 2020-10-13
      */
     public static boolean check(){
-        /* 连续登录 80 次，有一次登录成功即停止
-         * 每次失败后等待5秒钟
-         */
-        int num = 80;
-        while(num--!=0){
-            Request.UserAgent = InitUserAgent.getOne();
-            JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
-            JSONObject object = jsonObject.getJSONObject("data");
-            String code = jsonObject.getString("code");
-            if(SUCCESS.equals(code)){
-                JSONObject levelInfo = object.getJSONObject("level_info");
-                /* 用户名 */
-                USER_DATA.setUname(object.getString("uname"));
-                /* 账户的uid */
-                USER_DATA.setMid(object.getString("mid"));
-                /* vip类型 */
-                USER_DATA.setVipType(object.getString("vipType"));
-                /* 硬币数 */
-                USER_DATA.setMoney(object.getBigDecimal("money"));
-                /* 经验 */
-                USER_DATA.setCurrentExp(levelInfo.getIntValue("current_exp"));
-                /* 大会员状态 */
-                USER_DATA.setVipStatus(object.getString("vipStatus"));
-                /* 钱包B币卷余额 */
-                USER_DATA.setCouponBalance(object.getJSONObject("wallet").getIntValue("coupon_balance"));
-                /* 升级到下一级所需要的经验 */
-                USER_DATA.setNextExp(levelInfo.getString("next_exp"));
-                /* 获取当前的等级 */
-                USER_DATA.setCurrentLevel(levelInfo.getString("current_level"));
-                log.info("【尝试登录次数】: {}",80-num);
-                return true;
-            }
-            if(NOT_LOGGED_IN.equals(code)){
-                log.info("💔账户已失效，请在Secrets重新绑定你的信息");
-                return false;
-            }
-            Request.waitFor();
+        Request.UserAgent = InitUserAgent.getOne();
+        JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
+        JSONObject object = jsonObject.getJSONObject("data");
+        String code = jsonObject.getString("code");
+        if(SUCCESS.equals(code)){
+            JSONObject levelInfo = object.getJSONObject("level_info");
+            /* 用户名 */
+            USER_DATA.setUname(object.getString("uname"));
+            /* 账户的uid */
+            USER_DATA.setMid(object.getString("mid"));
+            /* vip类型 */
+            USER_DATA.setVipType(object.getString("vipType"));
+            /* 硬币数 */
+            USER_DATA.setMoney(object.getBigDecimal("money"));
+            /* 经验 */
+            USER_DATA.setCurrentExp(levelInfo.getIntValue("current_exp"));
+            /* 大会员状态 */
+            USER_DATA.setVipStatus(object.getString("vipStatus"));
+            /* 钱包B币卷余额 */
+            USER_DATA.setCouponBalance(object.getJSONObject("wallet").getIntValue("coupon_balance"));
+            /* 升级到下一级所需要的经验 */
+            USER_DATA.setNextExp(levelInfo.getString("next_exp"));
+            /* 获取当前的等级 */
+            USER_DATA.setCurrentLevel(levelInfo.getString("current_level"));
+            return true;
         }
-        log.info("💔80次尝试登录全部失败");
+        if(NOT_LOGGED_IN.equals(code)){
+            log.info("💔账户已失效，请在Secrets重新绑定你的信息");
+            return false;
+        }
         return false;
     }
 
