@@ -119,13 +119,13 @@ public class Request {
 
     /**
      * 增加等待时间，解决风控问题
-     * 暂时先设置为每次请求预等待 0-9 秒钟
+     * 暂时先设置为每次请求预等待 0-3 秒钟
      * @author srcrs
      * @Time 2020-11-28
      */
     public static void waitFor() {
         try{
-            Thread.sleep(new Random().nextInt(10)*1000);
+            Thread.sleep(new Random().nextInt(4)*1000);
         } catch (Exception e){
             log.warn("等待过程中出错",e);
         }
