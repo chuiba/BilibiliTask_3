@@ -29,7 +29,7 @@ public class UserData {
      * @return String
      */
     public String getCookie(){
-        return "bili_jct="+biliJct+";SESSDATA="+SESSDATA+";DedeUserID="+DedeUserID;
+        return "bili_jct="+biliJct+";SESSDATA="+SESSDATA+";DedeUserID="+DedeUserID+";";
     }
 
     private String DedeUserID;
