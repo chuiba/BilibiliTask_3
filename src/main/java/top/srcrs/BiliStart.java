@@ -9,6 +9,8 @@ import top.srcrs.util.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -75,12 +77,16 @@ public class BiliStart {
      * 因为部分任务是需要有顺序的去执行
      */
     private static void scanTask() {
-        List<String> classNameList = new ArrayList<>();
+        List<Class<?>> clazzList = new ArrayList<>();
         PackageScanner pack = new PackageScanner() {
             @Override
             public void dealClass(String className) {
                 try{
-                    classNameList.add(className);
+                    Class<?> clazz = Class.forName(className);
+                    // 判断类是否实现了接口Task
+                    if (Arrays.stream(clazz.getInterfaces()).parallel().anyMatch(taskI -> taskI.equals(Task.class))) {
+                        clazzList.add(clazz);
+                    }
                 } catch (Exception e){
                     log.error("💔反射获取对象错误 : ", e);
                 }
@@ -88,9 +94,9 @@ public class BiliStart {
         };
         pack.scannerPackage("top.srcrs.task");
 
-        classNameList.stream().sorted().forEach(className -> {
+        clazzList.stream().sorted(Comparator.comparing(Class::getName)).forEach(clazz -> {
             try{
-                Constructor<?> constructor = Class.forName(className).getConstructor();
+                Constructor<?> constructor = clazz.getConstructor();
                 Object object = constructor.newInstance();
                 Method method = object.getClass().getMethod("run");
                 method.invoke(object);
