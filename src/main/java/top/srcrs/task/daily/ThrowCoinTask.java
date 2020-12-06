@@ -179,7 +179,7 @@ public class ThrowCoinTask implements Task {
             for(Object object : cards){
                 JSONObject card = (JSONObject) object;
                 String aid = card.getJSONObject("desc").getString("rid");
-                String mid = card.getJSONObject("desc").getString("rid");
+                String mid = card.getJSONObject("desc").getString("uid");
                 if (isThrowCoins(aid, mid)) {
                     videoAid.add(aid);
                 }
