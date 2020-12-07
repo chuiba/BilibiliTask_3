@@ -8,9 +8,11 @@ s2c: true
 autoBiCoin: 1
 #用户设备的标识 [android,ios]
 platform: android
-# 自定义优先给这些 up 的视频投币 , 以yml数组的形式 , 填写其 uid (mid)
+#自定义优先给这些 up 的视频投币 , 以yml数组的形式 , 填写其 uid (mid)
 upList:
 #进行漫画签到任务 [true,false]
 manga: true
 #优先送出即将过期礼物给此up的直播间,填写其 uid
 upLive:
+#对于进行投币的视频选择是否点赞 , 默认不点赞 [0,1]
+selectLike: 0

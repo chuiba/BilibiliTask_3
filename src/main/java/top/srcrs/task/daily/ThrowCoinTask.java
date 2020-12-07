@@ -76,11 +76,12 @@ public class ThrowCoinTask implements Task {
                 videoAid.addAll(getRegions("6", "1",num - videoAid.size()));
                 log.info("【分区热门视频】: 成功获取到: {} 个视频", videoAid.size());
             }
-            /* 给每个视频投 1 个币,点 1 个赞 */
+            /* 给每个视频投 1 个币 */
+            /* 在配置文件中读取是否为投币视频点赞 */
             for (int i = 0; i < num; i++) {
                 /* 视频的aid */
                 String aid = videoAid.get(i);
-                JSONObject json = throwCoin(aid, "1", "1");
+                JSONObject json = throwCoin(aid, "1", config.getSelectLike());
                 /* 输出的日志消息 */
                 String msg ;
                 if ("0".equals(json.getString("code"))) {

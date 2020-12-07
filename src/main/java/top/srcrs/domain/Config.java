@@ -31,6 +31,16 @@ public class Config {
     private static boolean manga;
     /** 送出即将过期礼物给此 up 的直播间 */
     private static String upLive;
+    /** 对于进行投币的视频选择是否点赞 */
+    private static String selectLike;
+
+    public String getSelectLike() {
+        return selectLike;
+    }
+
+    public void setSelectLike(String selectLike) {
+        Config.selectLike = selectLike;
+    }
 
     public String getUpLive() {
         return upLive;
