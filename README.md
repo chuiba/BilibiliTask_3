@@ -5,6 +5,8 @@
 <img src="https://img.shields.io/github/forks/srcrs/BilibiliTask?color=orange">
 <img src="https://img.shields.io/github/license/srcrs/BilibiliTask?color=ff69b4">
 <img src="https://img.shields.io/github/search/srcrs/BilibiliTask/main?color=blue">
+<img src="https://img.shields.io/github/v/release/srcrs/BilibiliTask?color=blueviolet">
+<img src="https://img.shields.io/github/languages/code-size/srcrs/BilibiliTask?color=critical">
 </div>
 
 # 简介
@@ -15,6 +17,8 @@
 投币，点赞，直播签到，自动兑换银瓜子为硬币，自动送出即将过期礼物，漫画`App`签到，大会员领取`B`币卷等。每天获得`65`点经验，助你快速升级到`Lv6`。
 
 开源不易，如果本项目对你有帮助，那么就请给个`star`吧。😄
+
+重要提示，如果收到了`b`站的账号安全通知，可以考虑将`Actions`禁用一段时间，观望一段时间再进行使用，具体禁用步骤，请参考此[Issues](https://github.com/srcrs/BilibiliTask/issues/78)。
 
 # 功能
 
@@ -127,6 +131,7 @@ platform | 用户设备的标识[android,ios]
 upList | up 主列表,优先给这些 up 主投币[uid]
 manga | 是否自动进行漫画签到 [true,false]
 upLive | 即将过期礼物给此up的直播间,填写其 uid
+selectLike | 对于进行投币的视频选择是否点赞 , 默认不点赞 [0,1]
 
 ```yml
 #每天需要投币的数量 [0,5]。
@@ -139,7 +144,7 @@ s2c: true
 autoBiCoin: 1
 #用户设备的标识 [android,ios]
 platform: android
-# 自定义优先给这些 up 的视频投币 , 以yml数组的形式 , 填写其 uid (mid)
+#自定义优先给这些 up 的视频投币 , 以yml数组的形式 , 填写其 uid (mid)
 upList:
   - 477137547
   - 14602398
@@ -147,6 +152,8 @@ upList:
 manga: true
 #优先送出即将过期礼物给此up的直播间,填写其 uid
 upLive: 477137547
+#对于进行投币的视频选择是否点赞 , 默认不点赞 [0,1]
+selectLike: 0
 ``` 
 
 如实在没有想给他投币的up主，可以考虑把我填上哦 `477137547` 😄
@@ -251,6 +258,16 @@ git push origin main
 由于添加有配置文件`config.yml`，有可能会覆盖你自定义的`config.yml`，需要注意。
 
 # 更新日志
+
+## 2020-12-07
+
++ 发布1.0.8版本
+
++ 修复用户无动态获取视频信息错误
+
++ 修复从动态列表中获取到自己投稿视频的错误
+
++ 增加一些自定义配置点赞
 
 ## 2020-11-28
 
