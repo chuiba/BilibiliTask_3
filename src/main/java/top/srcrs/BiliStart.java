@@ -71,10 +71,10 @@ public class BiliStart {
         if(StringUtil.isNotBlank(System.getenv("DINGTALK"))){
             SendDingTalk.send(System.getenv("DINGTALK"));
         }
-
-        /* */
-        if(StringUtil.isNotBlank(System.getenv("TGBOT"))){
-            SendTgBot.send(System.getenv("TGBOT"));
+        /* Telegram Bot推送 */
+        if(StringUtil.isNotBlank(System.getenv("TELEGRAM_BOT_TOKEN"))
+                && StringUtil.isNotBlank(System.getenv("TELEGRAM_CHAT_ID"))){
+            SendTelegram.send(System.getenv("TELEGRAM_BOT_TOKEN"), System.getenv("TELEGRAM_CHAT_ID"));
         }
     }
 

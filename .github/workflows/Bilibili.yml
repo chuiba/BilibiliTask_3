@@ -39,6 +39,7 @@ jobs:
         DINGTALK: ${{secrets.DINGTALK}}
         PUSHPLUSTK: ${{secrets.PUSHPLUSTK}}
         SENDKEY: ${{ secrets.SENDKEY }}
-        TGBOT: ${{secrets.TGBOT}}
+        TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
+        TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
       run:
         sh gradlew runMain
