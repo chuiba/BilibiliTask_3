@@ -206,7 +206,20 @@ DINGTALK | https://oapi.dingtalk.com/robot/send?access_token=064559acaa666c43d5b
 
 ![](img/获取钉钉Webhook.gif)
 
-## 4.自定义程序运行时间
+## 4. 使用 Telegram bot 推送运行结果到 Telgram 群组
+
+1. 首先需要创建 telegram bot 并获取 telegram bot token，可以参考[文档](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-connect-telegram)；
+2. 将机器人加入群组中，并获取群组ID，查看[Stackoverflow问答](https://stackoverflow.com/a/32572159)；
+3. 将 telegram bot token 和群组ID添加到`Secrets`中即可。
+
+在`Secrets`中的`Name`和`Value`格式如下：
+
+Name               | Value
+-------------------|------
+TELEGRAM_BOT_TOKEN | xxxxx
+TELEGRAM_CHAT_ID   | xxxxx
+
+## 5.自定义程序运行时间
 
 在`.github/workflows/Bilibili.yml`修改`cron`表达式，需要注意的是，`cron`表达式是国际时间，
 需要换算到国内时间，往后推8个小时，例如国际时间是12点钟，则在国内是20点钟。
