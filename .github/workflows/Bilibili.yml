@@ -38,5 +38,7 @@ jobs:
         SCKEY: ${{ secrets.SCKEY }}
         DINGTALK: ${{secrets.DINGTALK}}
         PUSHPLUSTK: ${{secrets.PUSHPLUSTK}}
+        SENDKEY: ${{ secrets.SENDKEY }}
+        TGBOT: ${{secrets.TGBOT}}
       run:
         sh gradlew runMain

@@ -18,9 +18,23 @@ class SendTest {
     }
 
     @Test
+    void SendServerChanTest() {
+        if(StringUtil.isNotBlank(System.getenv("SENDKEY"))){
+            SendServerChan.send(System.getenv("SENDKEY"));
+        }
+    }
+
+    @Test
     void SendPushPlusTest() {
         if(StringUtil.isNotBlank(System.getenv("PUSHPLUSTK"))){
             SendPushPlus.send(System.getenv("PUSHPLUSTK"));
+        }
+    }
+
+    @Test
+    void SendTgBotTest() {
+        if(StringUtil.isNotBlank(System.getenv("TGBOT"))){
+            SendTgBot.send(System.getenv("TGBOT"));
         }
     }
 

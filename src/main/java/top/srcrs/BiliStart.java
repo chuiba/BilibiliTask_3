@@ -59,6 +59,10 @@ public class BiliStart {
         if(StringUtil.isNotBlank(System.getenv("SCKEY"))){
             SendServer.send(System.getenv("SCKEY"));
         }
+        // Server酱 测试号版
+        if(StringUtil.isNotBlank(System.getenv("SENDKEY"))){
+            SendServerChan.send(System.getenv("SENDKEY"));
+        }
         // PUSHPLUSTK
         if(StringUtil.isNotBlank(System.getenv("PUSHPLUSTK"))){
             SendPushPlus.send(System.getenv("PUSHPLUSTK"));
@@ -66,6 +70,11 @@ public class BiliStart {
         /* 此时数组的长度为4，就默认填写的是填写的钉钉 webHook 链接 */
         if(StringUtil.isNotBlank(System.getenv("DINGTALK"))){
             SendDingTalk.send(System.getenv("DINGTALK"));
+        }
+
+        /* */
+        if(StringUtil.isNotBlank(System.getenv("TGBOT"))){
+            SendTgBot.send(System.getenv("TGBOT"));
         }
     }
 
