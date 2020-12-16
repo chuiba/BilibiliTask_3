@@ -47,34 +47,13 @@
 - [进阶使用](#进阶使用)
   - [1.配置文件说明](#1配置文件说明)
   - [2.推送运行结果到微信](#2推送运行结果到微信)
-    - [使用`server`酱将程序运行结果推送到微信](#使用server酱将程序运行结果推送到微信)
-    - [使用`push+`推送运行结果到微信](#使用push推送运行结果到微信)
   - [3.推送运行结果到钉钉](#3推送运行结果到钉钉)
-  - [4.推送运行结果到 TgBot](#4推送运行结果到-tgbot)
-    - [创建机器人并获取 `token`](#创建机器人并获取-token)
-    - [获取 `chat_id`](#获取-chat_id)
-      - [获取自己的 `id`](#获取自己的-id)
-      - [获取群组的 `id`](#获取群组的-id)
-      - [添加到 `Secrets`](#添加到-secrets)
+  - [4.使用`Telegram bot`推送运行结果到`Telgram`群组](#使用Telegram bot推送运行结果到Telgram群组)
   - [5.自定义程序运行时间](#5自定义程序运行时间)
 - [如何拉取最新代码](#如何拉取最新代码)
   - [方法一](#方法一)
   - [方法二](#方法二)
 - [更新日志](#更新日志)
-  - [2020-12-07](#2020-12-07)
-  - [2020-11-28](#2020-11-28)
-  - [2020-11-22](#2020-11-22)
-  - [2020-11-17](#2020-11-17)
-  - [2020-11-05](#2020-11-05)
-  - [2020-11-03](#2020-11-03)
-  - [2020-10-22](#2020-10-22)
-  - [2020-10-19](#2020-10-19)
-  - [2020-10-17](#2020-10-17)
-  - [2020-10-13](#2020-10-13)
-  - [2020-10-08](#2020-10-08)
-  - [2020-10-07](#2020-10-07)
-  - [2020-10-06](#2020-10-06)
-  - [2020-10-05](#2020-10-05)
 - [参考项目](#参考项目)
 
 关于日志中的 ✔ 和 ❌ 说明
@@ -196,15 +175,21 @@ Name | Value
 -|-
 SCKEY | xxxxx
 
-如果是`server`酱测试号版，在`Secrets`中的`Name`和`Value`格式如下：
+这样就可以在微信接收到运行结果了。
+
+![](img/server酱推送的结果.jpg)
+
+### 使用`server`酱测试号版推送运行结果到微信
+
+`server`酱测试号版官网：`https://sct.ftqq.com/`
+
++ 按照`server`酱测试号版官网使用教程，用微信扫码登录。
+
++ 获得`SENDKEY`并将其填入到`Secrets`中。
 
 Name | Value
 -|-
 SENDKEY | xxxxx
-
-这样就可以在微信接收到运行结果了。
-
-![](img/server酱推送的结果.jpg)
 
 ### 使用`push+`推送运行结果到微信
 
@@ -234,59 +219,21 @@ DINGTALK | <https://oapi.dingtalk.com/robot/send?access_token=064559acaa666c43d5
 
 ![](img/获取钉钉Webhook.gif)
 
-## 4.推送运行结果到 TgBot
+## 4.使用`Telegram bot`推送运行结果到`Telgram`群组
 
-### 创建机器人并获取 `token`
+1. 首先需要创建 telegram bot 并获取 telegram bot token，可以参考[文档](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-connect-telegram)；
+2. 将机器人加入群组中，并获取群组ID，查看[Stackoverflow问答](https://stackoverflow.com/a/32572159)；
+3. 将 telegram bot token 和群组ID添加到`Secrets`中即可。
 
-在 `@BotFather` 中创建一个机器人：
+在`Secrets`中的`Name`和`Value`格式如下：
 
-   1. 首先输入 `/newbot`；
-   2. 输入机器人的昵称；
-   3. 再输入机器人的名字，名字必须以 `bot` 结尾；
-   4. 图片中红色框框内的黄色字符，就是机器人的 `token`，把他记住；
-
-![](img/创建TgBot机器人.jpg)
-
-### 获取 `chat_id`
-
-#### 获取自己的 `id`
-
-在 `@getidsbot` 输入 `/start` 可以获取自己的 `id`；
-
-![](img/获取自己的ID.jpg)
-
-#### 获取群组的 `id`
-
-如果想推送到群组，可以先把机器人加入进去群组；
-
-![](img/邀请机器人进群组.jpg)
-
-再对着群组里带 `/` 的随意发一些内容；
-
-![](img/在群组里说一句话.jpg)
-
-这时候，我们打开浏览器，在地址栏输入：
-
-``` shell
-## 把 <你的机器人的token> 替换成刚刚获取到的 token
-https://api.telegram.org/bot<你的机器人的token>/getUpdates
-```
-
-![](img/获取Json.jpg)
-
-而 chat 下的 id,就是群组 id。
-
-#### 添加到 `Secrets`
-
-键值对如下格式，Value 中填入 ```token@@chat_id``` ，`token` 和 `chat_id` 以 `@@` 分割
-
-Name | Value
--|-
-TGBOT |  token@@chat_id
-
-然后因为是重复签到，结果将就着看，大概就是这么回事儿~
+Name               | Value
+-------------------|------
+TELEGRAM_BOT_TOKEN | xxxxx
+TELEGRAM_CHAT_ID   | xxxxx
 
 ![](img/TgBot运行结果.jpg)
+
 ## 5.自定义程序运行时间
 
 在`.github/workflows/Bilibili.yml`修改`cron`表达式，需要注意的是，`cron`表达式是国际时间，
@@ -339,6 +286,12 @@ git push origin main
 由于添加有配置文件`config.yml`，有可能会覆盖你自定义的`config.yml`，需要注意。
 
 # 更新日志
+
+## 2020-12-17
+
++ 增加`server`酱测试号版推送，感谢[sh4wnzec](https://github.com/sh4wnzec)
+
++ 增加`Telegram bot`推送，感谢[qiwihui](https://github.com/qiwihui)
 
 ## 2020-12-07
 
