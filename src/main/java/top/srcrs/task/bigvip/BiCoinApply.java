@@ -50,6 +50,7 @@ public class BiCoinApply implements Task {
                     doMelonSeed(couponBalance);
                     break;
                 default:
+                    log.info("【使用B币卷】: " + "自定义配置不使用");
                     break;
             }
         } catch (Exception e){
@@ -67,19 +68,20 @@ public class BiCoinApply implements Task {
          * 判断条件 是月底&&b币券余额大于2&&配置项允许自动充电
          */
         if(couponBalance < 2){
-            log.warn("【用B币卷给自己充电】: {}<2 ,无法给自己充电❌", couponBalance);
+            log.warn("【使用B币卷】: B币卷不足 2 个 ,无法给自己充电❌");
             return ;
         }
         /* 被充电用户的userID */
         String userId = userData.getMid();
         JSONObject pJson = new JSONObject();
-        pJson.put("elec_num", couponBalance * 10);
+        pJson.put("bp_num", couponBalance);
+        pJson.put("is_bp_remains_prior","true");
         pJson.put("up_mid", userId);
         pJson.put("otype", "up");
         pJson.put("oid", userId);
         pJson.put("csrf", userData.getBiliJct());
 
-        JSONObject jsonObject = Request.post("https://api.bilibili.com/x/ugcpay/trade/elec/pay/quick", pJson);
+        JSONObject jsonObject = Request.post("https://api.bilibili.com/x/ugcpay/web/v2/trade/elec/pay/quick", pJson);
 
         Integer resultCode = jsonObject.getInteger("code");
         if (resultCode == 0) {
@@ -87,15 +89,15 @@ public class BiCoinApply implements Task {
             log.debug(dataJson.toString());
             Integer statusCode = dataJson.getInteger("status");
             if (statusCode == 4) {
-                log.info("【用B币卷给自己充电】: 本次给自己充值了: {}个电池✔", couponBalance * 10);
+                log.info("【使用B币卷】: 本次给自己充值了: {}个电池✔", couponBalance * 10);
                 /* 获取充电留言token */
                 String orderNo = dataJson.getString("order_no");
                 chargeComments(orderNo);
             } else {
-                log.warn("【用B币卷给自己充电】: " + "失败, 原因为: {}❌", jsonObject);
+                log.warn("【使用B币卷】: " + "充电失败, 原因为: {}❌", jsonObject);
             }
         } else {
-            log.warn("【用B币卷给自己充电】: " + "失败, 原因为: {}❌", jsonObject);
+            log.warn("【使用B币卷】: " + "充电失败, 原因为: {}❌", jsonObject);
         }
     }
 
@@ -137,7 +139,7 @@ public class BiCoinApply implements Task {
         } else{
             msg = post.getString("message") + "❌";
         }
-        log.info("【B币卷兑换金瓜子】: {}", msg);
+        log.info("【使用B币卷】: {}", msg);
     }
 
 }
