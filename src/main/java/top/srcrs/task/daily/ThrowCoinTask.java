@@ -41,8 +41,7 @@ public class ThrowCoinTask implements Task {
             num3 = Math.max(num3,0);
             /* 实际需要投 num个硬币 */
             int num = Math.min(num3,Math.min(num1,num2));
-            log.info("【投币计算】: 当前硬币数: " + num2
-                    + " ,自定义投币数: " + num3
+            log.info("【投币计算】: 自定义投币数: " + num3
                     + " ,今日已投币: " + reward/10
                     + " ,还需投币: "+num1
                     + " ,实际投币: "+num);
