@@ -61,12 +61,11 @@ public class ThrowCoinTask implements Task {
             if(config.getUpList() == null && num > 0){
                 log.info("【优先投币up】: 未配置优先投币up主");
             } else {
-                for(String up : getTodayUpList(num)) {
-                    if (videoAid.size() >= num) {
-                        break;
+                if(num - videoAid.size() > 0){
+                    for(String up : getTodayUpList(num)) {
+                        videoAid.addAll(spaceSearch(up,num - videoAid.size()));
+                        log.info("【优先投币up {} 】: 成功获取到: {} 个视频", up, videoAid.size());
                     }
-                    videoAid.addAll(spaceSearch(up,num - videoAid.size()));
-                    log.info("【优先投币up {} 】: 成功获取到: {} 个视频", up, videoAid.size());
                 }
             }
             /* 获取当前用户最新的20条动态投稿视频列表 */
