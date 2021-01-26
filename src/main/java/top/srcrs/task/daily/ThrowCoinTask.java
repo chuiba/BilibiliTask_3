@@ -11,6 +11,7 @@ import top.srcrs.util.Request;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * 进行视频投币
@@ -28,6 +29,8 @@ public class ThrowCoinTask implements Task {
         try {
             /* 今天投币获得了多少经验 */
             int reward = getReward();
+            /* 更新每天登录后所能领取的登录硬币奖励 */
+            updateMoney();
             /* 还剩多少个硬币 */
             int num2 = USER_DATA.getMoney().intValue();
             /* 配置类中设置投币数 */
@@ -57,12 +60,13 @@ public class ThrowCoinTask implements Task {
             /* 获取自定义配置中 up 主投稿的30条最新视频 */
             if(config.getUpList() == null && num > 0){
                 log.info("【优先投币up】: 未配置优先投币up主");
-            } else{
-                if(num - videoAid.size() > 0){
-                    for(String up : config.getUpList()){
-                        videoAid.addAll(spaceSearch(up,num - videoAid.size()));
-                        log.info("【优先投币up {} 】: 成功获取到: {} 个视频", up, videoAid.size());
+            } else {
+                for(String up : getTodayUpList(num)) {
+                    if (videoAid.size() >= num) {
+                        break;
                     }
+                    videoAid.addAll(spaceSearch(up,num - videoAid.size()));
+                    log.info("【优先投币up {} 】: 成功获取到: {} 个视频", up, videoAid.size());
                 }
             }
             /* 获取当前用户最新的20条动态投稿视频列表 */
@@ -82,7 +86,7 @@ public class ThrowCoinTask implements Task {
                 String aid = videoAid.get(i);
                 JSONObject json = throwCoin(aid, "1", config.getSelectLike());
                 /* 输出的日志消息 */
-                String msg ;
+                String msg;
                 if ("0".equals(json.getString("code"))) {
                     msg = "硬币-1✔";
                 } else {
@@ -95,6 +99,16 @@ public class ThrowCoinTask implements Task {
         } catch (Exception e) {
             log.info("💔投币异常 : ", e);
         }
+    }
+
+    /**
+     * 更新每天登录后所能领取的登录硬币奖励
+     * @author Arriv9l
+     * @Time 2021-01-24
+     */
+    public void updateMoney() {
+        JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
+        USER_DATA.setMoney(jsonObject.getJSONObject("data").getBigDecimal("money"));
     }
 
     /**
@@ -209,6 +223,46 @@ public class ThrowCoinTask implements Task {
         JSONObject object = Request.get("https://api.bilibili.com/x/web-interface/archive/coins", pJson);
         int multiply = object.getJSONObject("data").getIntValue("multiply");
         return multiply == 0;
+    }
+
+    /**
+     * 获取用户30天内投过硬币的视频
+     * @return JSONArray 用户30天内投过硬币的视频
+     * @author Arriv9l
+     * @base https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/user/space.md#获取用户最近投币的视频明细
+     * @Time 2021-01-24
+     */
+    private JSONArray getThrowCoinVideoList() {
+        JSONObject pJson = new JSONObject();
+        pJson.put("vmid", System.getenv("DEDEUSERID"));
+        JSONObject object = Request.get("http://api.bilibili.com/x/space/coin/video", pJson);
+        return object.getJSONArray("data");
+    }
+
+    /**
+     * 获取今天可投币的自定义配置 up 主
+     * @param num 需要投币的数量
+     * @return List<String> 今天可投币的自定义配置 up 主
+     * @author Arriv9l
+     * @base https://juejin.cn/post/6844903833726894093
+     * @Time 2021-01-24
+     */
+    private List<String> getTodayUpList(int num) {
+        JSONArray vList = getThrowCoinVideoList();
+        List<String> configUpList = config.getUpList();
+        List<String> upList = new ArrayList<>();
+        for (Object object : vList) {
+            JSONObject data = (JSONObject) object;
+            String mid = data.getJSONObject("owner").getString("mid");
+            if (configUpList.contains(mid) && !upList.contains(mid)) {
+                upList.add(mid);
+                if (upList.size() + num == configUpList.size()) {
+                    break;
+                }
+            }
+        }
+        /* 求 configUpList 与 upList 的差集 */
+        return configUpList.stream().filter(item -> !upList.contains(item)).collect(Collectors.toList());
     }
 
     /**
