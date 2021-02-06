@@ -39,7 +39,7 @@ public class ThrowCoinTask implements Task {
                当今日已经投过 num3 个硬币将不再进行投币
                否则则应该投 (num3-num1) 个硬币
             */
-            int num1 = (num3*10 - reward) / 10;
+            int num1 = Math.max((num3*10 - reward) / 10,0);
             /* 避免设置投币数为负数异常 */
             num3 = Math.max(num3,0);
             /* 实际需要投 num个硬币 */
