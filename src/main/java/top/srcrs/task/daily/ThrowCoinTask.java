@@ -250,6 +250,10 @@ public class ThrowCoinTask implements Task {
         JSONArray vList = getThrowCoinVideoList();
         List<String> configUpList = config.getUpList();
         List<String> upList = new ArrayList<>();
+        // 近30天未投币直接跳过
+        if(vList==null){
+            return new ArrayList<>(configUpList);
+        }
         for (Object object : vList) {
             JSONObject data = (JSONObject) object;
             String mid = data.getJSONObject("owner").getString("mid");
