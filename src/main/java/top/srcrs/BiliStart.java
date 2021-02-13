@@ -86,7 +86,7 @@ public class BiliStart {
      */
     private static void scanTask() {
         List<Class<?>> clazzList = new ArrayList<>();
-        PackageScanner pack = new PackageScanner() {
+        TaskRegistry pack = new TaskRegistry() {
             @Override
             public void dealClass(String className) {
                 try{
@@ -100,10 +100,10 @@ public class BiliStart {
                 }
             }
         };
-        pack.scannerPackage("top.srcrs.task");
+        pack.runTasks();
 
         clazzList.stream().sorted(Comparator.comparing(Class::getName)).forEach(clazz -> {
-            try{
+            try {
                 Constructor<?> constructor = clazz.getConstructor();
                 Object object = constructor.newInstance();
                 Method method = object.getClass().getMethod("run");

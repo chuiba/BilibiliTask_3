@@ -34,7 +34,7 @@ class SendTest {
     @Test
     void SendTgBotTest() {
         if(StringUtil.isNotBlank(System.getenv("TGBOT"))){
-            SendTgBot.send(System.getenv("TGBOT"));
+            SendTelegram.send(System.getenv("TELEGRAM_BOT_TOKEN"),System.getenv("TELEGRAM_CHAT_ID"));
         }
     }
 

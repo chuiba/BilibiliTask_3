@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author : Ali
  * @date : 2020/12/5
  */
-class PackageScannerTest {
+class TaskRegistryTest {
 
     @Test
     void taskTest() {
-        PackageScanner pack = new PackageScanner() {
+        TaskRegistry pack = new TaskRegistry() {
             @Override
             public void dealClass(String className) {
                 try{
@@ -29,7 +29,7 @@ class PackageScannerTest {
                 }
             }
         };
-        pack.scannerPackage("top.srcrs.task");
+        pack.runTasks();
     }
 
 }
