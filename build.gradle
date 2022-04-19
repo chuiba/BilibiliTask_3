@@ -23,7 +23,7 @@ repositories {
 }
 
 List alibaba = [
-        'com.alibaba:fastjson:latest.release'
+        'com.alibaba:fastjson:1.2.80'
 ]
 List apache = [
         'org.apache.httpcomponents:httpclient:latest.release'
