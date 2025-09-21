@@ -17,6 +17,7 @@ import org.apache.http.util.EntityUtils;
 import top.srcrs.domain.UserData;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
