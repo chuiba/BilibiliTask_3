@@ -73,22 +73,68 @@ public class DailyTask implements Task {
      * @Time 2020-10-13
      */
     public JSONArray getRegions(String ps, String rid) {
-        JSONObject pJson = new JSONObject();
-        pJson.put("ps", ps);
-        pJson.put("rid", rid);
-        JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/dynamic/region", pJson);
-        JSONArray jsonArray = jsonObject.getJSONObject("data").getJSONArray("archives");
-        JSONArray jsonRegions = new JSONArray();
-        for (Object object : jsonArray) {
-            JSONObject json = (JSONObject) object;
-            JSONObject cache = new JSONObject();
-            cache.put("title", json.getString("title"));
-            cache.put("aid", json.getString("aid"));
-            cache.put("bvid", json.getString("bvid"));
-            cache.put("cid", json.getString("cid"));
-            jsonRegions.add(cache);
+        try {
+            JSONObject pJson = new JSONObject();
+            pJson.put("ps", ps);
+            pJson.put("rid", rid);
+
+            // 首先尝试使用WBI签名的推荐API
+            JSONObject jsonObject = Request.getWithWbi("https://api.bilibili.com/x/web-interface/wbi/index/top/feed/rcmd", pJson);
+
+            if (!"0".equals(jsonObject.getString("code"))) {
+                log.warn("推荐API返回错误，尝试使用分区API: {} - {}", jsonObject.getString("code"), jsonObject.getString("message"));
+                // 如果推荐API失败，尝试使用分区API
+                jsonObject = Request.getWithWbi("https://api.bilibili.com/x/web-interface/dynamic/region", pJson);
+            }
+
+            JSONArray jsonArray;
+            if (jsonObject.containsKey("data") && jsonObject.getJSONObject("data").containsKey("item")) {
+                // 推荐API的数据结构
+                jsonArray = jsonObject.getJSONObject("data").getJSONArray("item");
+            } else if (jsonObject.containsKey("data") && jsonObject.getJSONObject("data").containsKey("archives")) {
+                // 分区API的数据结构
+                jsonArray = jsonObject.getJSONObject("data").getJSONArray("archives");
+            } else {
+                log.warn("无法获取视频列表，使用备用方案");
+                return getBackupVideoList();
+            }
+
+            JSONArray jsonRegions = new JSONArray();
+            for (Object object : jsonArray) {
+                JSONObject json = (JSONObject) object;
+                JSONObject cache = new JSONObject();
+                // 适配不同的数据结构
+                cache.put("title", json.getString("title"));
+                cache.put("aid", json.getIntValue("id") != 0 ? json.getString("id") : json.getString("aid"));
+                cache.put("bvid", json.getString("bvid"));
+                cache.put("cid", json.getString("cid"));
+                jsonRegions.add(cache);
+
+                // 最多获取指定数量的视频
+                if (jsonRegions.size() >= Integer.parseInt(ps)) {
+                    break;
+                }
+            }
+            return jsonRegions;
+        } catch (Exception e) {
+            log.error("获取推荐视频失败，使用备用方案: ", e);
+            return getBackupVideoList();
         }
-        return jsonRegions;
+    }
+
+    /**
+     * 备用视频列表（避免完全失败）
+     */
+    private JSONArray getBackupVideoList() {
+        JSONArray backupList = new JSONArray();
+        // 添加一些固定的热门视频作为备用
+        JSONObject backup = new JSONObject();
+        backup.put("title", "备用视频");
+        backup.put("aid", "1");
+        backup.put("bvid", "BV1xx411c7mD");
+        backup.put("cid", "1");
+        backupList.add(backup);
+        return backupList;
     }
 
     /**
@@ -127,13 +173,60 @@ public class DailyTask implements Task {
 
     /**
      * 获取每日得到经验信息
+     * 使用新的API端点和WBI签名认证
      *
      * @return JSONObject
-     * @author srcrs
-     * @Time 2020-10-13
+     * @author chuiba (updated from srcrs)
+     * @Time 2025-01-21
      */
     public JSONObject getReward() {
-        return Request.get("https://account.bilibili.com/home/reward").getJSONObject("data");
+        try {
+            // 使用新的WBI签名API获取每日任务状态
+            JSONObject params = new JSONObject();
+            JSONObject response = Request.getWithWbi("https://api.bilibili.com/x/member/web/exp/reward", params);
+
+            if ("0".equals(response.getString("code"))) {
+                return response.getJSONObject("data");
+            } else {
+                log.warn("每日任务API返回错误: {} - {}", response.getString("code"), response.getString("message"));
+                // 如果新API失败，尝试使用导航API获取基础信息
+                return getBasicExpInfo();
+            }
+        } catch (Exception e) {
+            log.warn("新API调用失败，尝试使用导航API: ", e);
+            return getBasicExpInfo();
+        }
+    }
+
+    /**
+     * 从导航API获取基础经验信息（备用方案）
+     */
+    private JSONObject getBasicExpInfo() {
+        try {
+            JSONObject navResp = Request.get("https://api.bilibili.com/x/web-interface/nav");
+            if ("0".equals(navResp.getString("code"))) {
+                JSONObject data = navResp.getJSONObject("data");
+
+                // 构造兼容的返回格式
+                JSONObject result = new JSONObject();
+                result.put("login", true); // 能获取到导航信息说明已登录
+                result.put("watch_av", false); // 默认为未完成，让程序尝试执行
+                result.put("share_av", false); // 默认为未完成，让程序尝试执行
+                result.put("coins_av", 0); // 默认为0，让程序尝试投币
+
+                return result;
+            }
+        } catch (Exception e) {
+            log.error("导航API调用失败: ", e);
+        }
+
+        // 返回默认值避免空指针
+        JSONObject defaultResult = new JSONObject();
+        defaultResult.put("login", false);
+        defaultResult.put("watch_av", false);
+        defaultResult.put("share_av", false);
+        defaultResult.put("coins_av", 0);
+        return defaultResult;
     }
 
     /**

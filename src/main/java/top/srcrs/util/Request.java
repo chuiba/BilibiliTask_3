@@ -69,6 +69,39 @@ public class Request {
     }
 
     /**
+     * 发送带WBI签名的GET请求
+     *
+     * @param url 请求的地址
+     * @param params 请求参数
+     * @return JSONObject
+     * @author chuiba
+     * @Time 2025-01-21
+     */
+    public static JSONObject getWithWbi(String url, JSONObject params) {
+        waitFor();
+        try {
+            // 转换参数格式
+            Map<String, Object> paramMap = new HashMap<>();
+            for (String key : params.keySet()) {
+                paramMap.put(key, params.get(key));
+            }
+
+            // 获取WBI签名
+            Map<String, String> wbiParams = WbiSignature.getWbiSign(paramMap);
+
+            // 添加WBI参数
+            JSONObject finalParams = new JSONObject(params);
+            finalParams.put("w_rid", wbiParams.get("w_rid"));
+            finalParams.put("wts", wbiParams.get("wts"));
+
+            return get(url, finalParams);
+        } catch (Exception e) {
+            log.error("💔WBI请求失败: ", e);
+            throw new RuntimeException("WBI请求失败: " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * 发送post请求
      *
      * @param url  请求的地址
@@ -90,11 +123,18 @@ public class Request {
     }
 
     private static RequestBuilder getBaseBuilder(final String method) {
+        // 获取bili_ticket并添加到Cookie中
+        String biliTicket = BiliTicket.getBiliTicket();
+        String cookie = USER_DATA.getCookie();
+        if (!biliTicket.isEmpty()) {
+            cookie += "bili_ticket=" + biliTicket + ";";
+        }
+
         return RequestBuilder.create(method)
                              .addHeader("connection", "keep-alive")
                              .addHeader("referer", "https://www.bilibili.com/")
                              .addHeader("User-Agent", UserAgent)
-                             .addHeader("Cookie", USER_DATA.getCookie());
+                             .addHeader("Cookie", cookie);
     }
 
     public static NameValuePair[] getPairList(JSONObject pJson) {

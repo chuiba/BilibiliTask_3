@@ -137,8 +137,24 @@ public class ThrowCoinTask implements Task {
      * @Time 2020-10-13
      */
     public Integer getReward() {
-        JSONObject jsonObject = Request.get("https://account.bilibili.com/home/reward");
-        return Integer.parseInt(jsonObject.getJSONObject("data").getString("coins_av"));
+        try {
+            // 使用新的WBI签名API获取投币状态
+            JSONObject params = new JSONObject();
+            JSONObject response = Request.getWithWbi("https://api.bilibili.com/x/member/web/exp/reward", params);
+
+            if ("0".equals(response.getString("code"))) {
+                JSONObject data = response.getJSONObject("data");
+                return data.getIntValue("coins_av");
+            } else {
+                log.warn("投币状态API返回错误: {} - {}", response.getString("code"), response.getString("message"));
+                // 如果新API失败，返回0让程序继续尝试投币
+                return 0;
+            }
+        } catch (Exception e) {
+            log.warn("新API调用失败，返回默认值: ", e);
+            // 返回0让程序继续尝试投币
+            return 0;
+        }
     }
 
     /**
@@ -150,24 +166,50 @@ public class ThrowCoinTask implements Task {
      * @Time 2020-10-13
      */
     public List<String> getRegions(String ps, String rid, int num) {
-        JSONObject pJson = new JSONObject();
-        pJson.put("ps", ps);
-        pJson.put("rid", rid);
-        JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/dynamic/region", pJson);
-        JSONArray archives = jsonObject.getJSONObject("data").getJSONArray("archives");
-        List<String> videoAid = new ArrayList<>();
-        for (Object object : archives) {
-            JSONObject archive = (JSONObject) object;
-            String aid = archive.getString("aid");
-            String mid = archive.getJSONObject("owner").getString("mid");
-            if (isThrowCoins(aid, mid)) {
-                videoAid.add(aid);
+        try {
+            JSONObject pJson = new JSONObject();
+            pJson.put("ps", ps);
+            pJson.put("rid", rid);
+
+            // 使用WBI签名的API获取视频列表
+            JSONObject jsonObject = Request.getWithWbi("https://api.bilibili.com/x/web-interface/wbi/index/top/feed/rcmd", pJson);
+
+            if (!"0".equals(jsonObject.getString("code"))) {
+                log.warn("推荐API返回错误，尝试使用分区API: {} - {}", jsonObject.getString("code"), jsonObject.getString("message"));
+                // 如果推荐API失败，尝试使用分区API
+                jsonObject = Request.getWithWbi("https://api.bilibili.com/x/web-interface/dynamic/region", pJson);
             }
-            if (videoAid.size() >= num) {
-                break;
+
+            JSONArray archives;
+            if (jsonObject.containsKey("data") && jsonObject.getJSONObject("data").containsKey("item")) {
+                // 推荐API的数据结构
+                archives = jsonObject.getJSONObject("data").getJSONArray("item");
+            } else if (jsonObject.containsKey("data") && jsonObject.getJSONObject("data").containsKey("archives")) {
+                // 分区API的数据结构
+                archives = jsonObject.getJSONObject("data").getJSONArray("archives");
+            } else {
+                log.warn("无法获取视频列表，返回空列表");
+                return new ArrayList<>();
             }
+
+            List<String> videoAid = new ArrayList<>();
+            for (Object object : archives) {
+                JSONObject archive = (JSONObject) object;
+                String aid = archive.getIntValue("id") != 0 ? archive.getString("id") : archive.getString("aid");
+                JSONObject owner = archive.getJSONObject("owner");
+                String mid = owner.getString("mid");
+                if (isThrowCoins(aid, mid)) {
+                    videoAid.add(aid);
+                }
+                if (videoAid.size() >= num) {
+                    break;
+                }
+            }
+            return videoAid;
+        } catch (Exception e) {
+            log.error("获取投币视频列表失败: ", e);
+            return new ArrayList<>();
         }
-        return videoAid;
     }
 
     /**
