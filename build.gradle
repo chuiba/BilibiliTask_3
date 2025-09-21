@@ -1,12 +1,13 @@
 plugins {
     id 'java'
-    id "io.freefair.lombok" version '5.3.0'
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id "io.freefair.lombok" version '8.4'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'top.srcrs'
-version = '1.0.9'
-sourceCompatibility = JavaVersion.VERSION_1_8
+version = '1.0.10'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 configurations {
     compileOnly {
@@ -23,19 +24,19 @@ repositories {
 }
 
 List alibaba = [
-        'com.alibaba:fastjson:1.2.80'
+        'com.alibaba.fastjson2:fastjson2:2.0.43'
 ]
 List apache = [
-        'org.apache.httpcomponents:httpclient:latest.release'
+        'org.apache.httpcomponents:httpclient:4.5.14'
 ]
 List logback = [
-        'ch.qos.logback:logback-classic:latest.release'
+        'ch.qos.logback:logback-classic:1.4.14'
 ]
 List junit = [
-        'org.junit.jupiter:junit-jupiter-engine:latest.release'
+        'org.junit.jupiter:junit-jupiter-engine:5.10.1'
 ]
 List yaml = [
-        'org.yaml:snakeyaml:latest.release'
+        'org.yaml:snakeyaml:2.2'
 ]
 dependencies {
     implementation logback,alibaba,apache,yaml

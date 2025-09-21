@@ -1,12 +1,18 @@
 <div align="center">
-<h1 align="center">Bilibili助手</h1>
-<img src="https://img.shields.io/github/issues/srcrs/BilibiliTask?color=green">
-<img src="https://img.shields.io/github/stars/srcrs/BilibiliTask?color=yellow">
-<img src="https://img.shields.io/github/forks/srcrs/BilibiliTask?color=orange">
-<img src="https://img.shields.io/github/license/srcrs/BilibiliTask?color=ff69b4">
-<img src="https://img.shields.io/github/search/srcrs/BilibiliTask/main?color=blue">
-<img src="https://img.shields.io/github/v/release/srcrs/BilibiliTask?color=blueviolet">
-<img src="https://img.shields.io/github/languages/code-size/srcrs/BilibiliTask?color=critical">
+<h1 align="center">Bilibili助手 (兼容性修复版)</h1>
+
+## ⚠️ 重要说明
+
+**本项目是 [srcrs/BilibiliTask](https://github.com/srcrs/BilibiliTask) 的备份和兼容性修复版本**
+
+- **原始项目**: https://github.com/srcrs/BilibiliTask
+- **原作者**: srcrs
+- **本仓库目的**: 备份原项目并修复现代环境兼容性问题
+
+<img src="https://img.shields.io/badge/Fork-srcrs/BilibiliTask-blue">
+<img src="https://img.shields.io/badge/Status-Compatibility%20Fixed-green">
+<img src="https://img.shields.io/badge/Java-11+-orange">
+<img src="https://img.shields.io/badge/Security-Updated-success">
 </div> 
  
 # 简介
@@ -16,9 +22,28 @@
 哔哩哔哩(`B`站)自动完成每日任务，
 投币，点赞，直播签到，自动兑换银瓜子为硬币，自动送出即将过期礼物，漫画`App`签到，大会员领取`B`币卷等。每天获得`65`点经验，助你快速升级到`Lv6`。
 
-开源不易，如果本项目对你有帮助，那么就请给个`star`吧。😄
+**本版本修复了原项目的兼容性问题，支持现代Java环境运行。**
 
-重要提示，如果收到了`b`站的账号安全通知，可以考虑将`Actions`禁用一段时间，观望一段时间再进行使用，具体禁用步骤，请参考此[Issues](https://github.com/srcrs/BilibiliTask/issues/78)。
+## 🔄 兼容性修复版本说明
+
+**感谢原作者 [srcrs](https://github.com/srcrs) 的优秀工作！**
+
+由于原项目 [srcrs/BilibiliTask](https://github.com/srcrs/BilibiliTask) 已多年未维护，本仓库对以下问题进行了修复：
+
+### ✅ 已修复的问题
+- **Java 兼容性**: 支持 Java 11+ (原版仅支持 Java 8)
+- **安全漏洞**: 升级 fastjson → fastjson2 修复CVE安全问题
+- **依赖更新**: 所有依赖库升级到最新稳定版本
+- **构建工具**: 更新 Gradle 到 8.5 版本
+- **CI/CD**: GitHub Actions 工作流现代化
+
+### 📋 技术改进
+- Fastjson 1.2.80 → Fastjson2 2.0.43
+- 移除 `latest.release` 依赖，使用固定版本
+- 支持现代开发环境
+- 保持原有功能完全兼容
+
+重要提示，如果收到了`b`站的账号安全通知，可以考虑将`Actions`禁用一段时间，观望一段时间再进行使用，具体禁用步骤，请参考原项目的[Issues](https://github.com/srcrs/BilibiliTask/issues/78)。
 
 # 功能
  
@@ -65,9 +90,16 @@
 
 # Github Actions 部署方法
 
+## 📌 重要提醒
+
+**本项目是 [srcrs/BilibiliTask](https://github.com/srcrs/BilibiliTask) 的兼容性修复版本**
+
+如需使用原版，请访问：https://github.com/srcrs/BilibiliTask
+
 ## 1.fork本项目
 
-项目地址：[srcrs/BilibiliTask](https://github.com/srcrs/BilibiliTask)
+**原项目地址**：[srcrs/BilibiliTask](https://github.com/srcrs/BilibiliTask)
+**本修复版地址**：当前仓库（兼容性修复版）
 
 ## 2.准备需要的参数
 
@@ -306,6 +338,34 @@ git push origin main
 
 # 更新日志
 
+## 兼容性修复版 (2025-01-21)
+
+**本版本基于原项目 [srcrs/BilibiliTask](https://github.com/srcrs/BilibiliTask) 进行兼容性修复**
+
+### ✅ 兼容性修复
+- **Java 支持**: 升级到 Java 11+ (原版 Java 8)
+- **安全修复**: fastjson 1.2.80 → fastjson2 2.0.43 (修复CVE安全漏洞)
+- **依赖升级**: 所有依赖库更新到稳定版本
+- **构建工具**: Gradle 6.7.1 → 8.5
+- **CI/CD**: GitHub Actions 工作流现代化
+
+### 📋 技术改进
+- 移除 `latest.release` 依赖，使用固定版本号
+- 更新 Lombok、Shadow 插件版本
+- 改进缓存策略和构建性能
+- 保持与原版 100% 功能兼容
+
+### 🔒 安全增强
+- 修复 Fastjson 已知安全漏洞
+- 更新所有依赖到安全版本
+- 代码导入语句全面更新
+
+---
+
+## 原项目更新历史
+
+**以下为原作者 [srcrs](https://github.com/srcrs) 的更新记录：**
+
 ## 2020-02-06
 
 + 避免投币给单一`up`主
@@ -431,6 +491,29 @@ git push origin main
 
 + 完善对接`api`接口
 
-# 参考项目
+# 致谢与参考
 
-[happy888888/BiliExp](https://github.com/happy888888/BiliExp)
+## 🙏 特别感谢
+
+**本项目基于以下优秀开源项目:**
+
+### 原始项目
+- **[srcrs/BilibiliTask](https://github.com/srcrs/BilibiliTask)** - 原作者：[srcrs](https://github.com/srcrs)
+  - 本项目是该仓库的备份和兼容性修复版本
+  - 感谢原作者的优秀工作和开源贡献
+
+### 参考项目
+- **[happy888888/BiliExp](https://github.com/happy888888/BiliExp)** - API 参考
+
+## ⚖️ 声明
+
+- 本仓库仅作为原项目的备份和兼容性修复
+- 所有核心功能和设计归原作者 [srcrs](https://github.com/srcrs) 所有
+- 修复内容仅涉及现代环境兼容性，不改变原有逻辑
+- 如有任何问题，建议优先参考原项目
+
+## 🔗 相关链接
+
+- **原项目**: https://github.com/srcrs/BilibiliTask
+- **原作者**: https://github.com/srcrs
+- **API参考**: https://github.com/happy888888/BiliExp
