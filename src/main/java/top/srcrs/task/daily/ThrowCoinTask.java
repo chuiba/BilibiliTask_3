@@ -96,7 +96,8 @@ public class ThrowCoinTask implements Task {
                 Thread.sleep(new Random().nextInt(1000)+1000);
             }
         } catch (Exception e) {
-            log.info("💔投币异常 : ", e);
+            log.error("💔投币异常 : ", e);
+            throw new RuntimeException("投币任务执行失败", e);
         }
     }
 

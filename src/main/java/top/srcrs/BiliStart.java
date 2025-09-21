@@ -28,10 +28,13 @@ public class BiliStart {
     private static final String NOT_LOGGED_IN = "-101";
     /** 获取Config配置的对象 */
     private static final Config CONFIG = Config.getInstance();
+    /** 标记是否有任务失败 */
+    private static boolean hasFailures = false;
+
     public static void main(String ...args) {
         if(checkEnv()){
             log.error("💔请在Github Secrets中添加你的Cookie信息");
-            return;
+            System.exit(1);
         }
         /* 读取yml文件配置信息 */
         ReadConfig.transformation("/config.yml");
@@ -53,6 +56,14 @@ public class BiliStart {
             }
             log.info("本次任务运行完毕。");
 
+            // 如果有任务失败，退出码应该为1
+            if(hasFailures){
+                log.error("💔部分任务执行失败，请检查日志");
+                System.exit(1);
+            }
+        } else {
+            log.error("💔账户验证失败，程序退出");
+            System.exit(1);
         }
 
         // server酱
@@ -109,7 +120,8 @@ public class BiliStart {
                 Method method = object.getClass().getMethod("run");
                 method.invoke(object);
             } catch (Exception e){
-                log.error("💔反射获取对象错误 : ", e);
+                log.error("💔任务执行失败 [{}] : ", clazz.getSimpleName(), e);
+                hasFailures = true;
             }
         });
     }
@@ -156,10 +168,11 @@ public class BiliStart {
             return true;
         }
         if(NOT_LOGGED_IN.equals(code)){
-            log.info("💔账户已失效，请在Secrets重新绑定你的信息");
-            return false;
+            log.error("💔账户已失效，请在Secrets重新绑定你的信息");
+            System.exit(1);
         }
-        return false;
+        log.error("💔未知错误，API返回代码: {}", code);
+        System.exit(1);
     }
 
     /**

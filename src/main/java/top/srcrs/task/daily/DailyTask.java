@@ -59,6 +59,7 @@ public class DailyTask implements Task {
             }
         } catch (Exception e) {
             log.error("💔每日任务异常 : ", e);
+            throw new RuntimeException("每日任务执行失败", e);
         }
     }
 

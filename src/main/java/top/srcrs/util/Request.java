@@ -110,10 +110,28 @@ public class Request {
             HttpResponse resp = client.execute(request);
             HttpEntity entity = resp.getEntity();
             String respContent = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-            return JSON.parseObject(respContent);
+
+            // 检查响应是否为有效JSON
+            if(respContent == null || respContent.trim().isEmpty()) {
+                log.error("💔{}请求返回空响应", request.getMethod());
+                throw new RuntimeException("API响应为空");
+            }
+
+            // 检查是否是HTML错误页面（通常以 < 开头）
+            if(respContent.trim().startsWith("<")) {
+                log.error("💔{}请求返回HTML错误页面: {}", request.getMethod(), respContent.substring(0, Math.min(100, respContent.length())));
+                throw new RuntimeException("API返回HTML错误页面，可能是认证失败或API不可用");
+            }
+
+            try {
+                return JSON.parseObject(respContent);
+            } catch (Exception parseException) {
+                log.error("💔{}请求JSON解析失败，响应内容: {}", request.getMethod(), respContent.substring(0, Math.min(200, respContent.length())));
+                throw new RuntimeException("JSON解析失败: " + parseException.getMessage(), parseException);
+            }
         } catch (Exception e) {
-            log.info("💔{}请求错误 : ", request.getMethod(), e);
-            return new JSONObject();
+            log.error("💔{}请求错误 : ", request.getMethod(), e);
+            throw new RuntimeException("API请求失败: " + e.getMessage(), e);
         }
     }
 
