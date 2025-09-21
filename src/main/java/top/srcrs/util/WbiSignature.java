@@ -75,19 +75,37 @@ public class WbiSignature {
         }
 
         try {
-            JSONObject navResp = Request.get("https://api.bilibili.com/x/web-interface/nav");
-            JSONObject data = navResp.getJSONObject("data");
-            JSONObject wbiImg = data.getJSONObject("wbi_img");
+            // 添加超时保护，最多尝试3次
+            JSONObject navResp = null;
+            int retries = 0;
+            while (retries < 3) {
+                try {
+                    navResp = Request.get("https://api.bilibili.com/x/web-interface/nav");
+                    break;
+                } catch (Exception e) {
+                    retries++;
+                    log.warn("WBI密钥更新重试 {}/3: {}", retries, e.getMessage());
+                    if (retries >= 3) throw e;
+                    Thread.sleep(1000); // 等待1秒后重试
+                }
+            }
 
-            String imgUrl = wbiImg.getString("img_url");
-            String subUrl = wbiImg.getString("sub_url");
+            if (navResp != null && "0".equals(navResp.getString("code"))) {
+                JSONObject data = navResp.getJSONObject("data");
+                JSONObject wbiImg = data.getJSONObject("wbi_img");
 
-            // 提取文件名（去掉扩展名）
-            imgKey = getFileName(imgUrl);
-            subKey = getFileName(subUrl);
+                String imgUrl = wbiImg.getString("img_url");
+                String subUrl = wbiImg.getString("sub_url");
 
-            lastUpdateTime = currentTime;
-            log.info("WBI密钥更新成功: imgKey={}, subKey={}", imgKey.substring(0, 8) + "...", subKey.substring(0, 8) + "...");
+                // 提取文件名（去掉扩展名）
+                imgKey = getFileName(imgUrl);
+                subKey = getFileName(subUrl);
+
+                lastUpdateTime = currentTime;
+                log.info("WBI密钥更新成功: imgKey={}, subKey={}", imgKey.substring(0, 8) + "...", subKey.substring(0, 8) + "...");
+            } else {
+                throw new RuntimeException("导航API返回错误: " + (navResp != null ? navResp.getString("message") : "无响应"));
+            }
 
         } catch (Exception e) {
             log.error("💔WBI密钥更新失败: ", e);
@@ -95,6 +113,7 @@ public class WbiSignature {
             if (imgKey.isEmpty()) {
                 imgKey = "7cd084941338484aae1ad9425b84077c";
                 subKey = "4932caff0ff746eab6f01bf08b70ac45";
+                log.warn("使用默认WBI密钥");
             }
         }
     }

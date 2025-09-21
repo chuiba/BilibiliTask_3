@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 启动类，程序运行开始的地方
@@ -32,38 +33,59 @@ public class BiliStart {
     private static boolean hasFailures = false;
 
     public static void main(String ...args) {
-        if(checkEnv()){
-            log.error("💔请在Github Secrets中添加你的Cookie信息");
-            System.exit(1);
-        }
-        /* 读取yml文件配置信息 */
-        ReadConfig.transformation("/config.yml");
-        /* 如果用户账户有效 */
-        if(check()){
-            log.info("【用户名】: {}",StringUtil.hideString(USER_DATA.getUname(),1,1,'*'));
-            log.info("【硬币】: {}", USER_DATA.getMoney());
-            log.info("【经验】: {}", USER_DATA.getCurrentExp());
-            /* 动态执行task包下的所有java代码 */
-            scanTask();
-            /* 当用户等级为Lv6时，升级到下一级 next_exp 值为 -- 代表无穷大 */
-            String maxLevel = "6";
-            if(maxLevel.equals(USER_DATA.getCurrentLevel())){
-                log.info("【升级预计】: 当前等级为: Lv{} ,已经是最高等级", maxLevel);
-                log.info("【温馨提示】: 可在配置文件中关闭每日投币操作");
-            } else{
-                log.info("【升级预计】: 当前等级为: Lv{} ,预计升级到下一级还需要: {} 天",
-                        USER_DATA.getCurrentLevel(), getNextLevel());
+        // 设置全局程序超时，防止程序无限运行
+        Thread mainThread = Thread.currentThread();
+        Thread timeoutThread = new Thread(() -> {
+            try {
+                // 程序最多运行5分钟
+                TimeUnit.MINUTES.sleep(5);
+                log.error("💔程序运行超时(5分钟)，强制退出");
+                System.exit(1);
+            } catch (InterruptedException e) {
+                // 正常退出时会中断这个线程
+                log.debug("超时监控线程被中断，程序正常结束");
             }
-            log.info("本次任务运行完毕。");
+        });
+        timeoutThread.setDaemon(true);
+        timeoutThread.start();
 
-            // 如果有任务失败，退出码应该为1
-            if(hasFailures){
-                log.error("💔部分任务执行失败，请检查日志");
+        try {
+            if(checkEnv()){
+                log.error("💔请在Github Secrets中添加你的Cookie信息");
                 System.exit(1);
             }
-        } else {
-            log.error("💔账户验证失败，程序退出");
-            System.exit(1);
+            /* 读取yml文件配置信息 */
+            ReadConfig.transformation("/config.yml");
+            /* 如果用户账户有效 */
+            if(check()){
+                log.info("【用户名】: {}",StringUtil.hideString(USER_DATA.getUname(),1,1,'*'));
+                log.info("【硬币】: {}", USER_DATA.getMoney());
+                log.info("【经验】: {}", USER_DATA.getCurrentExp());
+                /* 动态执行task包下的所有java代码 */
+                scanTask();
+                /* 当用户等级为Lv6时，升级到下一级 next_exp 值为 -- 代表无穷大 */
+                String maxLevel = "6";
+                if(maxLevel.equals(USER_DATA.getCurrentLevel())){
+                    log.info("【升级预计】: 当前等级为: Lv{} ,已经是最高等级", maxLevel);
+                    log.info("【温馨提示】: 可在配置文件中关闭每日投币操作");
+                } else{
+                    log.info("【升级预计】: 当前等级为: Lv{} ,预计升级到下一级还需要: {} 天",
+                            USER_DATA.getCurrentLevel(), getNextLevel());
+                }
+                log.info("本次任务运行完毕。");
+
+                // 如果有任务失败，退出码应该为1
+                if(hasFailures){
+                    log.error("💔部分任务执行失败，请检查日志");
+                    System.exit(1);
+                }
+            } else {
+                log.error("💔账户验证失败，程序退出");
+                System.exit(1);
+            }
+        } finally {
+            // 程序正常结束时中断超时监控线程
+            timeoutThread.interrupt();
         }
 
         // server酱

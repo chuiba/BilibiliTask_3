@@ -43,16 +43,28 @@ public class BiliTicket {
             params.put("context[ts]", timestamp);
             params.put("csrf", "");
 
-            JSONObject response = Request.post("https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket", params);
+            // 添加重试机制，最多尝试2次
+            int retries = 0;
+            while (retries < 2) {
+                try {
+                    JSONObject response = Request.post("https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket", params);
 
-            if ("0".equals(response.getString("code"))) {
-                JSONObject data = response.getJSONObject("data");
-                cachedTicket = data.getString("ticket");
-                lastUpdateTime = currentTime;
-                log.info("bili_ticket更新成功");
-                return cachedTicket;
-            } else {
-                log.warn("bili_ticket获取失败: {}", response.getString("message"));
+                    if ("0".equals(response.getString("code"))) {
+                        JSONObject data = response.getJSONObject("data");
+                        cachedTicket = data.getString("ticket");
+                        lastUpdateTime = currentTime;
+                        log.info("bili_ticket更新成功");
+                        return cachedTicket;
+                    } else {
+                        log.warn("bili_ticket获取失败: {}", response.getString("message"));
+                        break; // API返回错误，不重试
+                    }
+                } catch (Exception e) {
+                    retries++;
+                    log.warn("bili_ticket获取重试 {}/2: {}", retries, e.getMessage());
+                    if (retries >= 2) throw e;
+                    Thread.sleep(500); // 等待0.5秒后重试
+                }
             }
         } catch (Exception e) {
             log.error("💔bili_ticket生成异常: ", e);

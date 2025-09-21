@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -147,7 +148,16 @@ public class Request {
     }
 
     public static JSONObject clientExe(HttpUriRequest request) {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+        // 配置超时时间
+        RequestConfig config = RequestConfig.custom()
+                .setConnectTimeout(10000) // 连接超时10秒
+                .setSocketTimeout(30000)   // 读取超时30秒
+                .setConnectionRequestTimeout(5000) // 请求超时5秒
+                .build();
+
+        try (CloseableHttpClient client = HttpClients.custom()
+                .setDefaultRequestConfig(config)
+                .build()) {
             HttpResponse resp = client.execute(request);
             HttpEntity entity = resp.getEntity();
             String respContent = EntityUtils.toString(entity, StandardCharsets.UTF_8);
@@ -178,13 +188,14 @@ public class Request {
 
     /**
      * 增加等待时间，解决风控问题
-     * 暂时先设置为每次请求预等待 0-3 秒钟
-     * @author srcrs
-     * @Time 2020-11-28
+     * 优化等待时间为 0-1 秒钟，避免过长延迟
+     * @author chuiba (updated from srcrs)
+     * @Time 2025-01-21
      */
     public static void waitFor() {
         try{
-            Thread.sleep(new Random().nextInt(4)*1000);
+            // 减少等待时间，从0-3秒改为0-1秒
+            Thread.sleep(new Random().nextInt(1000));
         } catch (Exception e){
             log.warn("等待过程中出错",e);
         }
