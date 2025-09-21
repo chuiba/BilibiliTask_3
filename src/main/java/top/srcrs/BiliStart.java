@@ -169,10 +169,10 @@ public class BiliStart {
         }
         if(NOT_LOGGED_IN.equals(code)){
             log.error("💔账户已失效，请在Secrets重新绑定你的信息");
-            System.exit(1);
+            return false;
         }
         log.error("💔未知错误，API返回代码: {}", code);
-        System.exit(1);
+        return false;
     }
 
     /**
