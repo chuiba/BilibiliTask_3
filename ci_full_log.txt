@@ -1,0 +1,525 @@
+start	Set up job	﻿2025-09-23T16:13:41.2604643Z Current runner version: '2.328.0'
+start	Set up job	2025-09-23T16:13:41.2633271Z ##[group]Runner Image Provisioner
+start	Set up job	2025-09-23T16:13:41.2634272Z Hosted Compute Agent
+start	Set up job	2025-09-23T16:13:41.2634870Z Version: 20250829.383
+start	Set up job	2025-09-23T16:13:41.2635543Z Commit: 27cb235aab5b0e52e153a26cd86b4742e89dac5d
+start	Set up job	2025-09-23T16:13:41.2636237Z Build Date: 2025-08-29T13:48:48Z
+start	Set up job	2025-09-23T16:13:41.2636873Z ##[endgroup]
+start	Set up job	2025-09-23T16:13:41.2637427Z ##[group]Operating System
+start	Set up job	2025-09-23T16:13:41.2638008Z Ubuntu
+start	Set up job	2025-09-23T16:13:41.2638512Z 24.04.3
+start	Set up job	2025-09-23T16:13:41.2639063Z LTS
+start	Set up job	2025-09-23T16:13:41.2639944Z ##[endgroup]
+start	Set up job	2025-09-23T16:13:41.2640505Z ##[group]Runner Image
+start	Set up job	2025-09-23T16:13:41.2641133Z Image: ubuntu-24.04
+start	Set up job	2025-09-23T16:13:41.2641634Z Version: 20250907.24.1
+start	Set up job	2025-09-23T16:13:41.2642699Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250907.24/images/ubuntu/Ubuntu2404-Readme.md
+start	Set up job	2025-09-23T16:13:41.2644211Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250907.24
+start	Set up job	2025-09-23T16:13:41.2645418Z ##[endgroup]
+start	Set up job	2025-09-23T16:13:41.2648142Z ##[group]GITHUB_TOKEN Permissions
+start	Set up job	2025-09-23T16:13:41.2650577Z Actions: write
+start	Set up job	2025-09-23T16:13:41.2651289Z Attestations: write
+start	Set up job	2025-09-23T16:13:41.2651884Z Checks: write
+start	Set up job	2025-09-23T16:13:41.2652385Z Contents: write
+start	Set up job	2025-09-23T16:13:41.2653002Z Deployments: write
+start	Set up job	2025-09-23T16:13:41.2653513Z Discussions: write
+start	Set up job	2025-09-23T16:13:41.2654058Z Issues: write
+start	Set up job	2025-09-23T16:13:41.2654662Z Metadata: read
+start	Set up job	2025-09-23T16:13:41.2655177Z Models: read
+start	Set up job	2025-09-23T16:13:41.2655718Z Packages: write
+start	Set up job	2025-09-23T16:13:41.2656221Z Pages: write
+start	Set up job	2025-09-23T16:13:41.2656732Z PullRequests: write
+start	Set up job	2025-09-23T16:13:41.2657767Z RepositoryProjects: write
+start	Set up job	2025-09-23T16:13:41.2658402Z SecurityEvents: write
+start	Set up job	2025-09-23T16:13:41.2659037Z Statuses: write
+start	Set up job	2025-09-23T16:13:41.2659753Z ##[endgroup]
+start	Set up job	2025-09-23T16:13:41.2662208Z Secret source: Actions
+start	Set up job	2025-09-23T16:13:41.2663010Z Prepare workflow directory
+start	Set up job	2025-09-23T16:13:41.3013946Z Prepare all required actions
+start	Set up job	2025-09-23T16:13:41.3053328Z Getting action download info
+start	Set up job	2025-09-23T16:13:41.6327451Z Download action repository 'actions/checkout@v4' (SHA:08eba0b27e820071cde6df949e0beb9ba4906955)
+start	Set up job	2025-09-23T16:13:41.7027708Z Download action repository 'actions/setup-java@v4' (SHA:c5195efecf7bdfc987ee8bae7a71cb8b11521c00)
+start	Set up job	2025-09-23T16:13:42.0480979Z Download action repository 'actions/cache@v4' (SHA:0400d5f644dc74513175e3cd8d07132dd4860809)
+start	Set up job	2025-09-23T16:13:42.2438398Z Complete job name: start
+start	Run actions/checkout@v4	﻿2025-09-23T16:13:42.3221992Z ##[group]Run actions/checkout@v4
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3223029Z with:
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3223524Z   repository: chuiba/BilibiliTask_3
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3224406Z   token: ***
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3224848Z   ssh-strict: true
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3225305Z   ssh-user: git
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3225770Z   persist-credentials: true
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3226289Z   clean: true
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3226742Z   sparse-checkout-cone-mode: true
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3227304Z   fetch-depth: 1
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3227756Z   fetch-tags: false
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3228276Z   show-progress: true
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3228749Z   lfs: false
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3229198Z   submodules: false
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3229833Z   set-safe-directory: true
+start	Run actions/checkout@v4	2025-09-23T16:13:42.3230672Z ##[endgroup]
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4357830Z Syncing repository: chuiba/BilibiliTask_3
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4360345Z ##[group]Getting Git version info
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4361355Z Working directory is '/home/runner/work/BilibiliTask_3/BilibiliTask_3'
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4362702Z [command]/usr/bin/git version
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4389921Z git version 2.51.0
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4417696Z ##[endgroup]
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4443059Z Temporarily overriding HOME='/home/runner/work/_temp/72f53f8c-3ee5-44d4-96ff-bb8aa24d4f9d' before making global git config changes
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4446125Z Adding repository directory to the temporary git global config as a safe directory
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4450076Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/BilibiliTask_3/BilibiliTask_3
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4490021Z Deleting the contents of '/home/runner/work/BilibiliTask_3/BilibiliTask_3'
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4494353Z ##[group]Initializing the repository
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4499507Z [command]/usr/bin/git init /home/runner/work/BilibiliTask_3/BilibiliTask_3
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4563802Z hint: Using 'master' as the name for the initial branch. This default branch name
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4566130Z hint: is subject to change. To configure the initial branch name to use in all
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4568307Z hint: of your new repositories, which will suppress this warning, call:
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4570205Z hint:
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4571251Z hint: 	git config --global init.defaultBranch <name>
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4572481Z hint:
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4573608Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4575425Z hint: 'development'. The just-created branch can be renamed via this command:
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4576902Z hint:
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4577720Z hint: 	git branch -m <name>
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4578739Z hint:
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4580221Z hint: Disable this message with "git config set advice.defaultBranchName false"
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4582466Z Initialized empty Git repository in /home/runner/work/BilibiliTask_3/BilibiliTask_3/.git/
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4585866Z [command]/usr/bin/git remote add origin https://github.com/chuiba/BilibiliTask_3
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4618487Z ##[endgroup]
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4620153Z ##[group]Disabling automatic garbage collection
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4623930Z [command]/usr/bin/git config --local gc.auto 0
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4656435Z ##[endgroup]
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4657842Z ##[group]Setting up auth
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4664836Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+start	Run actions/checkout@v4	2025-09-23T16:13:42.4700066Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+start	Run actions/checkout@v4	2025-09-23T16:13:42.5004482Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+start	Run actions/checkout@v4	2025-09-23T16:13:42.5042065Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+start	Run actions/checkout@v4	2025-09-23T16:13:42.5282277Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+start	Run actions/checkout@v4	2025-09-23T16:13:42.5319530Z ##[endgroup]
+start	Run actions/checkout@v4	2025-09-23T16:13:42.5321378Z ##[group]Fetching the repository
+start	Run actions/checkout@v4	2025-09-23T16:13:42.5339215Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fd76d31777042eb24a07b97269e70794a72b2b02:refs/remotes/origin/main
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9132319Z From https://github.com/chuiba/BilibiliTask_3
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9134434Z  * [new ref]         fd76d31777042eb24a07b97269e70794a72b2b02 -> origin/main
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9163530Z ##[endgroup]
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9165126Z ##[group]Determining the checkout info
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9166622Z ##[endgroup]
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9171696Z [command]/usr/bin/git sparse-checkout disable
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9215648Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9249947Z ##[group]Checking out the ref
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9254175Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9468060Z Switched to a new branch 'main'
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9470739Z branch 'main' set up to track 'origin/main'.
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9476095Z ##[endgroup]
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9517962Z [command]/usr/bin/git log -1 --format=%H
+start	Run actions/checkout@v4	2025-09-23T16:13:42.9543920Z fd76d31777042eb24a07b97269e70794a72b2b02
+start	Set up JDK 11	﻿2025-09-23T16:13:42.9907264Z ##[group]Run actions/setup-java@v4
+start	Set up JDK 11	2025-09-23T16:13:42.9908497Z with:
+start	Set up JDK 11	2025-09-23T16:13:42.9909364Z   java-version: 11
+start	Set up JDK 11	2025-09-23T16:13:42.9910461Z   distribution: temurin
+start	Set up JDK 11	2025-09-23T16:13:42.9911445Z   java-package: jdk
+start	Set up JDK 11	2025-09-23T16:13:42.9912637Z   check-latest: false
+start	Set up JDK 11	2025-09-23T16:13:42.9913594Z   server-id: github
+start	Set up JDK 11	2025-09-23T16:13:42.9914551Z   server-username: GITHUB_ACTOR
+start	Set up JDK 11	2025-09-23T16:13:42.9915684Z   server-password: GITHUB_TOKEN
+start	Set up JDK 11	2025-09-23T16:13:42.9916801Z   overwrite-settings: true
+start	Set up JDK 11	2025-09-23T16:13:42.9917818Z   job-status: success
+start	Set up JDK 11	2025-09-23T16:13:42.9919054Z   token: ***
+start	Set up JDK 11	2025-09-23T16:13:42.9920067Z ##[endgroup]
+start	Set up JDK 11	2025-09-23T16:13:43.1983690Z ##[group]Installed distributions
+start	Set up JDK 11	2025-09-23T16:13:43.2036253Z Resolved Java 11.0.28+6 from tool-cache
+start	Set up JDK 11	2025-09-23T16:13:43.2038291Z Setting Java 11.0.28+6 as the default
+start	Set up JDK 11	2025-09-23T16:13:43.2052165Z Creating toolchains.xml for JDK version 11 from temurin
+start	Set up JDK 11	2025-09-23T16:13:43.2134012Z Writing to /home/runner/.m2/toolchains.xml
+start	Set up JDK 11	2025-09-23T16:13:43.2135615Z 
+start	Set up JDK 11	2025-09-23T16:13:43.2136370Z Java configuration:
+start	Set up JDK 11	2025-09-23T16:13:43.2137857Z   Distribution: temurin
+start	Set up JDK 11	2025-09-23T16:13:43.2139381Z   Version: 11.0.28+6
+start	Set up JDK 11	2025-09-23T16:13:43.2141799Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.28-6/x64
+start	Set up JDK 11	2025-09-23T16:13:43.2143788Z 
+start	Set up JDK 11	2025-09-23T16:13:43.2151456Z ##[endgroup]
+start	Set up JDK 11	2025-09-23T16:13:43.2172357Z Creating settings.xml with server-id: github
+start	Set up JDK 11	2025-09-23T16:13:43.2174420Z Writing to /home/runner/.m2/settings.xml
+start	Cache Gradle packages	﻿2025-09-23T16:13:43.3467855Z ##[group]Run actions/cache@v4
+start	Cache Gradle packages	2025-09-23T16:13:43.3469274Z with:
+start	Cache Gradle packages	2025-09-23T16:13:43.3471192Z   path: ~/.gradle/caches
+start	Cache Gradle packages	~/.gradle/wrapper
+start	Cache Gradle packages	
+start	Cache Gradle packages	2025-09-23T16:13:43.3473622Z   key: Linux-gradle-86f973b55333c0c023a3f50d68edae32fb988f3269f897e6515c34280bd51627
+start	Cache Gradle packages	2025-09-23T16:13:43.3475380Z   restore-keys: Linux-gradle-
+start	Cache Gradle packages	
+start	Cache Gradle packages	2025-09-23T16:13:43.3476388Z   enableCrossOsArchive: false
+start	Cache Gradle packages	2025-09-23T16:13:43.3477370Z   fail-on-cache-miss: false
+start	Cache Gradle packages	2025-09-23T16:13:43.3478297Z   lookup-only: false
+start	Cache Gradle packages	2025-09-23T16:13:43.3479128Z   save-always: false
+start	Cache Gradle packages	2025-09-23T16:13:43.3480119Z env:
+start	Cache Gradle packages	2025-09-23T16:13:43.3481229Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.28-6/x64
+start	Cache Gradle packages	2025-09-23T16:13:43.3483109Z   JAVA_HOME_11_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.28-6/x64
+start	Cache Gradle packages	2025-09-23T16:13:43.3484592Z ##[endgroup]
+start	Cache Gradle packages	2025-09-23T16:13:43.6023605Z Cache hit for: Linux-gradle-86f973b55333c0c023a3f50d68edae32fb988f3269f897e6515c34280bd51627
+start	Cache Gradle packages	2025-09-23T16:13:44.6618736Z Received 146800640 of 280469343 (52.3%), 139.4 MBs/sec
+start	Cache Gradle packages	2025-09-23T16:13:45.3220209Z Received 280469343 of 280469343 (100.0%), 160.7 MBs/sec
+start	Cache Gradle packages	2025-09-23T16:13:45.3223484Z Cache Size: ~267 MB (280469343 B)
+start	Cache Gradle packages	2025-09-23T16:13:45.3338265Z [command]/usr/bin/tar -xf /home/runner/work/_temp/0a6dbb5f-a251-42f7-a456-51d0ca4d5dad/cache.tzst -P -C /home/runner/work/BilibiliTask_3/BilibiliTask_3 --use-compress-program unzstd
+start	Cache Gradle packages	2025-09-23T16:13:45.8005174Z Cache restored successfully
+start	Cache Gradle packages	2025-09-23T16:13:45.8629100Z Cache restored from key: Linux-gradle-86f973b55333c0c023a3f50d68edae32fb988f3269f897e6515c34280bd51627
+start	Build with Gradle	﻿2025-09-23T16:13:45.8766729Z ##[group]Run chmod +x gradlew
+start	Build with Gradle	2025-09-23T16:13:45.8767379Z [36;1mchmod +x gradlew[0m
+start	Build with Gradle	2025-09-23T16:13:45.8767708Z [36;1m./gradlew runMain[0m
+start	Build with Gradle	2025-09-23T16:13:45.8820471Z shell: /usr/bin/bash -e {0}
+start	Build with Gradle	2025-09-23T16:13:45.8820776Z env:
+start	Build with Gradle	2025-09-23T16:13:45.8821086Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.28-6/x64
+start	Build with Gradle	2025-09-23T16:13:45.8821570Z   JAVA_HOME_11_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.28-6/x64
+start	Build with Gradle	2025-09-23T16:13:45.8822051Z   BILI_JCT: ***
+start	Build with Gradle	2025-09-23T16:13:45.8822261Z   DEDEUSERID: ***
+start	Build with Gradle	2025-09-23T16:13:45.8823292Z   SESSDATA: ***
+start	Build with Gradle	2025-09-23T16:13:45.8823473Z   SCKEY: 
+start	Build with Gradle	2025-09-23T16:13:45.8823657Z   DINGTALK: 
+start	Build with Gradle	2025-09-23T16:13:45.8823854Z   PUSHPLUSTK: 
+start	Build with Gradle	2025-09-23T16:13:45.8824045Z   SENDKEY: 
+start	Build with Gradle	2025-09-23T16:13:45.8824222Z   TELEGRAM_BOT_TOKEN: 
+start	Build with Gradle	2025-09-23T16:13:45.8824430Z   TELEGRAM_CHAT_ID: 
+start	Build with Gradle	2025-09-23T16:13:45.8824626Z ##[endgroup]
+start	Build with Gradle	2025-09-23T16:13:48.8021939Z 
+start	Build with Gradle	2025-09-23T16:13:48.8022956Z Welcome to Gradle 8.5!
+start	Build with Gradle	2025-09-23T16:13:48.8028136Z 
+start	Build with Gradle	2025-09-23T16:13:48.8028640Z Here are the highlights of this release:
+start	Build with Gradle	2025-09-23T16:13:48.8029234Z  - Support for running on Java 21
+start	Build with Gradle	2025-09-23T16:13:48.8030042Z  - Faster first use with Kotlin DSL
+start	Build with Gradle	2025-09-23T16:13:48.8031106Z  - Improved error and warning messages
+start	Build with Gradle	2025-09-23T16:13:48.8031454Z 
+start	Build with Gradle	2025-09-23T16:13:48.8032082Z For more details see https://docs.gradle.org/8.5/release-notes.html
+start	Build with Gradle	2025-09-23T16:13:48.8033931Z 
+start	Build with Gradle	2025-09-23T16:13:49.2871327Z Starting a Gradle Daemon (subsequent builds will be faster)
+start	Build with Gradle	2025-09-23T16:14:45.4919264Z > Task :processResources
+start	Build with Gradle	2025-09-23T16:14:45.4920320Z > Task :generateEffectiveLombokConfig
+start	Build with Gradle	2025-09-23T16:14:47.8884569Z > Task :compileJava
+start	Build with Gradle	2025-09-23T16:14:47.8885035Z > Task :classes
+start	Build with Gradle	2025-09-23T16:14:49.8869749Z 
+start	Build with Gradle	2025-09-23T16:14:49.8870294Z > Task :runMain
+start	Build with Gradle	2025-09-23T16:14:49.8875247Z [36m2025-09-24 00:14:48.512[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:53[0;39m 🚀程序启动，开始检查环境变量
+start	Build with Gradle	2025-09-23T16:14:49.8877745Z [36m2025-09-24 00:14:48.520[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:58[0;39m ✅环境变量检查通过
+start	Build with Gradle	2025-09-23T16:14:49.8880226Z [36m2025-09-24 00:14:48.521[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:61[0;39m 📖开始读取配置文件
+start	Build with Gradle	2025-09-23T16:14:49.8881298Z [36m2025-09-24 00:14:48.605[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:63[0;39m ✅配置文件读取完成
+start	Build with Gradle	2025-09-23T16:14:49.8882272Z [36m2025-09-24 00:14:48.606[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:66[0;39m 🔍开始验证用户账户
+start	Build with Gradle	2025-09-23T16:14:49.8883310Z [36m2025-09-24 00:14:48.606[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:174[0;39m 🌐初始化UserAgent
+start	Build with Gradle	2025-09-23T16:14:49.8884427Z [36m2025-09-24 00:14:48.616[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:176[0;39m 📡发送账户验证请求到Bilibili API
+start	Build with Gradle	2025-09-23T16:14:49.8885751Z [36m2025-09-24 00:14:48.616[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:69[0;39m 🔄开始GET请求: https://api.bilibili.com/x/web-interface/nav
+start	Build with Gradle	2025-09-23T16:14:49.8886634Z [36m2025-09-24 00:14:49.616[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:71[0;39m ⏰等待完成，开始执行请求
+start	Build with Gradle	2025-09-23T16:14:50.5885210Z [36m2025-09-24 00:14:50.549[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:14:51.5870256Z [36m2025-09-24 00:14:51.542[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:14:51.5873539Z [36m2025-09-24 00:14:51.542[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/nav
+start	Build with Gradle	2025-09-23T16:14:51.9892243Z [36m2025-09-24 00:14:51.884[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:178[0;39m 📨收到API响应: {"code":0,"message":"0","ttl":1,"data":{"isLogin":true,"email_verified":1,"face":"https://i2.hdslb.com/bfs/face/d96d57f4c6cf24d41d50ca39fe258b26368f980c.jpg","face_nft":0,"face_nft_type":0,"level_info":{"current_level":5,"current_min":10800,"current_exp":12741,"next_exp":28800},"mid":***,"mobile_verified":1,"money":27.8,"moral":70,"official":{"role":0,"title":"","desc":"","type":-1},"officialVerify":{"type":-1,"desc":""},"pendant":{"pid":4665,"name":"赏樱大会欧皇","image":"https://i2.hdslb.com/bfs/garb/item/5d0c345d7fcded95b7a99ae19c9eb642e6218420.png","expire":0,"image_enhance":"https://i2.hdslb.com/bfs/garb/item/334ca686e3e238528da44736d2d5d25a005f14bc.webp","image_enhance_frame":"https://i2.hdslb.com/bfs/garb/item/966403d32d76976b8d871c5b7962ce934f397f18.png","n_pid":4665},"scores":0,"uname":"装扮机器人","vipDueDate":0,"vipStatus":0,"vipType":0,"vip_pay_type":0,"vip_theme_type":0,"vip_label":{"path":"","text":"","label_theme":"","text_color":"","bg_style":0,"bg_color":"","border_color":"","use_img_label":true,"img_label_uri_hans":"","img_label_uri_hant":"","img_label_uri_hans_static":"https://i0.hdslb.com/bfs/vip/d7b702ef65a976b20ed854cbd04cb9e27341bb79.png","img_label_uri_hant_static":"https://i0.hdslb.com/bfs/activity-plat/static/20220614/e369244d0b14644f5e1a06431e22a4d5/KJunwh19T5.png","label_id":0},"vip_avatar_subscript":0,"vip_nickname_color":"","vip":{"type":0,"status":0,"due_date":0,"vip_pay_type":0,"theme_type":0,"label":{"path":"","text":"","label_theme":"","text_color":"","bg_style":0,"bg_color":"","border_color":"","use_img_label":true,"img_label_uri_hans":"","img_label_uri_hant":"","img_label_uri_hans_static":"https://i0.hdslb.com/bfs/vip/d7b702ef65a976b20ed854cbd04cb9e27341bb79.png","img_label_uri_hant_static":"https://i0.hdslb.com/bfs/activity-plat/static/20220614/e369244d0b14644f5e1a06431e22a4d5/KJunwh19T5.png","label_id":0},"avatar_subscript":0,"nickname_color":"","role":0,"avatar_subscript_url":"","tv_vip_status":0,"tv_vip_pay_type":0,"tv_due_date":0,"avatar_icon":{"icon_resource":{}},"ott_info":{"vip_type":0,"pay_type":0,"pay_channel_id":"","status":0,"overdue_time":0},"super_vip":{"is_super_vip":false}},"wallet":{"mid":***,"bcoin_balance":70,"coupon_balance":0,"coupon_due_time":0},"has_shop":false,"shop_url":"","answer_status":0,"is_senior_member":0,"wbi_img":{"img_url":"https://i0.hdslb.com/bfs/wbi/7cd084941338484aae1ad9425b84077c.png","sub_url":"https://i0.hdslb.com/bfs/wbi/4932caff0ff746eab6f01bf08b70ac45.png"},"is_jury":false}}
+start	Build with Gradle	2025-09-23T16:14:51.9901553Z [36m2025-09-24 00:14:51.885[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:68[0;39m ✅账户验证成功
+start	Build with Gradle	2025-09-23T16:14:51.9902181Z [36m2025-09-24 00:14:51.889[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:69[0;39m 【用户名】: 装***人
+start	Build with Gradle	2025-09-23T16:14:51.9902731Z [36m2025-09-24 00:14:51.890[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:70[0;39m 【硬币】: 27.8
+start	Build with Gradle	2025-09-23T16:14:51.9903250Z [36m2025-09-24 00:14:51.910[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:71[0;39m 【经验】: 12741
+start	Build with Gradle	2025-09-23T16:14:51.9903781Z [36m2025-09-24 00:14:51.933[0;39m [34m[INFO ][0;39m [33mt.s.t.b.BiCoinApply:36[0;39m 【B币卷】: 0
+start	Build with Gradle	2025-09-23T16:14:51.9904604Z [36m2025-09-24 00:14:51.933[0;39m [34m[INFO ][0;39m [33mt.s.t.b.BiCoinApply:38[0;39m 【使用B币卷】: B币卷为0 ,无法使用❌
+start	Build with Gradle	2025-09-23T16:14:51.9905796Z [36m2025-09-24 00:14:51.934[0;39m [34m[INFO ][0;39m [33mt.s.t.b.CollectVipGift:36[0;39m 【年度大会员领取福利】: 不是年度大会员,无法领取❌
+start	Build with Gradle	2025-09-23T16:14:52.0871052Z [36m2025-09-24 00:14:52.030[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:69[0;39m 🔄开始GET请求: https://api.bilibili.com/x/web-interface/nav
+start	Build with Gradle	2025-09-23T16:14:52.9870802Z [36m2025-09-24 00:14:52.957[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:71[0;39m ⏰等待完成，开始执行请求
+start	Build with Gradle	2025-09-23T16:14:54.3871567Z [36m2025-09-24 00:14:54.293[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:14:54.8872216Z [36m2025-09-24 00:14:54.812[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:14:54.8875663Z [36m2025-09-24 00:14:54.812[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/nav
+start	Build with Gradle	2025-09-23T16:14:55.1871076Z [36m2025-09-24 00:14:55.154[0;39m [34m[INFO ][0;39m [33mt.s.u.WbiSignature:105[0;39m WBI密钥更新成功: imgKey=7cd08494..., subKey=4932caff...
+start	Build with Gradle	2025-09-23T16:14:56.3871049Z [36m2025-09-24 00:14:56.358[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:14:56.7870794Z [36m2025-09-24 00:14:56.713[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:14:56.7873159Z [36m2025-09-24 00:14:56.714[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/member/web/exp/reward?w_rid=daaeef2af34aa465a268f12f8a937781&wts=1758644095
+start	Build with Gradle	2025-09-23T16:14:57.2871577Z [36m2025-09-24 00:14:57.227[0;39m [1;31m[ERROR][0;39m [33mt.s.u.Request:202[0;39m 💔GET请求返回HTML错误页面: <!DOCTYPE html>
+start	Build with Gradle	2025-09-23T16:14:57.2873099Z <html lang="zh-cn">
+start	Build with Gradle	2025-09-23T16:14:57.2873516Z 
+start	Build with Gradle	2025-09-23T16:14:57.2873722Z <head>
+start	Build with Gradle	2025-09-23T16:14:57.2874462Z     <meta http-equiv="Access-Control-Allow-Origin" conte
+start	Build with Gradle	2025-09-23T16:14:57.2885474Z [36m2025-09-24 00:14:57.227[0;39m [1;31m[ERROR][0;39m [33mt.s.u.Request:213[0;39m 💔GET请求错误 : 
+start	Build with Gradle	2025-09-23T16:14:57.2886843Z java.lang.RuntimeException: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:14:57.2887794Z 	at top.srcrs.util.Request.clientExe(Request.java:203)
+start	Build with Gradle	2025-09-23T16:14:57.2888827Z 	at top.srcrs.util.Request.get(Request.java:57)
+start	Build with Gradle	2025-09-23T16:14:57.2889876Z 	at top.srcrs.util.Request.getWithWbi(Request.java:101)
+start	Build with Gradle	2025-09-23T16:14:57.2891242Z 	at top.srcrs.task.daily.DailyTask.getReward(DailyTask.java:188)
+start	Build with Gradle	2025-09-23T16:14:57.2892017Z 	at top.srcrs.task.daily.DailyTask.run(DailyTask.java:28)
+start	Build with Gradle	2025-09-23T16:14:57.2892888Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+start	Build with Gradle	2025-09-23T16:14:57.2894056Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+start	Build with Gradle	2025-09-23T16:14:57.2895435Z 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+start	Build with Gradle	2025-09-23T16:14:57.2896456Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+start	Build with Gradle	2025-09-23T16:14:57.2897147Z 	at top.srcrs.BiliStart.lambda$scanTask$1(BiliStart.java:151)
+start	Build with Gradle	2025-09-23T16:14:57.2897983Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+start	Build with Gradle	2025-09-23T16:14:57.2898981Z 	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+start	Build with Gradle	2025-09-23T16:14:57.2900233Z 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+start	Build with Gradle	2025-09-23T16:14:57.2901318Z 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+start	Build with Gradle	2025-09-23T16:14:57.2902431Z 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+start	Build with Gradle	2025-09-23T16:14:57.2903503Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+start	Build with Gradle	2025-09-23T16:14:57.2904535Z 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+start	Build with Gradle	2025-09-23T16:14:57.2905518Z 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:497)
+start	Build with Gradle	2025-09-23T16:14:57.2906321Z 	at top.srcrs.BiliStart.scanTask(BiliStart.java:146)
+start	Build with Gradle	2025-09-23T16:14:57.2906893Z 	at top.srcrs.BiliStart.main(BiliStart.java:73)
+start	Build with Gradle	2025-09-23T16:14:57.2907844Z [36m2025-09-24 00:14:57.230[0;39m [1;31m[ERROR][0;39m [33mt.s.u.Request:103[0;39m 💔WBI请求失败: 
+start	Build with Gradle	2025-09-23T16:14:57.2908839Z java.lang.RuntimeException: API请求失败: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:14:57.2909750Z 	at top.srcrs.util.Request.clientExe(Request.java:214)
+start	Build with Gradle	2025-09-23T16:14:57.2910355Z 	at top.srcrs.util.Request.get(Request.java:57)
+start	Build with Gradle	2025-09-23T16:14:57.2910965Z 	at top.srcrs.util.Request.getWithWbi(Request.java:101)
+start	Build with Gradle	2025-09-23T16:14:57.2911658Z 	at top.srcrs.task.daily.DailyTask.getReward(DailyTask.java:188)
+start	Build with Gradle	2025-09-23T16:14:57.2912377Z 	at top.srcrs.task.daily.DailyTask.run(DailyTask.java:28)
+start	Build with Gradle	2025-09-23T16:14:57.2913197Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+start	Build with Gradle	2025-09-23T16:14:57.2914317Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+start	Build with Gradle	2025-09-23T16:14:57.2915607Z 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+start	Build with Gradle	2025-09-23T16:14:57.2916993Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+start	Build with Gradle	2025-09-23T16:14:57.2917705Z 	at top.srcrs.BiliStart.lambda$scanTask$1(BiliStart.java:151)
+start	Build with Gradle	2025-09-23T16:14:57.2918525Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+start	Build with Gradle	2025-09-23T16:14:57.2919475Z 	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+start	Build with Gradle	2025-09-23T16:14:57.2920658Z 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+start	Build with Gradle	2025-09-23T16:14:57.2921688Z 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+start	Build with Gradle	2025-09-23T16:14:57.2922759Z 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+start	Build with Gradle	2025-09-23T16:14:57.2923855Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+start	Build with Gradle	2025-09-23T16:14:57.2924900Z 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+start	Build with Gradle	2025-09-23T16:14:57.2925906Z 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:497)
+start	Build with Gradle	2025-09-23T16:14:57.2926698Z 	at top.srcrs.BiliStart.scanTask(BiliStart.java:146)
+start	Build with Gradle	2025-09-23T16:14:57.2927501Z 	at top.srcrs.BiliStart.main(BiliStart.java:73)
+start	Build with Gradle	2025-09-23T16:14:57.2928355Z Caused by: java.lang.RuntimeException: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:14:57.2929041Z 	at top.srcrs.util.Request.clientExe(Request.java:203)
+start	Build with Gradle	2025-09-23T16:14:57.2929754Z 	... 19 common frames omitted
+start	Build with Gradle	2025-09-23T16:14:57.2930592Z [36m2025-09-24 00:14:57.231[0;39m [31m[WARN ][0;39m [33mt.s.t.d.DailyTask:198[0;39m 新API调用失败，尝试使用导航API: 
+start	Build with Gradle	2025-09-23T16:14:57.2931616Z java.lang.RuntimeException: WBI请求失败: API请求失败: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:14:57.2932370Z 	at top.srcrs.util.Request.getWithWbi(Request.java:104)
+start	Build with Gradle	2025-09-23T16:14:57.2933058Z 	at top.srcrs.task.daily.DailyTask.getReward(DailyTask.java:188)
+start	Build with Gradle	2025-09-23T16:14:57.2933751Z 	at top.srcrs.task.daily.DailyTask.run(DailyTask.java:28)
+start	Build with Gradle	2025-09-23T16:14:57.2934610Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+start	Build with Gradle	2025-09-23T16:14:57.2935750Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+start	Build with Gradle	2025-09-23T16:14:57.2937108Z 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+start	Build with Gradle	2025-09-23T16:14:57.2938185Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+start	Build with Gradle	2025-09-23T16:14:57.2938875Z 	at top.srcrs.BiliStart.lambda$scanTask$1(BiliStart.java:151)
+start	Build with Gradle	2025-09-23T16:14:57.2939856Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+start	Build with Gradle	2025-09-23T16:14:57.2940873Z 	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+start	Build with Gradle	2025-09-23T16:14:57.2941860Z 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+start	Build with Gradle	2025-09-23T16:14:57.2942895Z 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+start	Build with Gradle	2025-09-23T16:14:57.2944015Z 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+start	Build with Gradle	2025-09-23T16:14:57.2945175Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+start	Build with Gradle	2025-09-23T16:14:57.2946231Z 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+start	Build with Gradle	2025-09-23T16:14:57.2947242Z 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:497)
+start	Build with Gradle	2025-09-23T16:14:57.2948058Z 	at top.srcrs.BiliStart.scanTask(BiliStart.java:146)
+start	Build with Gradle	2025-09-23T16:14:57.2948626Z 	at top.srcrs.BiliStart.main(BiliStart.java:73)
+start	Build with Gradle	2025-09-23T16:14:57.2949492Z Caused by: java.lang.RuntimeException: API请求失败: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:14:57.2950360Z 	at top.srcrs.util.Request.clientExe(Request.java:214)
+start	Build with Gradle	2025-09-23T16:14:57.2950919Z 	at top.srcrs.util.Request.get(Request.java:57)
+start	Build with Gradle	2025-09-23T16:14:57.2951479Z 	at top.srcrs.util.Request.getWithWbi(Request.java:101)
+start	Build with Gradle	2025-09-23T16:14:57.2952235Z 	... 17 common frames omitted
+start	Build with Gradle	2025-09-23T16:14:57.2952903Z Caused by: java.lang.RuntimeException: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:14:57.2953558Z 	at top.srcrs.util.Request.clientExe(Request.java:203)
+start	Build with Gradle	2025-09-23T16:14:57.2954069Z 	... 19 common frames omitted
+start	Build with Gradle	2025-09-23T16:14:57.2955048Z [36m2025-09-24 00:14:57.232[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:69[0;39m 🔄开始GET请求: https://api.bilibili.com/x/web-interface/nav
+start	Build with Gradle	2025-09-23T16:14:57.6870984Z [36m2025-09-24 00:14:57.664[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:71[0;39m ⏰等待完成，开始执行请求
+start	Build with Gradle	2025-09-23T16:14:58.6871307Z [36m2025-09-24 00:14:58.627[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:14:58.9871541Z [36m2025-09-24 00:14:58.949[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:14:58.9873492Z [36m2025-09-24 00:14:58.949[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/nav
+start	Build with Gradle	2025-09-23T16:14:59.2870592Z [36m2025-09-24 00:14:59.271[0;39m [34m[INFO ][0;39m [33mt.s.t.d.DailyTask:29[0;39m 📊每日任务状态: {"login":true,"watch_av":false,"share_av":false,"coins_av":0}
+start	Build with Gradle	2025-09-23T16:15:00.2869787Z [36m2025-09-24 00:15:00.247[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:00.6870151Z [36m2025-09-24 00:15:00.601[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:00.6871959Z [36m2025-09-24 00:15:00.602[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/wbi/index/top/feed/rcmd?ps=6&rid=1&w_rid=8cb2c04b6f83eae6f6855503a91eeebf&wts=1758644099
+start	Build with Gradle	2025-09-23T16:15:02.1870464Z [36m2025-09-24 00:15:02.124[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:02.4870860Z [36m2025-09-24 00:15:02.437[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:02.4872530Z [36m2025-09-24 00:15:02.437[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/player/pagelist?aid=115245951484120
+start	Build with Gradle	2025-09-23T16:15:03.4870763Z [36m2025-09-24 00:15:03.406[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:03.7870610Z [36m2025-09-24 00:15:03.766[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:03.7871957Z [36m2025-09-24 00:15:03.766[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/x/v2/history/report
+start	Build with Gradle	2025-09-23T16:15:04.0869061Z [36m2025-09-24 00:15:04.078[0;39m [34m[INFO ][0;39m [33mt.s.t.d.DailyTask:54[0;39m 【模拟观看视频】: 成功✔
+start	Build with Gradle	2025-09-23T16:15:05.2870819Z [36m2025-09-24 00:15:05.186[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:05.7870613Z [36m2025-09-24 00:15:05.696[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:05.7871803Z [36m2025-09-24 00:15:05.697[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/x/web-interface/share/add
+start	Build with Gradle	2025-09-23T16:15:06.0870549Z [36m2025-09-24 00:15:06.040[0;39m [34m[INFO ][0;39m [33mt.s.t.d.DailyTask:60[0;39m 【分享视频】: 成功✔
+start	Build with Gradle	2025-09-23T16:15:08.5871730Z [36m2025-09-24 00:15:08.560[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:08.8869477Z [36m2025-09-24 00:15:08.878[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:08.8871601Z [36m2025-09-24 00:15:08.879[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/member/web/exp/reward?w_rid=e986e3fbee241e07d040a2bc38ae19ed&wts=1758644106
+start	Build with Gradle	2025-09-23T16:15:09.4871485Z [36m2025-09-24 00:15:09.388[0;39m [1;31m[ERROR][0;39m [33mt.s.u.Request:202[0;39m 💔GET请求返回HTML错误页面: <!DOCTYPE html>
+start	Build with Gradle	2025-09-23T16:15:09.4872533Z <html lang="zh-cn">
+start	Build with Gradle	2025-09-23T16:15:09.4872815Z 
+start	Build with Gradle	2025-09-23T16:15:09.4872986Z <head>
+start	Build with Gradle	2025-09-23T16:15:09.4873504Z     <meta http-equiv="Access-Control-Allow-Origin" conte
+start	Build with Gradle	2025-09-23T16:15:09.4874633Z [36m2025-09-24 00:15:09.389[0;39m [1;31m[ERROR][0;39m [33mt.s.u.Request:213[0;39m 💔GET请求错误 : 
+start	Build with Gradle	2025-09-23T16:15:09.4875759Z java.lang.RuntimeException: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:15:09.4876571Z 	at top.srcrs.util.Request.clientExe(Request.java:203)
+start	Build with Gradle	2025-09-23T16:15:09.4877322Z 	at top.srcrs.util.Request.get(Request.java:57)
+start	Build with Gradle	2025-09-23T16:15:09.4878066Z 	at top.srcrs.util.Request.getWithWbi(Request.java:101)
+start	Build with Gradle	2025-09-23T16:15:09.4879096Z 	at top.srcrs.task.daily.ThrowCoinTask.getReward(ThrowCoinTask.java:143)
+start	Build with Gradle	2025-09-23T16:15:09.4880222Z 	at top.srcrs.task.daily.ThrowCoinTask.run(ThrowCoinTask.java:31)
+start	Build with Gradle	2025-09-23T16:15:09.4881238Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+start	Build with Gradle	2025-09-23T16:15:09.4882529Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+start	Build with Gradle	2025-09-23T16:15:09.4884051Z 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+start	Build with Gradle	2025-09-23T16:15:09.4885257Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+start	Build with Gradle	2025-09-23T16:15:09.4886039Z 	at top.srcrs.BiliStart.lambda$scanTask$1(BiliStart.java:151)
+start	Build with Gradle	2025-09-23T16:15:09.4886985Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+start	Build with Gradle	2025-09-23T16:15:09.4888066Z 	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+start	Build with Gradle	2025-09-23T16:15:09.4889176Z 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+start	Build with Gradle	2025-09-23T16:15:09.4890341Z 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+start	Build with Gradle	2025-09-23T16:15:09.4891347Z 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+start	Build with Gradle	2025-09-23T16:15:09.4892359Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+start	Build with Gradle	2025-09-23T16:15:09.4893337Z 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+start	Build with Gradle	2025-09-23T16:15:09.4894252Z 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:497)
+start	Build with Gradle	2025-09-23T16:15:09.4895029Z 	at top.srcrs.BiliStart.scanTask(BiliStart.java:146)
+start	Build with Gradle	2025-09-23T16:15:09.4895557Z 	at top.srcrs.BiliStart.main(BiliStart.java:73)
+start	Build with Gradle	2025-09-23T16:15:09.4896406Z [36m2025-09-24 00:15:09.390[0;39m [1;31m[ERROR][0;39m [33mt.s.u.Request:103[0;39m 💔WBI请求失败: 
+start	Build with Gradle	2025-09-23T16:15:09.4897909Z java.lang.RuntimeException: API请求失败: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:15:09.4898594Z 	at top.srcrs.util.Request.clientExe(Request.java:214)
+start	Build with Gradle	2025-09-23T16:15:09.4899180Z 	at top.srcrs.util.Request.get(Request.java:57)
+start	Build with Gradle	2025-09-23T16:15:09.4900057Z 	at top.srcrs.util.Request.getWithWbi(Request.java:101)
+start	Build with Gradle	2025-09-23T16:15:09.4900819Z 	at top.srcrs.task.daily.ThrowCoinTask.getReward(ThrowCoinTask.java:143)
+start	Build with Gradle	2025-09-23T16:15:09.4901632Z 	at top.srcrs.task.daily.ThrowCoinTask.run(ThrowCoinTask.java:31)
+start	Build with Gradle	2025-09-23T16:15:09.4902505Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+start	Build with Gradle	2025-09-23T16:15:09.4903656Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+start	Build with Gradle	2025-09-23T16:15:09.4905094Z 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+start	Build with Gradle	2025-09-23T16:15:09.4906426Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+start	Build with Gradle	2025-09-23T16:15:09.4907157Z 	at top.srcrs.BiliStart.lambda$scanTask$1(BiliStart.java:151)
+start	Build with Gradle	2025-09-23T16:15:09.4908035Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+start	Build with Gradle	2025-09-23T16:15:09.4909338Z 	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+start	Build with Gradle	2025-09-23T16:15:09.4910518Z 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+start	Build with Gradle	2025-09-23T16:15:09.4911526Z 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+start	Build with Gradle	2025-09-23T16:15:09.4912596Z 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+start	Build with Gradle	2025-09-23T16:15:09.4913688Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+start	Build with Gradle	2025-09-23T16:15:09.4914752Z 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+start	Build with Gradle	2025-09-23T16:15:09.4915737Z 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:497)
+start	Build with Gradle	2025-09-23T16:15:09.4916522Z 	at top.srcrs.BiliStart.scanTask(BiliStart.java:146)
+start	Build with Gradle	2025-09-23T16:15:09.4917112Z 	at top.srcrs.BiliStart.main(BiliStart.java:73)
+start	Build with Gradle	2025-09-23T16:15:09.4917951Z Caused by: java.lang.RuntimeException: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:15:09.4918621Z 	at top.srcrs.util.Request.clientExe(Request.java:203)
+start	Build with Gradle	2025-09-23T16:15:09.4919134Z 	... 19 common frames omitted
+start	Build with Gradle	2025-09-23T16:15:09.4920358Z [36m2025-09-24 00:15:09.391[0;39m [31m[WARN ][0;39m [33mt.s.t.d.ThrowCoinTask:154[0;39m 新API调用失败，返回默认值: 
+start	Build with Gradle	2025-09-23T16:15:09.4921393Z java.lang.RuntimeException: WBI请求失败: API请求失败: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:15:09.4922130Z 	at top.srcrs.util.Request.getWithWbi(Request.java:104)
+start	Build with Gradle	2025-09-23T16:15:09.4922869Z 	at top.srcrs.task.daily.ThrowCoinTask.getReward(ThrowCoinTask.java:143)
+start	Build with Gradle	2025-09-23T16:15:09.4923664Z 	at top.srcrs.task.daily.ThrowCoinTask.run(ThrowCoinTask.java:31)
+start	Build with Gradle	2025-09-23T16:15:09.4924515Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+start	Build with Gradle	2025-09-23T16:15:09.4925787Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+start	Build with Gradle	2025-09-23T16:15:09.4927094Z 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+start	Build with Gradle	2025-09-23T16:15:09.4928168Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+start	Build with Gradle	2025-09-23T16:15:09.4928858Z 	at top.srcrs.BiliStart.lambda$scanTask$1(BiliStart.java:151)
+start	Build with Gradle	2025-09-23T16:15:09.4929906Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+start	Build with Gradle	2025-09-23T16:15:09.4930848Z 	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+start	Build with Gradle	2025-09-23T16:15:09.4931783Z 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+start	Build with Gradle	2025-09-23T16:15:09.4932802Z 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+start	Build with Gradle	2025-09-23T16:15:09.4933864Z 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+start	Build with Gradle	2025-09-23T16:15:09.4935216Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+start	Build with Gradle	2025-09-23T16:15:09.4936236Z 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+start	Build with Gradle	2025-09-23T16:15:09.4937205Z 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:497)
+start	Build with Gradle	2025-09-23T16:15:09.4938005Z 	at top.srcrs.BiliStart.scanTask(BiliStart.java:146)
+start	Build with Gradle	2025-09-23T16:15:09.4938585Z 	at top.srcrs.BiliStart.main(BiliStart.java:73)
+start	Build with Gradle	2025-09-23T16:15:09.4939469Z Caused by: java.lang.RuntimeException: API请求失败: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:15:09.4940425Z 	at top.srcrs.util.Request.clientExe(Request.java:214)
+start	Build with Gradle	2025-09-23T16:15:09.4941012Z 	at top.srcrs.util.Request.get(Request.java:57)
+start	Build with Gradle	2025-09-23T16:15:09.4941600Z 	at top.srcrs.util.Request.getWithWbi(Request.java:101)
+start	Build with Gradle	2025-09-23T16:15:09.4942149Z 	... 17 common frames omitted
+start	Build with Gradle	2025-09-23T16:15:09.4942862Z Caused by: java.lang.RuntimeException: API返回HTML错误页面，可能是认证失败或API不可用
+start	Build with Gradle	2025-09-23T16:15:09.4943595Z 	at top.srcrs.util.Request.clientExe(Request.java:203)
+start	Build with Gradle	2025-09-23T16:15:09.4944124Z 	... 19 common frames omitted
+start	Build with Gradle	2025-09-23T16:15:09.4945135Z [36m2025-09-24 00:15:09.391[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:69[0;39m 🔄开始GET请求: https://api.bilibili.com/x/web-interface/nav
+start	Build with Gradle	2025-09-23T16:15:10.2871171Z [36m2025-09-24 00:15:10.209[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:71[0;39m ⏰等待完成，开始执行请求
+start	Build with Gradle	2025-09-23T16:15:11.9870374Z [36m2025-09-24 00:15:11.891[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:12.2870273Z [36m2025-09-24 00:15:12.244[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:12.2872303Z [36m2025-09-24 00:15:12.245[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/nav
+start	Build with Gradle	2025-09-23T16:15:12.5870755Z [36m2025-09-24 00:15:12.570[0;39m [34m[INFO ][0;39m [33mt.s.t.d.ThrowCoinTask:47[0;39m 【投币计算】: 自定义投币数: 5 ,今日已投币: 0 ,还需投币: 5 ,实际投币: 5
+start	Build with Gradle	2025-09-23T16:15:12.5872442Z [36m2025-09-24 00:15:12.570[0;39m [34m[INFO ][0;39m [33mt.s.t.d.ThrowCoinTask:62[0;39m 【优先投币up】: 未配置优先投币up主
+start	Build with Gradle	2025-09-23T16:15:13.7870637Z [36m2025-09-24 00:15:13.781[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:14.1869533Z [36m2025-09-24 00:15:14.141[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:14.1872284Z [36m2025-09-24 00:15:14.142[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=***&type_list=8
+start	Build with Gradle	2025-09-23T16:15:15.0870991Z [36m2025-09-24 00:15:15.042[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:15.3870796Z [36m2025-09-24 00:15:15.355[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:15.3872277Z [36m2025-09-24 00:15:15.356[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/archive/coins?aid=115252276494351
+start	Build with Gradle	2025-09-23T16:15:16.6871162Z [36m2025-09-24 00:15:16.657[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:16.9870035Z [36m2025-09-24 00:15:16.971[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:16.9871581Z [36m2025-09-24 00:15:16.972[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/archive/coins?aid=115252863702943
+start	Build with Gradle	2025-09-23T16:15:18.6870793Z [36m2025-09-24 00:15:18.653[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:18.9869881Z [36m2025-09-24 00:15:18.967[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:18.9871282Z [36m2025-09-24 00:15:18.967[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/archive/coins?aid=115252259785009
+start	Build with Gradle	2025-09-23T16:15:21.1870144Z [36m2025-09-24 00:15:21.082[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:21.5870815Z [36m2025-09-24 00:15:21.485[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:22.9870735Z [36m2025-09-24 00:15:21.486[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/archive/coins?aid=115247075628402
+start	Build with Gradle	2025-09-23T16:15:22.9872375Z [36m2025-09-24 00:15:22.892[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:23.3869521Z [36m2025-09-24 00:15:23.284[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:23.3871105Z [36m2025-09-24 00:15:23.285[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.bilibili.com/x/web-interface/archive/coins?aid=115241958511681
+start	Build with Gradle	2025-09-23T16:15:23.6870416Z [36m2025-09-24 00:15:23.628[0;39m [34m[INFO ][0;39m [33mt.s.t.d.ThrowCoinTask:74[0;39m 【用户动态列表】: 成功获取到: 5 个视频
+start	Build with Gradle	2025-09-23T16:15:25.2871204Z [36m2025-09-24 00:15:25.190[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:25.5870822Z [36m2025-09-24 00:15:25.538[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:25.5872151Z [36m2025-09-24 00:15:25.538[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/x/web-interface/coin/add
+start	Build with Gradle	2025-09-23T16:15:26.0871805Z [36m2025-09-24 00:15:25.997[0;39m [34m[INFO ][0;39m [33mt.s.t.d.ThrowCoinTask:94[0;39m 【投币】: 给视频 - av115252276494351 - 非法访问❌
+start	Build with Gradle	2025-09-23T16:15:29.6870594Z [36m2025-09-24 00:15:29.583[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:30.0870151Z [36m2025-09-24 00:15:30.018[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:30.0871095Z [36m2025-09-24 00:15:30.018[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/x/web-interface/coin/add
+start	Build with Gradle	2025-09-23T16:15:30.4869824Z [36m2025-09-24 00:15:30.419[0;39m [34m[INFO ][0;39m [33mt.s.t.d.ThrowCoinTask:94[0;39m 【投币】: 给视频 - av115252863702943 - 非法访问❌
+start	Build with Gradle	2025-09-23T16:15:32.4871191Z [36m2025-09-24 00:15:32.421[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:32.8869490Z [36m2025-09-24 00:15:32.805[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:32.8870763Z [36m2025-09-24 00:15:32.805[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/x/web-interface/coin/add
+start	Build with Gradle	2025-09-23T16:15:33.1869133Z [36m2025-09-24 00:15:33.184[0;39m [34m[INFO ][0;39m [33mt.s.t.d.ThrowCoinTask:94[0;39m 【投币】: 给视频 - av115252259785009 - 非法访问❌
+start	Build with Gradle	2025-09-23T16:15:34.8870731Z [36m2025-09-24 00:15:34.837[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:35.1869250Z [36m2025-09-24 00:15:35.179[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:35.1871144Z [36m2025-09-24 00:15:35.180[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/x/web-interface/coin/add
+start	Build with Gradle	2025-09-23T16:15:35.5869758Z [36m2025-09-24 00:15:35.576[0;39m [34m[INFO ][0;39m [33mt.s.t.d.ThrowCoinTask:94[0;39m 【投币】: 给视频 - av115247075628402 - 非法访问❌
+start	Build with Gradle	2025-09-23T16:15:38.0870360Z [36m2025-09-24 00:15:38.031[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:38.4870456Z [36m2025-09-24 00:15:38.469[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:38.4871879Z [36m2025-09-24 00:15:38.470[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/x/web-interface/coin/add
+start	Build with Gradle	2025-09-23T16:15:38.9870450Z [36m2025-09-24 00:15:38.894[0;39m [34m[INFO ][0;39m [33mt.s.t.d.ThrowCoinTask:94[0;39m 【投币】: 给视频 - av115241958511681 - 非法访问❌
+start	Build with Gradle	2025-09-23T16:15:40.0871278Z [36m2025-09-24 00:15:40.009[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:69[0;39m 🔄开始GET请求: https://api.live.bilibili.com/xlive/web-ucenter/v1/sign/DoSign
+start	Build with Gradle	2025-09-23T16:15:40.1870395Z [36m2025-09-24 00:15:40.134[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:71[0;39m ⏰等待完成，开始执行请求
+start	Build with Gradle	2025-09-23T16:15:40.9871679Z [36m2025-09-24 00:15:40.895[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:41.2870773Z [36m2025-09-24 00:15:41.240[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:41.2872964Z [36m2025-09-24 00:15:41.240[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.live.bilibili.com/xlive/web-ucenter/v1/sign/DoSign
+start	Build with Gradle	2025-09-23T16:15:41.6870370Z [36m2025-09-24 00:15:41.651[0;39m [34m[INFO ][0;39m [33mt.s.t.l.BiLiveTask:33[0;39m 【直播签到】: 签到活动已下线，无法使用。❌
+start	Build with Gradle	2025-09-23T16:15:45.2870821Z [36m2025-09-24 00:15:45.196[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:69[0;39m 🔄开始GET请求: https://api.live.bilibili.com/xlive/web-room/v1/gift/bag_list
+start	Build with Gradle	2025-09-23T16:15:45.2872052Z [36m2025-09-24 00:15:45.265[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:71[0;39m ⏰等待完成，开始执行请求
+start	Build with Gradle	2025-09-23T16:15:46.4870634Z [36m2025-09-24 00:15:46.386[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:46.8869427Z [36m2025-09-24 00:15:46.819[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:46.8870641Z [36m2025-09-24 00:15:46.819[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.live.bilibili.com/xlive/web-room/v1/gift/bag_list
+start	Build with Gradle	2025-09-23T16:15:47.2870032Z [36m2025-09-24 00:15:47.197[0;39m [1;31m[ERROR][0;39m [33mt.s.t.l.GiveGiftTask:76[0;39m 💔赠送礼物异常 : 
+start	Build with Gradle	2025-09-23T16:15:47.2871026Z java.lang.NullPointerException: null
+start	Build with Gradle	2025-09-23T16:15:47.2872526Z 	at top.srcrs.task.live.GiveGiftTask.xliveGiftBagList(GiveGiftTask.java:134)
+start	Build with Gradle	2025-09-23T16:15:47.2873680Z 	at top.srcrs.task.live.GiveGiftTask.run(GiveGiftTask.java:37)
+start	Build with Gradle	2025-09-23T16:15:47.2874924Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+start	Build with Gradle	2025-09-23T16:15:47.2876166Z 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+start	Build with Gradle	2025-09-23T16:15:47.2877379Z 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+start	Build with Gradle	2025-09-23T16:15:47.2878327Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+start	Build with Gradle	2025-09-23T16:15:47.2878961Z 	at top.srcrs.BiliStart.lambda$scanTask$1(BiliStart.java:151)
+start	Build with Gradle	2025-09-23T16:15:47.2879760Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+start	Build with Gradle	2025-09-23T16:15:47.2880498Z 	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+start	Build with Gradle	2025-09-23T16:15:47.2881207Z 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+start	Build with Gradle	2025-09-23T16:15:47.2881953Z 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+start	Build with Gradle	2025-09-23T16:15:47.2882929Z 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+start	Build with Gradle	2025-09-23T16:15:47.2883721Z 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+start	Build with Gradle	2025-09-23T16:15:47.2884494Z 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+start	Build with Gradle	2025-09-23T16:15:47.2885201Z 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:497)
+start	Build with Gradle	2025-09-23T16:15:47.2885777Z 	at top.srcrs.BiliStart.scanTask(BiliStart.java:146)
+start	Build with Gradle	2025-09-23T16:15:47.2886189Z 	at top.srcrs.BiliStart.main(BiliStart.java:73)
+start	Build with Gradle	2025-09-23T16:15:47.2887160Z [36m2025-09-24 00:15:47.197[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:69[0;39m 🔄开始GET请求: https://api.live.bilibili.com/xlive/web-ucenter/user/get_user_info
+start	Build with Gradle	2025-09-23T16:15:47.3869132Z [36m2025-09-24 00:15:47.315[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:71[0;39m ⏰等待完成，开始执行请求
+start	Build with Gradle	2025-09-23T16:15:47.5871023Z [36m2025-09-24 00:15:47.529[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:47.9869998Z [36m2025-09-24 00:15:47.881[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:47.9871806Z [36m2025-09-24 00:15:47.881[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: GET https://api.live.bilibili.com/xlive/web-ucenter/user/get_user_info
+start	Build with Gradle	2025-09-23T16:15:48.2870209Z [36m2025-09-24 00:15:48.272[0;39m [34m[INFO ][0;39m [33mt.s.t.l.Silver2CoinTask:24[0;39m 【银瓜子】: 522
+start	Build with Gradle	2025-09-23T16:15:48.2871304Z [36m2025-09-24 00:15:48.273[0;39m [34m[INFO ][0;39m [33mt.s.t.l.Silver2CoinTask:30[0;39m 【银瓜子兑换硬币】: 银瓜子余额不足❌
+start	Build with Gradle	2025-09-23T16:15:49.5870556Z [36m2025-09-24 00:15:49.575[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket
+start	Build with Gradle	2025-09-23T16:15:49.9870089Z [36m2025-09-24 00:15:49.915[0;39m [31m[WARN ][0;39m [33mt.s.u.BiliTicket:59[0;39m bili_ticket获取失败: -111
+start	Build with Gradle	2025-09-23T16:15:49.9871599Z [36m2025-09-24 00:15:49.915[0;39m [34m[INFO ][0;39m [33mt.s.u.Request:179[0;39m 🌐开始执行HTTP请求: POST https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn
+start	Build with Gradle	2025-09-23T16:15:50.5870269Z [36m2025-09-24 00:15:50.551[0;39m [34m[INFO ][0;39m [33mt.s.t.m.MangaTask:25[0;39m 【漫画签到设备信息】: android
+start	Build with Gradle	2025-09-23T16:15:50.5872844Z [36m2025-09-24 00:15:50.552[0;39m [34m[INFO ][0;39m [33mt.s.t.m.MangaTask:26[0;39m 【漫画签到】: 成功✔
+start	Build with Gradle	2025-09-23T16:15:50.5875252Z [36m2025-09-24 00:15:50.552[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:80[0;39m 【升级预计】: 当前等级为: Lv5 ,预计升级到下一级还需要: 632 天
+start	Build with Gradle	2025-09-23T16:15:50.5881670Z [36m2025-09-24 00:15:50.552[0;39m [34m[INFO ][0;39m [33mt.s.BiliStart:83[0;39m 本次任务运行完毕。
+start	Build with Gradle	2025-09-23T16:15:50.5883296Z [36m2025-09-24 00:15:50.552[0;39m [39m[DEBUG][0;39m [33mt.s.BiliStart:46[0;39m 超时监控线程被中断，程序正常结束
+start	Build with Gradle	2025-09-23T16:15:50.5884110Z 
+start	Build with Gradle	2025-09-23T16:15:50.5884742Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+start	Build with Gradle	2025-09-23T16:15:50.5885383Z 
+start	Build with Gradle	2025-09-23T16:15:50.5886171Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+start	Build with Gradle	2025-09-23T16:15:50.5887066Z 
+start	Build with Gradle	2025-09-23T16:15:50.5888052Z For more on this, please refer to https://docs.gradle.org/8.5/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+start	Build with Gradle	2025-09-23T16:15:50.5889214Z 
+start	Build with Gradle	2025-09-23T16:15:50.5889480Z BUILD SUCCESSFUL in 2m 3s
+start	Build with Gradle	2025-09-23T16:15:50.5890249Z 4 actionable tasks: 4 executed
+start	Post Cache Gradle packages	﻿2025-09-23T16:15:51.0647837Z Post job cleanup.
+start	Post Cache Gradle packages	2025-09-23T16:15:51.1983773Z Cache hit occurred on the primary key Linux-gradle-86f973b55333c0c023a3f50d68edae32fb988f3269f897e6515c34280bd51627, not saving cache.
+start	Post Set up JDK 11	﻿2025-09-23T16:15:51.2136822Z Post job cleanup.
+start	Post Run actions/checkout@v4	﻿2025-09-23T16:15:51.3959108Z Post job cleanup.
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.4917281Z [command]/usr/bin/git version
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.4958801Z git version 2.51.0
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5006190Z Temporarily overriding HOME='/home/runner/work/_temp/f0717b52-4810-4cef-80dc-039b5fe03ea2' before making global git config changes
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5007449Z Adding repository directory to the temporary git global config as a safe directory
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5020258Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/BilibiliTask_3/BilibiliTask_3
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5057833Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5093711Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5330028Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5353055Z http.https://github.com/.extraheader
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5365707Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+start	Post Run actions/checkout@v4	2025-09-23T16:15:51.5398517Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+start	Complete job	﻿2025-09-23T16:15:51.5737086Z Cleaning up orphan processes
+start	Complete job	2025-09-23T16:15:51.6011551Z Terminate orphan process: pid (2128) (java)

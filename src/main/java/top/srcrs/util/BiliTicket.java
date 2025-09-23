@@ -2,6 +2,7 @@ package top.srcrs.util;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import top.srcrs.domain.UserData;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
