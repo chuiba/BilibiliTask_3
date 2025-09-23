@@ -242,9 +242,8 @@ public class ThrowCoinTask implements Task {
                     JSONObject item = items.getJSONObject(i);
                     if (item.containsKey("id")) {
                         String aid = item.getString("id");
-                        if (!isThrowCoins(aid)) {
-                            videoList.add(aid);
-                        }
+                        // 推荐视频没有mid信息，直接添加
+                        videoList.add(aid);
                     }
                 }
             }
@@ -271,9 +270,8 @@ public class ThrowCoinTask implements Task {
                     for (int i = 0; i < archives.size() && videoList.size() < 10; i++) {
                         JSONObject archive = archives.getJSONObject(i);
                         String aid = archive.getString("aid");
-                        if (!isThrowCoins(aid)) {
-                            videoList.add(aid);
-                        }
+                        // 分区视频没有mid信息，直接添加
+                        videoList.add(aid);
                     }
                 }
             }
