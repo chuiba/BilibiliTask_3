@@ -22,55 +22,65 @@ public class BiliTicket {
     private static final String KEY_ID = "ec02";
     private static String cachedTicket = "";
     private static long lastUpdateTime = 0;
-    private static final long UPDATE_INTERVAL = 30 * 60 * 1000; // 30分钟更新一次
+    private static final long TICKET_VALIDITY = 2 * 60 * 60 * 1000; // 2小时有效期
+    private static final int MAX_RETRIES = 3; // 最大重试次数
 
     /**
      * 获取bili_ticket
      */
     public static String getBiliTicket() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastUpdateTime < UPDATE_INTERVAL && !cachedTicket.isEmpty()) {
+        
+        // 检查缓存是否有效
+        if (!cachedTicket.isEmpty() && 
+            (currentTime - lastUpdateTime) < TICKET_VALIDITY) {
             return cachedTicket;
         }
 
-        try {
-            long timestamp = currentTime / 1000;
-            String message = "ts" + timestamp;
-            String hexSign = hmacSha256(message, HMAC_KEY);
+        // 获取新的ticket
+        for (int i = 0; i < MAX_RETRIES; i++) {
+            try {
+                long timestamp = currentTime / 1000;
+                String message = "ts" + timestamp;
+                String hexSign = hmacSha256(message, HMAC_KEY);
 
-            JSONObject params = new JSONObject();
-            params.put("key_id", KEY_ID);
-            params.put("hexsign", hexSign);
-            params.put("context[ts]", timestamp);
-            params.put("csrf", UserData.getInstance().getBiliJct());
+                JSONObject params = new JSONObject();
+                params.put("key_id", KEY_ID);
+                params.put("hexsign", hexSign);
+                params.put("context[ts]", timestamp);
+                params.put("csrf", UserData.getInstance().getBiliJct());
 
-            // 添加重试机制，最多尝试2次
-            int retries = 0;
-            while (retries < 2) {
-                try {
-                    JSONObject response = Request.postWithoutBiliTicket("https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket", params);
+                JSONObject response = Request.postWithoutBiliTicket(
+                    "https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket", 
+                    params
+                );
 
-                    if ("0".equals(response.getString("code"))) {
-                        JSONObject data = response.getJSONObject("data");
-                        cachedTicket = data.getString("ticket");
-                        lastUpdateTime = currentTime;
-                        log.info("bili_ticket更新成功");
-                        return cachedTicket;
-                    } else {
-                        log.warn("bili_ticket获取失败: {}", response.getString("message"));
-                        break; // API返回错误，不重试
+                if ("0".equals(response.getString("code"))) {
+                    JSONObject data = response.getJSONObject("data");
+                    cachedTicket = data.getString("ticket");
+                    lastUpdateTime = currentTime;
+                    log.info("bili_ticket更新成功");
+                    return cachedTicket;
+                } else {
+                    log.warn("bili_ticket API返回错误: {} - {}", 
+                        response.getString("code"), response.getString("message"));
+                    // API返回错误码，不进行重试
+                    break;
+                }
+            } catch (Exception e) {
+                log.warn("bili_ticket获取失败，重试 {}/{}: {}", i + 1, MAX_RETRIES, e.getMessage());
+                if (i < MAX_RETRIES - 1) {
+                    try {
+                        Thread.sleep(1000 * (i + 1)); // 递增等待时间：1s, 2s, 3s
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        break;
                     }
-                } catch (Exception e) {
-                    retries++;
-                    log.warn("bili_ticket获取重试 {}/2: {}", retries, e.getMessage());
-                    if (retries >= 2) throw e;
-                    Thread.sleep(500); // 等待0.5秒后重试
                 }
             }
-        } catch (Exception e) {
-            log.error("💔bili_ticket生成异常: ", e);
         }
-
+        
+        log.warn("bili_ticket获取失败，使用空值");
         return "";
     }
 

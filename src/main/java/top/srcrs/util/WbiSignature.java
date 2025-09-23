@@ -34,6 +34,15 @@ public class WbiSignature {
      * 获取WBI签名参数
      */
     public static Map<String, String> getWbiSign(Map<String, Object> params) {
+        return getWbiSignWithWks(params, false);
+    }
+
+    /**
+     * 获取带w_ks参数的WBI签名参数
+     * @param params 请求参数
+     * @param addSelf 是否添加w_ks参数
+     */
+    public static Map<String, String> getWbiSignWithWks(Map<String, Object> params, boolean addSelf) {
         try {
             // 更新密钥
             updateKeys();
@@ -45,11 +54,14 @@ public class WbiSignature {
             long wts = System.currentTimeMillis() / 1000;
             params.put("wts", wts);
 
+            // 新增 w_ks 参数支持
+            if (addSelf) {
+                String wKs = swapString(imgKey + subKey, 2);
+                params.put("w_ks", wKs);
+            }
+
             // 排序参数并构建查询字符串
-            String query = params.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining("&"));
+            String query = buildSortedQuery(params);
 
             // 计算MD5
             String wRid = md5(query + mixinKey);
@@ -57,6 +69,9 @@ public class WbiSignature {
             Map<String, String> result = new HashMap<>();
             result.put("w_rid", wRid);
             result.put("wts", String.valueOf(wts));
+            if (addSelf) {
+                result.put("w_ks", params.get("w_ks").toString());
+            }
 
             return result;
         } catch (Exception e) {
@@ -137,6 +152,39 @@ public class WbiSignature {
             }
         }
         return key.toString();
+    }
+
+    /**
+     * 构建排序后的查询字符串
+     */
+    private static String buildSortedQuery(Map<String, Object> params) {
+        return params.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey())
+            .map(entry -> {
+                String value = String.valueOf(entry.getValue());
+                // 过滤特殊字符
+                value = value.replaceAll("[!'()*]", "");
+                return entry.getKey() + "=" + value;
+            })
+            .collect(Collectors.joining("&"));
+    }
+
+    /**
+     * swapString函数 - 2024年新增的WBI算法
+     * @param str 输入字符串
+     * @param depth 递归深度
+     * @return 处理后的字符串
+     */
+    private static String swapString(String str, int depth) {
+        if (str.length() % 2 != 0) return str;
+        if (depth == 0) return str;
+        if (str.length() == Math.pow(2, depth)) {
+            return new StringBuilder(str).reverse().toString();
+        }
+        
+        String left = str.substring(0, str.length() / 2);
+        String right = str.substring(str.length() / 2);
+        return swapString(right, depth - 1) + swapString(left, depth - 1);
     }
 
     /**

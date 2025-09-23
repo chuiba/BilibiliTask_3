@@ -79,49 +79,96 @@ public class DailyTask implements Task {
             JSONObject pJson = new JSONObject();
             pJson.put("ps", ps);
             pJson.put("rid", rid);
-
-            // 首先尝试使用WBI签名的推荐API
-            JSONObject jsonObject = Request.getWithWbi("https://api.bilibili.com/x/web-interface/wbi/index/top/feed/rcmd", pJson);
-
-            if (!"0".equals(jsonObject.getString("code"))) {
-                log.warn("推荐API返回错误，尝试使用分区API: {} - {}", jsonObject.getString("code"), jsonObject.getString("message"));
-                // 如果推荐API失败，尝试使用分区API
-                jsonObject = Request.getWithWbi("https://api.bilibili.com/x/web-interface/dynamic/region", pJson);
-            }
-
-            JSONArray jsonArray;
-            if (jsonObject.containsKey("data") && jsonObject.getJSONObject("data").containsKey("item")) {
-                // 推荐API的数据结构
-                jsonArray = jsonObject.getJSONObject("data").getJSONArray("item");
-            } else if (jsonObject.containsKey("data") && jsonObject.getJSONObject("data").containsKey("archives")) {
-                // 分区API的数据结构
-                jsonArray = jsonObject.getJSONObject("data").getJSONArray("archives");
-            } else {
-                log.warn("无法获取视频列表，使用备用方案");
-                return getBackupVideoList();
-            }
-
-            JSONArray jsonRegions = new JSONArray();
-            for (Object object : jsonArray) {
-                JSONObject json = (JSONObject) object;
-                JSONObject cache = new JSONObject();
-                // 适配不同的数据结构
-                cache.put("title", json.getString("title"));
-                cache.put("aid", json.getIntValue("id") != 0 ? json.getString("id") : json.getString("aid"));
-                cache.put("bvid", json.getString("bvid"));
-                cache.put("cid", json.getString("cid"));
-                jsonRegions.add(cache);
-
-                // 最多获取指定数量的视频
-                if (jsonRegions.size() >= Integer.parseInt(ps)) {
-                    break;
+            pJson.put("fresh_type", "3");
+            pJson.put("version", "1");
+            pJson.put("fresh_idx_1h", "1");
+            pJson.put("fetch_row", "1");
+            pJson.put("fresh_idx", "1");
+            pJson.put("brush", "0");
+            pJson.put("homepage_ver", "1");
+            pJson.put("ps", "12");
+            
+            // 优先使用新的推荐API
+            JSONObject jsonObject = Request.getWithWbi(
+                "https://api.bilibili.com/x/web-interface/wbi/index/top/feed/rcmd", 
+                pJson
+            );
+            
+            if ("0".equals(jsonObject.getString("code"))) {
+                JSONObject data = jsonObject.getJSONObject("data");
+                if (data.containsKey("item")) {
+                    return processRecommendVideos(data.getJSONArray("item"));
                 }
             }
-            return jsonRegions;
+            
+            // 降级到分区API
+            log.warn("推荐API失败，使用分区API");
+            return getRegionVideos(ps, rid);
+            
         } catch (Exception e) {
-            log.error("获取推荐视频失败，使用备用方案: ", e);
+            log.error("获取视频列表失败: ", e);
             return getBackupVideoList();
         }
+    }
+
+    /**
+     * 新增方法处理推荐视频数据
+     */
+    private JSONArray processRecommendVideos(JSONArray items) {
+        JSONArray result = new JSONArray();
+        for (Object item : items) {
+            JSONObject video = (JSONObject) item;
+            JSONObject processed = new JSONObject();
+            processed.put("title", video.getString("title"));
+            processed.put("aid", video.getString("id"));
+            processed.put("bvid", video.getString("bvid"));
+            processed.put("cid", video.getString("cid"));
+            result.add(processed);
+        }
+        return result;
+    }
+
+    /**
+     * 获取分区视频（降级方案）
+     */
+    private JSONArray getRegionVideos(String ps, String rid) {
+        try {
+            JSONObject pJson = new JSONObject();
+            pJson.put("ps", ps);
+            pJson.put("rid", rid);
+            
+            JSONObject jsonObject = Request.getWithWbi(
+                "https://api.bilibili.com/x/web-interface/dynamic/region", 
+                pJson
+            );
+            
+            if ("0".equals(jsonObject.getString("code"))) {
+                JSONObject data = jsonObject.getJSONObject("data");
+                if (data.containsKey("archives")) {
+                    JSONArray archives = data.getJSONArray("archives");
+                    JSONArray result = new JSONArray();
+                    
+                    for (Object object : archives) {
+                        JSONObject json = (JSONObject) object;
+                        JSONObject cache = new JSONObject();
+                        cache.put("title", json.getString("title"));
+                        cache.put("aid", json.getString("aid"));
+                        cache.put("bvid", json.getString("bvid"));
+                        cache.put("cid", json.getString("cid"));
+                        result.add(cache);
+                        
+                        if (result.size() >= Integer.parseInt(ps)) {
+                            break;
+                        }
+                    }
+                    return result;
+                }
+            }
+        } catch (Exception e) {
+            log.error("分区API调用失败: ", e);
+        }
+        
+        return getBackupVideoList();
     }
 
     /**
