@@ -66,7 +66,9 @@ public class Request {
      * @Time 2020-10-13
      */
     public static JSONObject get(String url) {
+        log.info("🔄开始GET请求: {}", url);
         waitFor();
+        log.info("⏰等待完成，开始执行请求");
         return get(url, new JSONObject());
     }
 
@@ -148,6 +150,7 @@ public class Request {
     }
 
     public static JSONObject clientExe(HttpUriRequest request) {
+        log.info("🌐开始执行HTTP请求: {} {}", request.getMethod(), request.getURI());
         // 配置超时时间
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(10000) // 连接超时10秒

@@ -37,9 +37,9 @@ public class BiliStart {
         Thread mainThread = Thread.currentThread();
         Thread timeoutThread = new Thread(() -> {
             try {
-                // 程序最多运行5分钟
-                TimeUnit.MINUTES.sleep(5);
-                log.error("💔程序运行超时(5分钟)，强制退出");
+                // 程序最多运行2分钟
+                TimeUnit.MINUTES.sleep(2);
+                log.error("💔程序运行超时(2分钟)，强制退出");
                 System.exit(1);
             } catch (InterruptedException e) {
                 // 正常退出时会中断这个线程
@@ -50,14 +50,22 @@ public class BiliStart {
         timeoutThread.start();
 
         try {
+            log.info("🚀程序启动，开始检查环境变量");
             if(checkEnv()){
                 log.error("💔请在Github Secrets中添加你的Cookie信息");
                 System.exit(1);
             }
+            log.info("✅环境变量检查通过");
+
             /* 读取yml文件配置信息 */
+            log.info("📖开始读取配置文件");
             ReadConfig.transformation("/config.yml");
+            log.info("✅配置文件读取完成");
+
             /* 如果用户账户有效 */
+            log.info("🔍开始验证用户账户");
             if(check()){
+                log.info("✅账户验证成功");
                 log.info("【用户名】: {}",StringUtil.hideString(USER_DATA.getUname(),1,1,'*'));
                 log.info("【硬币】: {}", USER_DATA.getMoney());
                 log.info("【经验】: {}", USER_DATA.getCurrentExp());
@@ -163,8 +171,11 @@ public class BiliStart {
      * @Time 2020-10-13
      */
     public static boolean check(){
+        log.info("🌐初始化UserAgent");
         Request.UserAgent = InitUserAgent.getOne();
+        log.info("📡发送账户验证请求到Bilibili API");
         JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
+        log.info("📨收到API响应: {}", jsonObject.toJSONString());
         JSONObject object = jsonObject.getJSONObject("data");
         String code = jsonObject.getString("code");
         if(SUCCESS.equals(code)){
