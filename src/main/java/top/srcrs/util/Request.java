@@ -126,12 +126,38 @@ public class Request {
         return clientExe(httpPost);
     }
 
+    /**
+     * 发送POST请求，不包含bili_ticket（用于获取bili_ticket本身，避免循环调用）
+     */
+    public static JSONObject postWithoutBiliTicket(String url, JSONObject pJson) {
+        waitFor();
+        HttpUriRequest httpPost = getBaseBuilder(HttpPost.METHOD_NAME, false)
+                .addHeader("accept", "application/json, text/plain, */*")
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("charset", "UTF-8")
+                .setUri(url)
+                .addParameters(getPairList(pJson))
+                .build();
+        return clientExe(httpPost);
+    }
+
     private static RequestBuilder getBaseBuilder(final String method) {
-        // 获取bili_ticket并添加到Cookie中
-        String biliTicket = BiliTicket.getBiliTicket();
+        return getBaseBuilder(method, true);
+    }
+
+    private static RequestBuilder getBaseBuilder(final String method, boolean includeBiliTicket) {
         String cookie = USER_DATA.getCookie();
-        if (!biliTicket.isEmpty()) {
-            cookie += "bili_ticket=" + biliTicket + ";";
+
+        // 只有在需要时才获取bili_ticket，避免循环调用
+        if (includeBiliTicket) {
+            try {
+                String biliTicket = BiliTicket.getBiliTicket();
+                if (!biliTicket.isEmpty()) {
+                    cookie += "bili_ticket=" + biliTicket + ";";
+                }
+            } catch (Exception e) {
+                log.warn("获取bili_ticket失败，跳过: {}", e.getMessage());
+            }
         }
 
         return RequestBuilder.create(method)

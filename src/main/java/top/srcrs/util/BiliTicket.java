@@ -47,7 +47,7 @@ public class BiliTicket {
             int retries = 0;
             while (retries < 2) {
                 try {
-                    JSONObject response = Request.post("https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket", params);
+                    JSONObject response = Request.postWithoutBiliTicket("https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket", params);
 
                     if ("0".equals(response.getString("code"))) {
                         JSONObject data = response.getJSONObject("data");
