@@ -121,13 +121,32 @@ public class ThrowCoinTask implements Task {
      * @Time 2020-10-13
      */
     public JSONObject throwCoin(String aid, String num, String selectLike) {
-        JSONObject pJson = new JSONObject();
-        pJson.put("aid", aid);
-        pJson.put("multiply", num);
-        pJson.put("select_like", selectLike);
-        pJson.put("cross_domain", "true");
-        pJson.put("csrf", USER_DATA.getBiliJct());
-        return Request.post("https://api.bilibili.com/x/web-interface/coin/add", pJson);
+        try {
+            JSONObject pJson = new JSONObject();
+            pJson.put("aid", aid);
+            pJson.put("multiply", num);
+            pJson.put("select_like", selectLike);
+            pJson.put("cross_domain", "true");
+            pJson.put("csrf", USER_DATA.getBiliJct());
+
+            // 投币API需要WBI签名认证
+            JSONObject response = Request.postWithWbi("https://api.bilibili.com/x/web-interface/coin/add", pJson);
+
+            // 如果WBI签名失败，尝试普通POST
+            if (response == null || response.toString().contains("HTML")) {
+                log.warn("WBI投币请求失败，尝试普通POST");
+                response = Request.post("https://api.bilibili.com/x/web-interface/coin/add", pJson);
+            }
+
+            return response;
+        } catch (Exception e) {
+            log.error("投币请求异常: ", e);
+            // 返回错误响应
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("code", "-1");
+            errorResponse.put("message", "请求异常: " + e.getMessage());
+            return errorResponse;
+        }
     }
 
     /**

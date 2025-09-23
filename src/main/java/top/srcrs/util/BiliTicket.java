@@ -41,7 +41,7 @@ public class BiliTicket {
             params.put("key_id", KEY_ID);
             params.put("hexsign", hexSign);
             params.put("context[ts]", timestamp);
-            params.put("csrf", "");
+            params.put("csrf", UserData.getInstance().getBiliJct());
 
             // 添加重试机制，最多尝试2次
             int retries = 0;

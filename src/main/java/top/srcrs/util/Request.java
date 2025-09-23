@@ -141,6 +141,33 @@ public class Request {
         return clientExe(httpPost);
     }
 
+    /**
+     * 发送带WBI签名的POST请求
+     */
+    public static JSONObject postWithWbi(String url, JSONObject pJson) {
+        waitFor();
+        try {
+            // 转换参数格式
+            Map<String, Object> paramMap = new HashMap<>();
+            for (String key : pJson.keySet()) {
+                paramMap.put(key, pJson.get(key));
+            }
+
+            // 获取WBI签名
+            Map<String, String> wbiParams = WbiSignature.getWbiSign(paramMap);
+
+            // 添加WBI参数
+            JSONObject finalParams = new JSONObject(pJson);
+            finalParams.put("w_rid", wbiParams.get("w_rid"));
+            finalParams.put("wts", wbiParams.get("wts"));
+
+            return post(url, finalParams);
+        } catch (Exception e) {
+            log.error("💔WBI POST请求失败: ", e);
+            throw new RuntimeException("WBI POST请求失败: " + e.getMessage(), e);
+        }
+    }
+
     private static RequestBuilder getBaseBuilder(final String method) {
         return getBaseBuilder(method, true);
     }

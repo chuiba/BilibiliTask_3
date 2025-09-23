@@ -47,7 +47,28 @@ public class BiLiveTask implements Task {
      * @Time 2020-10-13
      */
     public JSONObject xliveSign(){
-        return Request.get("https://api.live.bilibili.com/xlive/web-ucenter/v1/sign/DoSign");
+        try {
+            JSONObject response = Request.get("https://api.live.bilibili.com/xlive/web-ucenter/v1/sign/DoSign");
+
+            // 检查响应是否有效
+            if (response == null || response.toString().contains("HTML")) {
+                log.warn("直播签到API返回HTML页面，可能需要不同的认证方式");
+                // 构造默认失败响应
+                JSONObject fallbackResponse = new JSONObject();
+                fallbackResponse.put("code", "-1");
+                fallbackResponse.put("message", "API访问失败，可能需要更新认证方式");
+                return fallbackResponse;
+            }
+
+            return response;
+        } catch (Exception e) {
+            log.error("直播签到请求异常: ", e);
+            // 返回默认失败响应
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("code", "-1");
+            errorResponse.put("message", "请求异常: " + e.getMessage());
+            return errorResponse;
+        }
     }
 
 }
