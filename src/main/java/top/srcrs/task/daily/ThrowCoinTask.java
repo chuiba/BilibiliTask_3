@@ -121,39 +121,102 @@ public class ThrowCoinTask implements Task {
      * @Time 2020-10-13
      */
     public JSONObject throwCoin(String aid, String num, String selectLike) {
-        try {
-            JSONObject pJson = new JSONObject();
-            pJson.put("aid", aid);
-            pJson.put("multiply", num);
-            pJson.put("select_like", selectLike);
-            pJson.put("cross_domain", "true");
-            pJson.put("csrf", USER_DATA.getBiliJct());
-            
-            // 使用WBI签名的POST请求
-            JSONObject response = Request.postWithWbi(
-                "https://api.bilibili.com/x/web-interface/coin/add", 
-                pJson
-            );
-            
-            // 如果WBI请求失败，尝试普通POST（向后兼容）
-            if (response == null || 
-                response.toString().contains("HTML") || 
-                "-352".equals(response.getString("code"))) {
-                log.warn("WBI投币请求失败，尝试普通POST");
+        int maxRetries = 3;
+        for (int attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                // 验证视频有效性
+                if (!isValidVideo(aid)) {
+                    log.warn("视频 {} 无效或不可投币，跳过", aid);
+                    JSONObject errorResponse = new JSONObject();
+                    errorResponse.put("code", "-1");
+                    errorResponse.put("message", "视频无效或不可投币");
+                    return errorResponse;
+                }
+                
+                JSONObject pJson = new JSONObject();
+                pJson.put("aid", aid);
+                pJson.put("multiply", num);
+                pJson.put("select_like", selectLike);
+                pJson.put("cross_domain", "true");
+                pJson.put("csrf", USER_DATA.getBiliJct());
+                
+                // 添加额外的必要参数
+                pJson.put("eab_x", "2");
+                pJson.put("ramval", "0");
+                pJson.put("source", "web_normal");
+                pJson.put("ga", "1");
+                
+                log.info("尝试投币 (第{}次): aid={}, multiply={}, like={}", attempt, aid, num, selectLike);
+                
+                // 使用WBI签名的POST请求
+                JSONObject response = Request.postWithWbi(
+                    "https://api.bilibili.com/x/web-interface/coin/add", 
+                    pJson
+                );
+                
+                // 检查WBI请求结果
+                if (response != null && !response.toString().contains("HTML")) {
+                    String code = response.getString("code");
+                    if ("0".equals(code)) {
+                        log.info("WBI投币成功: aid={}", aid);
+                        return response;
+                    } else if ("-401".equals(code) || "-403".equals(code) || "-352".equals(code)) {
+                        log.warn("WBI投币失败 (第{}次): {} - {}", attempt, code, response.getString("message"));
+                        // 这些错误码通常表示认证问题，尝试普通POST
+                    } else {
+                        // 其他错误码直接返回，不重试
+                        log.warn("投币失败，不可重试的错误: {} - {}", code, response.getString("message"));
+                        return response;
+                    }
+                }
+                
+                // WBI请求失败，尝试普通POST（向后兼容）
+                log.warn("WBI投币请求失败 (第{}次)，尝试普通POST", attempt);
+                
+                // 为普通POST添加时间戳参数
+                pJson.put("ts", System.currentTimeMillis() / 1000);
+                
                 response = Request.post(
                     "https://api.bilibili.com/x/web-interface/coin/add", 
                     pJson
                 );
+                
+                if (response != null) {
+                    String code = response.getString("code");
+                    if ("0".equals(code)) {
+                        log.info("普通POST投币成功: aid={}", aid);
+                        return response;
+                    } else if ("-401".equals(code) || "-403".equals(code)) {
+                        log.warn("普通POST投币失败 (第{}次): {} - {}", attempt, code, response.getString("message"));
+                        if (attempt < maxRetries) {
+                            // 等待后重试
+                            Thread.sleep(2000 * attempt);
+                            continue;
+                        }
+                    }
+                    return response;
+                }
+                
+            } catch (Exception e) {
+                log.error("投币请求异常 (第{}次): ", attempt, e);
+                if (attempt < maxRetries) {
+                    try {
+                        Thread.sleep(1000 * attempt);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                    continue;
+                }
             }
-            
-            return response;
-        } catch (Exception e) {
-            log.error("投币请求异常: ", e);
-            JSONObject errorResponse = new JSONObject();
-            errorResponse.put("code", "-1");
-            errorResponse.put("message", "请求异常: " + e.getMessage());
-            return errorResponse;
         }
+        
+        // 所有重试都失败了
+        log.error("投币功能完全失败，已尝试{}次", maxRetries);
+        JSONObject errorResponse = new JSONObject();
+        errorResponse.put("code", "-1");
+        errorResponse.put("message", "投币功能暂时不可用，请稍后重试");
+        return errorResponse;
     }
 
     /**
@@ -402,11 +465,62 @@ public class ThrowCoinTask implements Task {
         if((USER_DATA.getMid().equals(mid))){
             return false;
         }
-        JSONObject pJson = new JSONObject();
-        pJson.put("aid", aid);
-        JSONObject object = Request.get("https://api.bilibili.com/x/web-interface/archive/coins", pJson);
-        int multiply = object.getJSONObject("data").getIntValue("multiply");
-        return multiply == 0;
+        try {
+            JSONObject pJson = new JSONObject();
+            pJson.put("aid", aid);
+            JSONObject object = Request.get("https://api.bilibili.com/x/web-interface/archive/coins", pJson);
+            if (object != null && "0".equals(object.getString("code"))) {
+                int multiply = object.getJSONObject("data").getIntValue("multiply");
+                return multiply == 0;
+            } else {
+                log.warn("检查投币状态失败: aid={}, 默认为未投币", aid);
+                return true; // 默认认为未投币，允许尝试投币
+            }
+        } catch (Exception e) {
+            log.warn("检查投币状态异常: aid={}, 默认为未投币", aid, e);
+            return true; // 异常时默认认为未投币
+        }
+    }
+    
+    /**
+     * 验证视频是否有效且可投币
+     * @param aid 视频aid
+     * @return boolean 是否有效
+     */
+    private boolean isValidVideo(String aid) {
+        try {
+            JSONObject pJson = new JSONObject();
+            pJson.put("aid", aid);
+            JSONObject response = Request.get("https://api.bilibili.com/x/web-interface/view", pJson);
+            
+            if (response != null && "0".equals(response.getString("code"))) {
+                JSONObject data = response.getJSONObject("data");
+                // 检查视频状态
+                int state = data.getIntValue("state");
+                if (state < 0) {
+                    log.warn("视频状态异常: aid={}, state={}", aid, state);
+                    return false;
+                }
+                
+                // 检查是否为自己的视频
+                JSONObject owner = data.getJSONObject("owner");
+                if (owner != null) {
+                    String videoMid = owner.getString("mid");
+                    if (USER_DATA.getMid().equals(videoMid)) {
+                        log.debug("跳过自己的视频: aid={}", aid);
+                        return false;
+                    }
+                }
+                
+                return true;
+            } else {
+                log.warn("获取视频信息失败: aid={}", aid);
+                return false;
+            }
+        } catch (Exception e) {
+            log.warn("验证视频有效性异常: aid={}", aid, e);
+            return false;
+        }
     }
 
     /**
