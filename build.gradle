@@ -6,8 +6,11 @@ plugins {
 
 group = 'top.srcrs'
 version = '1.0.10'
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
 configurations {
     compileOnly {
@@ -58,6 +61,6 @@ test {
 }
 
 task runMain (type: JavaExec) {
-    main = 'top.srcrs.BiliStart'
+    mainClass = 'top.srcrs.BiliStart'
     classpath = sourceSets.main.runtimeClasspath
 }

@@ -37,6 +37,10 @@ public class GiveGiftTask implements Task {
             JSONArray jsonArray = xliveGiftBagList();
             /* 判断是否有过期礼物出现 */
             boolean flag = true;
+            if (jsonArray == null || jsonArray.isEmpty()) {
+                log.info("【送即将过期礼物】: 礼物背包为空或获取失败❌");
+                return;
+            }
             for(Object object : jsonArray){
                 JSONObject json = (JSONObject) object;
                 long expireAt = Long.parseLong(json.getString("expire_at"));
@@ -129,9 +133,20 @@ public class GiveGiftTask implements Task {
      * @Time 2020-10-13
      */
     public JSONArray xliveGiftBagList(){
-        return Request.get("https://api.live.bilibili.com/xlive/web-room/v1/gift/bag_list")
-                .getJSONObject("data")
-                .getJSONArray("list");
+        try {
+            JSONObject response = Request.get("https://api.live.bilibili.com/xlive/web-room/v1/gift/bag_list");
+            if (response != null && response.containsKey("data")) {
+                JSONObject data = response.getJSONObject("data");
+                if (data != null && data.containsKey("list")) {
+                    return data.getJSONArray("list");
+                }
+            }
+            log.warn("【获取礼物背包】: API返回数据格式异常或为空");
+            return new JSONArray();
+        } catch (Exception e) {
+            log.error("【获取礼物背包】: 请求异常", e);
+            return new JSONArray();
+        }
     }
 
     /**

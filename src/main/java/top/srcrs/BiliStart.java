@@ -175,9 +175,9 @@ public class BiliStart {
         Request.UserAgent = InitUserAgent.getOne();
         log.info("📡发送账户验证请求到Bilibili API");
         JSONObject jsonObject = Request.get("https://api.bilibili.com/x/web-interface/nav");
-        log.info("📨收到API响应: {}", jsonObject.toJSONString());
-        JSONObject object = jsonObject.getJSONObject("data");
         String code = jsonObject.getString("code");
+        log.info("📨API响应状态: code={}", code);
+        JSONObject object = jsonObject.getJSONObject("data");
         if(SUCCESS.equals(code)){
             JSONObject levelInfo = object.getJSONObject("level_info");
             /* 用户名 */

@@ -273,7 +273,7 @@ public class Request {
                 }
                 return result;
             } catch (Exception parseException) {
-                log.error("💔{}请求JSON解析失败，响应内容: {}", request.getMethod(), respContent.substring(0, Math.min(200, respContent.length())));
+                log.error("💔{}请求JSON解析失败，响应长度: {} 字符", request.getMethod(), respContent.length());
                 recordError(url);
                 throw new RuntimeException("JSON解析失败: " + parseException.getMessage(), parseException);
             }

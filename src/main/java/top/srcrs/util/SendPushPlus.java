@@ -56,7 +56,7 @@ public class SendPushPlus {
             if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 log.info("【PUSH+推送】: 正常✔");
             } else {
-                log.info("【PUSH+推送】: 失败, 原因为: {}❌", respContent);
+                log.info("【PUSH+推送】: 失败, HTTP状态码: {}❌", resp.getStatusLine().getStatusCode());
             }
         } catch (Exception e) {
             log.error("💔PUSH+发送错误 : ", e);

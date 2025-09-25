@@ -49,9 +49,8 @@ public class SendTelegram {
             if(resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
                 log.info("【Telegram推送】: 正常✔");
             } else{
-                log.info("【Telegram推送】: 失败, 原因为: {}❌", respContent);
+                log.info("【Telegram推送】: 失败, HTTP状态码: {}❌", resp.getStatusLine().getStatusCode());
             }
-            System.out.println(respContent);
         } catch (Exception e){
             log.error("💔Telegram通知错误 : ", e);
         }
